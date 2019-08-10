@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: dffccb6283798cf47923ce6aa42e60d7
+timeCreated: 1563764778
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mainTextBar: {instanceID: 0}
+  - mainText: {instanceID: 0}
+  - mainSprite: {instanceID: 0}
+  - baseSprite: {instanceID: 0}
+  - nullSprite: {fileID: 21300000, guid: 1e47ec5114e9aee429776adfae938cd0, type: 3}
+  - _resourceMgr: {instanceID: 0}
+  - _playerMgr: {instanceID: 0}
+  - _itemMgr: {instanceID: 0}
+  - _enemyMgr: {instanceID: 0}
+  - _stringMgr: {instanceID: 0}
+  - finalAnswerBar: {instanceID: 0}
+  - mainIndicator1: {instanceID: 0}
+  - mainIndicator2: {instanceID: 0}
+  - mainIndicator3: {instanceID: 0}
+  - PlayerIndicator: {instanceID: 0}
+  - MonsterIndicator: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
