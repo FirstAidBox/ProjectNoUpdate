@@ -5684,6 +5684,8 @@ MonoBehaviour:
   _FLAG_finalAnswer: 0
   fadeImage: {fileID: 619734371}
   isFade: 0
+  isFadeOut: 0
+  isFadeIn: 0
   mainIndicator1: {fileID: 1903154961}
   mainIndicator2: {fileID: 1894201820}
   mainIndicator3: {fileID: 1255228745}
@@ -6581,7 +6583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1313592955
 MonoBehaviour:
   m_ObjectHideFlags: 0
