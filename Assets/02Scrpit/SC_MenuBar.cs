@@ -8,17 +8,20 @@ public class SC_MenuBar : MonoBehaviour
 {
     public GameObject playerMenuBar;
 
-    public GameObject statsButton;
-    public GameObject skillButton;
-    public GameObject itemButton;
+    public bool isNomalMenu;
+    public bool isFieldMenu;
+    public bool isInnMenu;
 
+    public GameObject nomalButtons;
+    public GameObject fieldButtons;
+
+    public GameObject statsWindow;
     public Text titleText;
     public const string title_stat = "능력치";
     public const string title_skill = "기술";
     public const string title_itme = "소지품";
     public const string title_buy = "구매";
     public const string title_sell = "판매";
-    public GameObject statsWindow;
     public Image statsImage;
     public Text jobText;
     public const string jobHead = "직업: ";
@@ -34,21 +37,30 @@ public class SC_MenuBar : MonoBehaviour
     public const string moneyHead = "소지금: ";
 
     public GameObject skillWindow;
+    public GameObject skillContent;
+    public SC_SkillInMenu[] skillList;
+
+    public GameObject fieldBSkillWindow;
+
+    public GameObject battleBSkillWindow;
 
     public GameObject itemWindow;
+    public GameObject itemContent;
+    public GameObject[] itemList;
 
     public SC_PlayerMgr _playerMgr;
 
     private void Awake()
     {
         _playerMgr = GetComponent<SC_PlayerMgr>();
+        skillList = skillContent.GetComponentsInChildren<SC_SkillInMenu>();
     }
     public void PopupPlayerMenu()
     {
-        RefreshStat();
         titleText.text = title_stat;
         SC_GameMgr._gameMgr.isPopupPlayerBar = true;
         playerMenuBar.SetActive(true);
+        OpenStatsWindow();
     }
     public void ClosePlayerMenu()
     {
@@ -67,12 +79,14 @@ public class SC_MenuBar : MonoBehaviour
     }
     public void OpenStatsWindow()
     {
-        if (statsWindow.activeInHierarchy)
-            return;
         RefreshStat();
         titleText.text = title_stat;
         statsWindow.SetActive(true);
         skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(false);
         itemWindow.SetActive(false);
+        nomalButtons.SetActive(true);
+        fieldButtons.SetActive(false);
     }
 }

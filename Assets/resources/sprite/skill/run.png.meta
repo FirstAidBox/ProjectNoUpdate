@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3a66523ec5777f04784a6115c1090f67
-timeCreated: 1565244665
+guid: 953cfdbdf4a439f41a2e4d637365440c
+timeCreated: 1565585661
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -94,7 +94,7 @@ TextureImporter:
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     androidETC2FallbackOverride: 0
   - buildTarget: Windows Store Apps
     maxTextureSize: 2048

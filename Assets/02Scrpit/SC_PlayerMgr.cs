@@ -4,8 +4,9 @@ using System;
 using UnityEngine;
 
 public class SC_PlayerMgr : MonoBehaviour
-//플레이어의 상태의 정보와 관련된 행동들을 처리하는 스크립트입니다.
+    //플레이어에 관한 정보들이 모여있는 스크립트입니다.
 {
+    public static SC_PlayerMgr _playerMgr;
     public SC_ResourceMgr _resourceMgr;
     
     public string Job;
@@ -17,7 +18,7 @@ public class SC_PlayerMgr : MonoBehaviour
     public int DEF;
     public int SPD;
     public int Money = 0;
-    public int[] SkillIndex;
+    public int[] HaveSkillIndex;
     public int TotalSkillNum;
 
     public struct Jobdefalut
@@ -30,14 +31,17 @@ public class SC_PlayerMgr : MonoBehaviour
         public int spd;
     }
 
+    /*
     public Jobdefalut Warrior;
     public Jobdefalut Mage;
     public Jobdefalut Ranger;
+    */
 
     void Awake()
     {
+        _playerMgr = this;
         _resourceMgr = GetComponent<SC_ResourceMgr>();
-        //기본스텟 5, 2, 1, 1
+        /*옛날 데이터. 완전히 필요 없어지면 제거할 것
         Warrior.jobName = "전사";
         Warrior.jobImage = _resourceMgr.sp_Warrior;
         Warrior.hp = 6;
@@ -58,7 +62,7 @@ public class SC_PlayerMgr : MonoBehaviour
         Ranger.atk = 2;
         Ranger.def = 1;
         Ranger.spd = 4;
-
+        */
     }
 
     [Obsolete("구버전 함수. 스크립터블 오브잭트를 사용하는 함수로 바꿀 것.")]

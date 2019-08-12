@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KIND_ACTION {  }
+public enum KIND_ACTION { SKILL = 1, ITEM }
 
 public class SC_FieldMgr : MonoBehaviour
+    //필드(여관 밖 지역)에서 일어나는 일들을 담당.
 {
     public static SC_FieldMgr _fieldMgr;
     public GameObject fieldBackGroup;
@@ -24,11 +25,13 @@ public class SC_FieldMgr : MonoBehaviour
         public int index;
     }
 
+    public GameObject actionBar;
+    public bool isPopupFieldMenu = false;
     public GameObject selecter;
     public int actionIndex;
 
     public ActionData[] playerFieldAction;
-    public ActionData[] enemyFieldAction;
+
     public ActionData[] playerBattleAction;
     public ActionData[] enemyBattleAction;
 
@@ -56,8 +59,14 @@ public class SC_FieldMgr : MonoBehaviour
         EnableFieldTiles();
         FieldTilesInit();
         StartCoroutine("MoveTiles", 2);
-        SC_GameMgr._gameMgr.StartCoroutine("PrintClickTextBox", "지역1에 도착했습니다.");
-        SC_GameMgr._gameMgr.StartCoroutine("PrintClickTextBox", "이동합니다.");
+    }
+    public void EnteringField()
+    {
+        EnableFieldTiles();
+        FieldTilesInit();
+        actionBar.SetActive(true);
+        SC_GameMgr._gameMgr.SetBaseText("행동 3개를 선택해주세요.");
+        SC_GameMgr._gameMgr.PrintClickTextBox("이동합니다.");
     }
     public void FieldTilesInit()
     {

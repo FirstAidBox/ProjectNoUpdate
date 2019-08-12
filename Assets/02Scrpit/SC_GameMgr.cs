@@ -52,7 +52,6 @@ public class SC_GameMgr : MonoBehaviour
     public SC_EnemyMgr _enemyMgr;
     public SC_StringMgr _stringMgr;
     public SC_MenuBar _menuBar;
-    public SC_FieldMgr _FieldMgr;
 
     public GameObject finalAnswerBar;
     public bool isPopupFABar = false;
@@ -91,7 +90,6 @@ public class SC_GameMgr : MonoBehaviour
         _enemyMgr = GetComponent<SC_EnemyMgr>();
         _stringMgr = GetComponent<SC_StringMgr>();
         _menuBar = GetComponent<SC_MenuBar>();
-        _FieldMgr = GetComponent<SC_FieldMgr>();
 
         buttons = FindObjectsOfType<Button>();
         eventTriggers = new EventTrigger[buttons.Length];
@@ -136,7 +134,7 @@ public class SC_GameMgr : MonoBehaviour
         mainSprite.sprite = inputSprite;
         mainSprite.color = inputColor;
     }
-    public IEnumerator PrintClickTextBox(string inputText)
+    private IEnumerator _PrintClickTextBox(string inputText)
     {
         isPlayingText = true;
         PrintTextBox(inputText);
@@ -146,6 +144,20 @@ public class SC_GameMgr : MonoBehaviour
         yield return waitClick;
         isPlayingText = false;
         PrintBaseBox();
+    }
+    public void PrintClickTextBox(string inputText)
+    {
+        StartCoroutine("_PrintClickTextBox", inputText);
+    }
+    public void SetBaseText(string inputText)
+    {
+        baseSprite = nullSprite;
+        baseText = inputText;
+    }
+    public void SetBaseText(Sprite inputSprite, string inputText)
+    {
+        baseSprite = inputSprite;
+        baseText = inputText;
     }
     /// <summary>
     /// baseText와 baseSprite로 하단 박스 내용 표시.
@@ -340,6 +352,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         innMenu.SetActive(false);
         _menuBar.playerMenuBar.SetActive(false);
+        SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
         mainIndicator1.IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, "AnswerWarriorPick", EVENT_FLAG.EVENT);
@@ -357,7 +370,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("jobdata/Warrior"));
+            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Warrior"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -372,7 +385,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("jobdata/Mage"));
+            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Mage"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -387,7 +400,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("jobdata/Ranger"));
+            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Ranger"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -487,8 +500,8 @@ public class SC_GameMgr : MonoBehaviour
         FadeOutAndIn();
 		InvokeWaitFadeOut("OffMainIndicator");
 		InvokeWaitFadeOut("VisiblePlayer");
-        _FieldMgr.GetArea1Sprite();
-		InvokeWaitFadeOut (_FieldMgr.Test);
+        SC_FieldMgr._fieldMgr.GetArea1Sprite();
+		InvokeWaitFadeOut (SC_FieldMgr._fieldMgr.EnteringField);
     }
     public void IndiSetupArea2()
     {

@@ -12,7 +12,7 @@ public class SC_SkillMgr : MonoBehaviour
     {
         _skillMgr = this;
 
-        testSkills.AddRange(Resources.LoadAll<TestSkill>("skilldata"));
+        testSkills.AddRange(Resources.LoadAll<TestSkill>("player/skilldata"));
         testSkills.Sort(delegate (TestSkill A, TestSkill B)
         {
             if (A.Index > B.Index) return 1;

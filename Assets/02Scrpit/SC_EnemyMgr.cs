@@ -14,10 +14,16 @@ public class SC_EnemyMgr : MonoBehaviour
     public bool isArea2Clear = false;
     public bool isArea3Clear = false;
 
-    public SBO_EnemyData[] enemyData;
+    public List<SBO_EnemyData> enemyData;
+    public List<TestSkill> testSkills;
 
     void Awake()
     {
         _resourceMgr = GetComponent<SC_ResourceMgr>();
+    }
+
+    public void GetArea1Data()
+    {
+
     }
 }

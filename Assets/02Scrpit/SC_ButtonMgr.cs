@@ -74,4 +74,8 @@ public class SC_ButtonMgr : MonoBehaviour
     {
         _menuBar.ClosePlayerMenu();
     }
+    public void Test()
+    {
+        Debug.Log("Test!");
+    }
 }

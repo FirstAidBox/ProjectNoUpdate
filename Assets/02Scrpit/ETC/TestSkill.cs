@@ -13,6 +13,6 @@ public class TestSkill : ScriptableObject, I_CanUse
 
     public void UseEffect()
     {
-        SC_GameMgr._gameMgr.PrintTextBox(Name + "을 사용했습니다.");
+        SC_GameMgr._gameMgr.PrintTextBox(Name + "을(를) 사용했습니다.");
     }
 }
