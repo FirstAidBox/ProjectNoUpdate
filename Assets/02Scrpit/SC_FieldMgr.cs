@@ -65,8 +65,9 @@ public class SC_FieldMgr : MonoBehaviour
         EnableFieldTiles();
         FieldTilesInit();
         actionBar.SetActive(true);
-        SC_GameMgr._gameMgr.SetBaseText("행동 3개를 선택해주세요.");
+        SC_GameMgr._gameMgr.SetBaseText("무한으로 즐겨요.");
         SC_GameMgr._gameMgr.PrintClickTextBox("이동합니다.");
+        StartCoroutine("MoveTiles", 20);
     }
     public void FieldTilesInit()
     {

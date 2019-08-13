@@ -6,14 +6,16 @@ public class SC_SkillMgr : MonoBehaviour
 {
     public static SC_SkillMgr _skillMgr;
 
-    public List<TestSkill> testSkills;
+    public List<SBO_SkillBase> testSkills;
+
+    public SBO_SkillBase testSkill;
 
     private void Awake()
     {
         _skillMgr = this;
 
-        testSkills.AddRange(Resources.LoadAll<TestSkill>("player/skilldata"));
-        testSkills.Sort(delegate (TestSkill A, TestSkill B)
+        testSkills.AddRange(Resources.LoadAll<SBO_SkillBase>("player/skilldata"));
+        testSkills.Sort(delegate (SBO_SkillBase A, SBO_SkillBase B)
         {
             if (A.Index > B.Index) return 1;
             else if (A.Index < B.Index) return -1;

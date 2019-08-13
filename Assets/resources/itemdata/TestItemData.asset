@@ -8,12 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bae9ac1502effc4dae463dfa9936c9f, type: 3}
-  m_Name: TestSkillData0
+  m_Script: {fileID: 11500000, guid: 1a1b8d305a963d549aca181d47c825d4, type: 3}
+  m_Name: TestItemData
   m_EditorClassIdentifier: 
   Index: 0
-  SkillName: 
-  SkillText: 
-  Tooltip: "\uACF5\uACA9\uD569\uB2C8\uB2E4."
+  ItemName: "\uC2E4\uD5D8\uC544\uC774\uD15C1"
+  ItemText: "\uC2E4\uD5D8"
+  Tooltip: "\uC2E4\uD5D8\uC6A9"
   Image: {fileID: 21300000, guid: 3fa08794c5572884ab106390d2e78c7b, type: 3}
   Color: {r: 1, g: 1, b: 1, a: 1}

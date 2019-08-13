@@ -12,7 +12,6 @@ public class SC_Indicator : MonoBehaviour
     public SpriteRenderer indicatorRenderer;
     public BoxCollider2D indicatorCollider;
     public bool isPointerIn = false;
-    public bool isPointerClick = false;
 
     private void Awake()
     {
@@ -72,12 +71,9 @@ public class SC_Indicator : MonoBehaviour
     private void OnMouseExit()
     {
         isPointerIn = false;
-        if (IsCanInteract())
-            SC_GameMgr._gameMgr.PrintBaseBox();
     }
     private void OnMouseDown()
     {
-        isPointerClick = true;
         if (IsCanInteract())
         {
             SC_GameMgr._gameMgr.PrintTextBox(indicatorRenderer.sprite, indicatorText, indicatorRenderer.color);
@@ -85,8 +81,8 @@ public class SC_Indicator : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        isPointerClick = false;
         if (IsCanInteract() && indicatorEventName != null && isPointerIn)
             SC_GameMgr._gameMgr.EventExecute(indicatorEventName, _FLAG);
+        SC_GameMgr._gameMgr.PrintBaseBox();
     }
 }

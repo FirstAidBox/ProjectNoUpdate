@@ -1,15 +1,5 @@
 ﻿using UnityEngine;
 
-public class SBO_SkillBase : ScriptableObject
+public abstract class SBO_SkillBase : SBO_SlotObjectBase
 {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

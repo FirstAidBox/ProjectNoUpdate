@@ -12,8 +12,12 @@ public class SC_MenuBar : MonoBehaviour
     public bool isFieldMenu;
     public bool isInnMenu;
 
-    public GameObject nomalButtons;
-    public GameObject fieldButtons;
+    public GameObject buttons;
+    public GameObject statButton;
+    public GameObject skillButton;
+    public GameObject itemButton;
+    public GameObject fieldBSkillButton;
+    public GameObject battelBSkillButton;
 
     public GameObject statsWindow;
     public Text titleText;
@@ -22,6 +26,8 @@ public class SC_MenuBar : MonoBehaviour
     public const string title_itme = "소지품";
     public const string title_buy = "구매";
     public const string title_sell = "판매";
+    public const string title_fieldBS = "기본기술-탐험";
+    public const string title_battleBS = "기본기술-전투";
     public Image statsImage;
     public Text jobText;
     public const string jobHead = "직업: ";
@@ -37,23 +43,18 @@ public class SC_MenuBar : MonoBehaviour
     public const string moneyHead = "소지금: ";
 
     public GameObject skillWindow;
-    public GameObject skillContent;
-    public SC_SkillInMenu[] skillList;
 
     public GameObject fieldBSkillWindow;
 
     public GameObject battleBSkillWindow;
 
     public GameObject itemWindow;
-    public GameObject itemContent;
-    public GameObject[] itemList;
 
     public SC_PlayerMgr _playerMgr;
 
     private void Awake()
     {
         _playerMgr = GetComponent<SC_PlayerMgr>();
-        skillList = skillContent.GetComponentsInChildren<SC_SkillInMenu>();
     }
     public void PopupPlayerMenu()
     {
@@ -86,7 +87,35 @@ public class SC_MenuBar : MonoBehaviour
         fieldBSkillWindow.SetActive(false);
         battleBSkillWindow.SetActive(false);
         itemWindow.SetActive(false);
-        nomalButtons.SetActive(true);
-        fieldButtons.SetActive(false);
+        buttons.SetActive(true);
+        statButton.SetActive(true);
+        fieldBSkillButton.SetActive(false);
+        battelBSkillButton.SetActive(false);
+    }
+    public void OpenSkillWindow()
+    {
+        titleText.text = title_skill;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(true);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(false);
+        itemWindow.SetActive(false);
+        buttons.SetActive(true);
+        statButton.SetActive(true);
+        fieldBSkillButton.SetActive(false);
+        battelBSkillButton.SetActive(false);
+    }
+    public void OpenItemWindow()
+    {
+        titleText.text = title_itme;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(false);
+        itemWindow.SetActive(true);
+        buttons.SetActive(true);
+        statButton.SetActive(true);
+        fieldBSkillButton.SetActive(false);
+        battelBSkillButton.SetActive(false);
     }
 }

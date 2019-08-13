@@ -11,21 +11,4 @@ public class SC_PlayerIndi : SC_Indicator
         else
             return true;
     }
-    private void OnMouseEnter()
-    {
-        if (IsCanInteract())
-            SC_GameMgr._gameMgr.PrintTextBox(indicatorRenderer.sprite, indicatorText, indicatorRenderer.color);
-    }
-
-    private void OnMouseExit()
-    {
-        if (IsCanInteract())
-            SC_GameMgr._gameMgr.PrintBaseBox();
-    }
-
-    private void OnMouseDown()
-    {
-        if (IsCanInteract())
-            SC_GameMgr._gameMgr.EventExecute(indicatorEventName, _FLAG);
-    }
 }

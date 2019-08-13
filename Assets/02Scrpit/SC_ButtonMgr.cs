@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SC_ButtonMgr : MonoBehaviour
-    //인디케이터들을 제외한 UI 버튼들의 커서오버나 클릭시 실행되는 함수들을 모아놓은 스크립트
-    //SC_StringMgr에 있던 문자열들 중 버튼에 관련된 것들은 이곳에 옮겨짐
-    //finalAnswer버튼은 GameMgr에서 담당한다.
+//인디케이터들을 제외한 UI 버튼들의 커서오버나 클릭시 실행되는 함수들을 모아놓은 스크립트
+//SC_StringMgr에 있던 문자열들 중 버튼에 관련된 것들은 이곳에 옮겨짐
+//finalAnswer버튼은 GameMgr에서 담당한다.
 {
     public SC_StringMgr _stringMgr;
     public SC_ResourceMgr _resourceMgr;
@@ -33,47 +33,29 @@ public class SC_ButtonMgr : MonoBehaviour
         SC_GameMgr._gameMgr.trigger_Click = false;
     }
 
-    public void InnOverBuyButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_inn_buy);
-    }
-    public void InnOverSellButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_inn_sell);
-    }
-    public void InnOverExitButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_inn_exit);
-    }
-    public void InnClickExitButton()
-    {
-        SC_GameMgr._gameMgr.AnswerExitInn();
-    }
+    public void PointerUpPrintBase() { SC_GameMgr._gameMgr.PrintBaseBox(); }
 
-    public void PLMenuOverStatButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_plm_stat);
-    }
-    public void PLMenuClickStatButton()
-    {
-        _menuBar.OpenStatsWindow();
-    }
-    public void PLMenuOverSkillButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_plm_skill);
-    }
-    public void PLMenuOverItemButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_plm_item);
-    }
-    public void PLMenuOverExitButton()
-    {
-        SC_GameMgr._gameMgr.PrintTextBox(s_plm_exit);
-    }
-    public void PLMenuClickExitButton()
-    {
-        _menuBar.ClosePlayerMenu();
-    }
+    public void InnBuyPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_buy); }
+    public void InnBuyButtonClick() { }
+
+    public void InnSellPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_sell); }
+    public void InnSellButtonClick() { }
+
+    public void InnExitPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_exit); }
+    public void InnExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitInn(); }
+
+    public void PLMenuStatPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_stat); }
+    public void PLMenuStatClickButton() { _menuBar.OpenStatsWindow(); }
+
+    public void PLMenuSkillPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_skill); }
+    public void PLMenuSkillClickButton() { _menuBar.OpenSkillWindow(); }
+
+    public void PLMenuItemPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_item); }
+    public void PLMenuItemClickButton() { _menuBar.OpenItemWindow(); }
+
+    public void PLMenuExitPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_exit); }
+    public void PLMenuExitButtonClick() { _menuBar.ClosePlayerMenu(); }
+
     public void Test()
     {
         Debug.Log("Test!");
