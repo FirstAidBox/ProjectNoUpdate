@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KIND_ACTION { SKILL = 1, ITEM }
+public enum BATTLEPHASE { ITEM = 0, GUARD, ATTACK, SMASH, EXTRA }
 
 public class SC_FieldMgr : MonoBehaviour
     //필드(여관 밖 지역)에서 일어나는 일들을 담당.
@@ -19,27 +19,31 @@ public class SC_FieldMgr : MonoBehaviour
     public Vector2 backMove = new Vector2(-0.1f, 0f);
     public int moveCount = 0;
 
-    public struct ActionData
-    {
-        public KIND_ACTION _ACTION;
-        public int index;
-    }
-
     public GameObject actionBar;
+    public SpriteRenderer[] actionIcons;
     public bool isPopupFieldMenu = false;
     public GameObject selecter;
     public int actionIndex;
 
-    public ActionData[] playerFieldAction;
+    public SC_SlotBase[] playerFieldActionSlot;
 
-    public ActionData[] playerBattleAction;
-    public ActionData[] enemyBattleAction;
+    public bool isInBattle = false;
+    public SC_SlotBase[] playerBattleActionSlot;
+    public SC_SlotBase[] enemyBattleActionSlot;
+    public BATTLEPHASE currentBattlePhase;
+    public SC_SlotBase[] playerBattlePhase;
+    public SC_SlotBase[] enemyBattlePhase;
 
     private void Awake()
     {
         _fieldMgr = this;
         fieldBacks = fieldBackGroup.GetComponentsInChildren<SC_FieldBack>();
         DisableFieldTiles();
+        playerFieldActionSlot = new SC_SlotBase[3];
+        playerBattleActionSlot = new SC_SlotBase[3];
+        enemyBattleActionSlot = new SC_SlotBase[3];
+        playerBattlePhase = new SC_SlotBase[5];
+        enemyBattlePhase = new SC_SlotBase[5];
     }
 
     public void GetArea1Sprite()
@@ -86,8 +90,49 @@ public class SC_FieldMgr : MonoBehaviour
     }
     public void MoveSelecter(int input)
     {
+        if(!isPopupFieldMenu)
+        {
+            
+        }
         actionIndex = input;
         selecter.transform.localPosition = new Vector2(input, 0);
+    }
+    public void MoveSelecterOnly(int input)
+    {
+        actionIndex = input;
+        selecter.transform.localPosition = new Vector2(input, 0);
+    }
+    public void SelecterInit()
+    {
+        actionIndex = 0;
+        selecter.transform.localPosition = new Vector2(0, 0);
+    }
+    public void PlayerActionInput(SC_SlotBase inputSlot)
+    {
+        if (isInBattle)
+        {
+            if (playerBattleActionSlot[actionIndex] != null)
+                playerBattleActionSlot[actionIndex].OutByActionBar();
+            playerFieldActionSlot[actionIndex] = inputSlot;
+            actionIcons[actionIndex].sprite = inputSlot.icon.sprite;
+            actionIcons[actionIndex].color = inputSlot.icon.color;
+        }
+        else
+        {
+            if (playerFieldActionSlot[actionIndex] != null)
+                playerFieldActionSlot[actionIndex].OutByActionBar();
+            playerFieldActionSlot[actionIndex] = inputSlot;
+            actionIcons[actionIndex].sprite = inputSlot.icon.sprite;
+            actionIcons[actionIndex].color = inputSlot.icon.color;
+        }
+    }
+    public void IconReset()
+    {
+        if(isInBattle)
+        {
+            for (int i = 0; i < actionIcons.Length; i++)
+                actionIcons[i].sprite = playerBattleActionSlot[i].slotObject.Image;
+        }
     }
     IEnumerator MoveTiles(int moveRange)
     {

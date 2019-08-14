@@ -57,9 +57,11 @@ public class SC_Indicator : MonoBehaviour
         ResizeCollider(1f);
         indicatorRenderer.color = SC_GameMgr._gameMgr.baseColor;
     }
-    private bool IsCanInteract()
+    public virtual bool IsCanInteract()
     {
-        if (indicatorText == null || SC_GameMgr._gameMgr.isFade || SC_GameMgr._gameMgr.isPopupFABar || SC_GameMgr._gameMgr.isPlayingText)
+        if (indicatorText == null || SC_GameMgr._gameMgr.isFade 
+            || SC_GameMgr._gameMgr.isPopupFABar || SC_GameMgr._gameMgr.isPlayingText
+            || SC_GameMgr._gameMgr.isPlayingText)
             return false;
         else
             return true;
@@ -75,14 +77,13 @@ public class SC_Indicator : MonoBehaviour
     private void OnMouseDown()
     {
         if (IsCanInteract())
-        {
             SC_GameMgr._gameMgr.PrintTextBox(indicatorRenderer.sprite, indicatorText, indicatorRenderer.color);
-        }
     }
     private void OnMouseUp()
     {
         if (IsCanInteract() && indicatorEventName != null && isPointerIn)
             SC_GameMgr._gameMgr.EventExecute(indicatorEventName, _FLAG);
-        SC_GameMgr._gameMgr.PrintBaseBox();
+        if(IsCanInteract())
+            SC_GameMgr._gameMgr.PrintBaseBox();
     }
 }

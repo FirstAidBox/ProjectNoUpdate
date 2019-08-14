@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class TestSlot : MonoBehaviour
 {
-    public SBO_ItemBase item;
+    private SBO_SlotObject item;
     public Image icon;
     public Text text;
 
-    public void AddItem(SBO_ItemBase GetItem)
+    public void AddItem(SBO_SlotObject GetItem)
     {
         item = GetItem;
         icon.sprite = GetItem.Image;
@@ -22,7 +22,7 @@ public class TestSlot : MonoBehaviour
     }
     private void Start()
     {
-        AddItem(SC_ItemMgr._itemMgr.testItem[0]);
+        AddItem(SC_ItemMgr._itemMgr.ItemList[1]);
     }
     public void UseItem()
     {
@@ -30,5 +30,9 @@ public class TestSlot : MonoBehaviour
         {
             (item as I_CanUse).UseEffect();
         }
+    }
+    public void ClickItem()
+    {
+        Debug.Log("버튼누름");
     }
 }

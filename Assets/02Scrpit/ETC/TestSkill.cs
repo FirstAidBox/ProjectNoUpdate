@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TestSkillData", menuName = "CrateTestSkill")]
-public class TestSkill : SBO_SkillBase
+public class TestSkill : SBO_UseObject
 {
 }

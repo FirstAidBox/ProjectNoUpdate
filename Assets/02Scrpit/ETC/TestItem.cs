@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TestItemData", menuName = "MakeTestItem")]
-public class TestItem : SBO_ItemBase, I_CanUse
+public class TestItem : SBO_UseObject
 {
-    public void UseEffect()
+    public override void UseEffect()
     {
         Debug.Log("사용됨");
     }

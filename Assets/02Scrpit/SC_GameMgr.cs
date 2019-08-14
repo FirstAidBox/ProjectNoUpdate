@@ -64,9 +64,7 @@ public class SC_GameMgr : MonoBehaviour
     public bool isFadeOut = false;
 	public bool isFadeIn = false;
 
-    public SC_Indicator mainIndicator1;
-    public SC_Indicator mainIndicator2;
-    public SC_Indicator mainIndicator3;
+    public SC_Indicator[] mainIndicator;
 
     public SC_PlayerIndi playerIndicator;
     public Vector2 currentPlayerPos = new Vector2(-4f, 0f);
@@ -136,14 +134,14 @@ public class SC_GameMgr : MonoBehaviour
     }
     private IEnumerator _PrintClickTextBox(string inputText)
     {
+        OffButtons();
         isPlayingText = true;
-        PrintTextBox(inputText);
-        yield return delay2s;
         trigger_Click = true;
         PrintTextBox(inputText + clickString);
         yield return waitClick;
         isPlayingText = false;
         PrintBaseBox();
+        OnButtons();
     }
     public void PrintClickTextBox(string inputText)
     {
@@ -217,27 +215,23 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void OffMainIndicatorCollider()
     {
-        mainIndicator1.indicatorCollider.enabled = false;
-        mainIndicator2.indicatorCollider.enabled = false;
-        mainIndicator3.indicatorCollider.enabled = false;
+        for (int i = 0; i < mainIndicator.Length; i++)
+            mainIndicator[i].indicatorCollider.enabled = false;
     }
     public void OnMainIndicatorCollider()
     {
-        mainIndicator1.indicatorCollider.enabled = true;
-        mainIndicator2.indicatorCollider.enabled = true;
-        mainIndicator3.indicatorCollider.enabled = true;
+        for (int i = 0; i < mainIndicator.Length; i++)
+            mainIndicator[i].indicatorCollider.enabled = true;
     }
     public void OffMainIndicator()
     {
-        mainIndicator1.gameObject.SetActive(false);
-        mainIndicator2.gameObject.SetActive(false);
-        mainIndicator3.gameObject.SetActive(false);
+        for (int i = 0; i < mainIndicator.Length; i++)
+            mainIndicator[i].gameObject.SetActive(false);
     }
     public void OnMainIndicator()
     {
-        mainIndicator1.gameObject.SetActive(true);
-        mainIndicator2.gameObject.SetActive(true);
-        mainIndicator3.gameObject.SetActive(true);
+        for (int i = 0; i < mainIndicator.Length; i++)
+            mainIndicator[i].gameObject.SetActive(true);
     }
     /// <summary>
     /// 화면 중앙에 마지막으로 묻는 질문버튼 출력
@@ -355,9 +349,9 @@ public class SC_GameMgr : MonoBehaviour
         SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
-        mainIndicator1.IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, "AnswerWarriorPick", EVENT_FLAG.EVENT);
-        mainIndicator2.IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, "AnswerMagePick", EVENT_FLAG.EVENT);
-        mainIndicator3.IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, "AnswerRangerPick", EVENT_FLAG.EVENT);
+        mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, "AnswerWarriorPick", EVENT_FLAG.EVENT);
+        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, "AnswerMagePick", EVENT_FLAG.EVENT);
+        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, "AnswerRangerPick", EVENT_FLAG.EVENT);
     }
 
     public void AnswerWarriorPick()
@@ -473,15 +467,15 @@ public class SC_GameMgr : MonoBehaviour
     {
         if (isAreaClear[1])
         {
-            mainIndicator1.IndicatorMakeup(_resourceMgr.sp_48_Area1, "이미 우두머리를 물리친 지역입니다.");
-            mainIndicator1.indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);   
+            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, "이미 우두머리를 물리친 지역입니다.");
+            mainIndicator[0].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);   
         }
         else
         {
-            mainIndicator1.IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, "AnswerArea1", EVENT_FLAG.EVENT);
+            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, "AnswerArea1", EVENT_FLAG.EVENT);
         }
-        mainIndicator1.ResizeCollider(3f);
-        mainIndicator1.transform.position = new Vector2(-6f, 0f);
+        mainIndicator[0].ResizeCollider(3f);
+        mainIndicator[0].transform.position = new Vector2(-6f, 0f);
     }
     public void AnswerArea1()
     {
@@ -505,9 +499,9 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void IndiSetupArea2()
     {
-        mainIndicator2.IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, "AnswerArea2", EVENT_FLAG.EVENT);
-        mainIndicator2.ResizeCollider(3f);
-        mainIndicator2.transform.position = new Vector2(-1.5f, 0f);
+        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, "AnswerArea2", EVENT_FLAG.EVENT);
+        mainIndicator[1].ResizeCollider(3f);
+        mainIndicator[1].transform.position = new Vector2(-1.5f, 0f);
     }
     public void AnswerArea2()
     {
@@ -528,9 +522,9 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void IndiSetupArea3()
     {
-        mainIndicator3.IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, "AnswerArea3", EVENT_FLAG.EVENT);
-        mainIndicator3.ResizeCollider(3f);
-        mainIndicator3.transform.position = new Vector2(3f, 0f);
+        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, "AnswerArea3", EVENT_FLAG.EVENT);
+        mainIndicator[2].ResizeCollider(3f);
+        mainIndicator[2].transform.position = new Vector2(3f, 0f);
     }
     public void AnswerArea3()
     {
