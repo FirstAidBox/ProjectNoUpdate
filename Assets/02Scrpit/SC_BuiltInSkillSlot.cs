@@ -2,43 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_SkillSlot : SC_SlotBase
+public class SC_BuiltInSkillSlot : SC_SkillSlot
+    //기본스킬 슬롯. 일반스킬 슬롯과는 다르게 여러번 액션 슬롯에 넣을 수 있다.
 {
-    public override void SlotInit()
+    public override void SlotCanUse()
     {
-        slotObject = null;
-        gameObject.SetActive(false);
     }
-    public override void AddObject(SBO_SlotObject GetObject)
+    public override void SlotCannotUse()
     {
-        base.AddObject(GetObject);
-        gameObject.SetActive(true);
-        if (GetObject is I_Instant)
-            (GetObject as I_Instant).GetEffect();
-        SC_PlayerMgr._playerMgr.SkillCount++;
-    }
-    public override void RemoveObject()
-    {
-        if (slotObject != null)
-        {
-            SlotInit();
-            SC_PlayerMgr._playerMgr.SkillCount--;
-        }
-    }
-    public override void UseObject()
-    {
-        if (slotObject is I_CanUse)
-        {
-            (slotObject as I_CanUse).UseEffect();
-            this.SlotCanUse();
-        }
     }
     public override void ButtonClick()
     {
         if (slotObject is I_Instant)
             return;
-        else if (isStackInAction)
-            SC_GameMgr._gameMgr.PrintTextBox("이미 사용 예약이 되어있습니다.");
         else if (SC_FieldMgr._fieldMgr.isInBattle)
         {
             if (slotObject is I_BattleStack)

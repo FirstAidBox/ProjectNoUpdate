@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item_Potion", menuName = "SBO/Item/Potion", order = 1)]
-public class SBO_Potion : SBO_UseObject, I_FieldStack, I_BattleStack
+public class SBO_Potion : SBO_UseObject, I_FieldStack, I_BattleStack, I_UseInInn
 {
     public int healvalve;
 

@@ -22,7 +22,7 @@ public class TestSlot : MonoBehaviour
     }
     private void Start()
     {
-        AddItem(SC_ItemMgr._itemMgr.ItemList[1]);
+        AddItem(SC_SBODataMgr._SBODataMgr.itemData[1]);
     }
     public void UseItem()
     {

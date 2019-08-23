@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public enum EVENT_FLAG { EVENT=1, ITEM, ENEMY, MENU };
-public enum CURRENT_PAGE { START=1, CHARSELECT, INN, AREASELECT, FIELD };
+public enum SCENEINFO { START=1, CHARSELECT, INN, AREASELECT, FIELD };
 
 public static class MonoExtension
 {
@@ -31,8 +30,9 @@ public class SC_GameMgr : MonoBehaviour
     public Sprite nullSprite; //투명한 스프라이트
     public Color baseColor = Color.white;
 
-    [SerializeField] private Button[] buttons;
-    [SerializeField] private EventTrigger[] eventTriggers;
+    public Button[] buttons;
+    public EventTrigger[] eventTriggers;
+    public GameObject offWhileEvent;
 
     public bool isEventPlaying = false;
     public bool isPlayingText = false;
@@ -51,13 +51,11 @@ public class SC_GameMgr : MonoBehaviour
     public SC_ItemMgr _itemMgr;
     public SC_EnemyMgr _enemyMgr;
     public SC_StringMgr _stringMgr;
-    public SC_MenuBar _menuBar;
 
     public GameObject finalAnswerBar;
     public bool isPopupFABar = false;
     public bool trigger_FA_Yes = false;
-    public string finalAnswerName;
-    public EVENT_FLAG _FLAG_finalAnswer;
+    public Action finalAnswerAction;
 
     public Image fadeImage;
 	public bool isFade = false;
@@ -87,7 +85,6 @@ public class SC_GameMgr : MonoBehaviour
         _itemMgr = GetComponent<SC_ItemMgr>();
         _enemyMgr = GetComponent<SC_EnemyMgr>();
         _stringMgr = GetComponent<SC_StringMgr>();
-        _menuBar = GetComponent<SC_MenuBar>();
 
         buttons = FindObjectsOfType<Button>();
         eventTriggers = new EventTrigger[buttons.Length];
@@ -120,12 +117,23 @@ public class SC_GameMgr : MonoBehaviour
         mainSprite.sprite = nullSprite;
         mainSprite.color = baseColor;
     }
+    /// <summary>
+    /// 하단 텍스트 박스에 문자열 표시.
+    /// </summary>
+    /// <param name="inputSprite">같이 표시할 이미지</param>
+    /// <param name="inputText">표시할 문자열</param>
     public void PrintTextBox(Sprite inputSprite, string inputText)
     {
         mainText.text = inputText;
         mainSprite.sprite = inputSprite;
         mainSprite.color = baseColor;
     }
+    /// <summary>
+    /// 하단 텍스트 박스에 문자열 표시.
+    /// </summary>
+    /// <param name="inputSprite">같이 표시할 이미지</param>
+    /// <param name="inputText">표시할 문자열</param>
+    /// <param name="inputColor">이미지 색상</param>
     public void PrintTextBox(Sprite inputSprite ,string inputText, Color inputColor)
     {
         mainText.text = inputText;
@@ -135,18 +143,31 @@ public class SC_GameMgr : MonoBehaviour
     private IEnumerator _PrintClickTextBox(string inputText)
     {
         OffButtons();
+        offWhileEvent.SetActive(false);
         isPlayingText = true;
         trigger_Click = true;
+        PrintTextBox(inputText);
+        yield return waitEvent;
         PrintTextBox(inputText + clickString);
         yield return waitClick;
         isPlayingText = false;
         PrintBaseBox();
         OnButtons();
+        offWhileEvent.SetActive(true);
     }
+    /// <summary>
+    /// 하단 텍스트 박스를 클릭하기 전까지 문자열을 출력시켜준다. 활성중엔 텍스트 박스를 제외한 다른 게임오브젝트들과 상호작용 불가능.(시스템 버튼은 예외)
+    /// waitEvent와 연계해서 특정 이벤트를 보기 전까진 텍스트박스 클릭 비활성화 가능.
+    /// </summary>
+    /// <param name="inputText">표시할 문자열</param>
     public void PrintClickTextBox(string inputText)
     {
         StartCoroutine("_PrintClickTextBox", inputText);
     }
+    /// <summary>
+    /// PrintBaseBox 함수 호출 시 출력될 문자열을 설정한다.
+    /// </summary>
+    /// <param name="inputText">출력될 문자열</param>
     public void SetBaseText(string inputText)
     {
         baseSprite = nullSprite;
@@ -166,6 +187,7 @@ public class SC_GameMgr : MonoBehaviour
         mainSprite.sprite = baseSprite;
         mainSprite.color = baseColor;
     }
+    /*구버전 이벤트 처리기. Action 사용버전이 문제 없으면 삭제할 것
     /// <summary>
     /// 이벤트처리기. 입력된 프로퍼티에 따라 이벤트(함수)를 실행시킵니다.
     /// </summary>
@@ -185,7 +207,7 @@ public class SC_GameMgr : MonoBehaviour
                 _enemyMgr.Invoke(inputEventName, 0f);
                 break;
             case EVENT_FLAG.MENU:
-                _menuBar.Invoke(inputEventName, 0f);
+                SC_MenuBar._menuBar.Invoke(inputEventName, 0f);
                 break;
         }
     }
@@ -209,10 +231,10 @@ public class SC_GameMgr : MonoBehaviour
                 _enemyMgr.Invoke(inputEventName, delayTime);
                 break;
             case EVENT_FLAG.MENU:
-                _menuBar.Invoke(inputEventName, delayTime);
+                SC_MenuBar._menuBar.Invoke(inputEventName, delayTime);
                 break;
         }
-    }
+    }*/
     public void OffMainIndicatorCollider()
     {
         for (int i = 0; i < mainIndicator.Length; i++)
@@ -233,36 +255,19 @@ public class SC_GameMgr : MonoBehaviour
         for (int i = 0; i < mainIndicator.Length; i++)
             mainIndicator[i].gameObject.SetActive(true);
     }
-    /// <summary>
-    /// 화면 중앙에 마지막으로 묻는 질문버튼 출력
-    /// </summary>
-    /// <param name="eventName">Yes 버튼을 누르면 실행될 이벤트(함수)이름</param>
-    /// <param name="inputText">팝업 되고있는 동안 출력될 텍스트</param>
-    /// <param name="inputFLAG">실행될 이벤트의 종류</param>
-    public void PopupFinalAnswerBar(string eventName, string inputText, EVENT_FLAG inputFLAG)
+    public void PopupFinalAnswerBar(Action eventName, string inputText)
     {
         finalAnswerBar.SetActive(true);
         trigger_FA_Yes = false;
         isPopupFABar = true;
         PrintTextBox(inputText);
-        finalAnswerName = eventName;
-        _FLAG_finalAnswer = inputFLAG;
-        OffButtons();
-    }
-    public void PopupFinalAnswerBar(Action eventName, string inputText, EVENT_FLAG inputFLAG)
-    {
-        finalAnswerBar.SetActive(true);
-        trigger_FA_Yes = false;
-        isPopupFABar = true;
-        PrintTextBox(inputText);
-        finalAnswerName = eventName.Method.Name;
-        _FLAG_finalAnswer = inputFLAG;
+        finalAnswerAction = eventName;
         OffButtons();
     }
     public void YesClickFinalAnswer()
     {
         trigger_FA_Yes = true;
-        EventExecute(finalAnswerName, _FLAG_finalAnswer);
+        finalAnswerAction();
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
         OnButtons();
@@ -274,7 +279,7 @@ public class SC_GameMgr : MonoBehaviour
         isPopupFABar = false;
         OnButtons();
     }
-    public IEnumerator PlayFadeOut()
+    private IEnumerator PlayFadeOut()
     {
 		isFade = true;
 		isFadeOut = true;
@@ -288,7 +293,7 @@ public class SC_GameMgr : MonoBehaviour
         }
 		isFadeOut = false;
     }
-    public IEnumerator PlayFadeIn()
+    private IEnumerator PlayFadeIn()
     {
         yield return waitFadeOut;
 		isFadeIn = true;
@@ -303,20 +308,28 @@ public class SC_GameMgr : MonoBehaviour
 		isFadeIn = false;
 		isFade = false;
     }
-    public IEnumerator _WaitFadeOut(string name)
+    private IEnumerator _WaitFadeOut(string name)
     {
         yield return waitFadeOut;
         Invoke(name, 0f);
     }
+    /// <summary>
+    /// 해당 함수(메소드)를 페이드 아웃이 완전히 완료 된 이후에 실행합니다.
+    /// </summary>
+    /// <param name="name">실행시킬 함수 이름</param>
     public void InvokeWaitFadeOut(string name)
     {
 		StartCoroutine("_WaitFadeOut", name);
     }
-	public IEnumerator _WaitFadeOut (Action method)
+	private IEnumerator _WaitFadeOut (Action method)
 	{
 		yield return waitFadeOut;
-		method.Invoke ();
+        method();
 	}
+    /// <summary>
+    /// 해당 함수(메소드)를 페이드 아웃이 완전히 완료 된 이후에 실행합니다.
+    /// </summary>
+    /// <param name="method">실행시킬 함수(메소드)</param>
 	public void InvokeWaitFadeOut(Action method)
 	{
 		StartCoroutine ("_WaitFadeOut", method);
@@ -342,25 +355,32 @@ public class SC_GameMgr : MonoBehaviour
 		StartCoroutine(PlayFadeOut());
 		StartCoroutine(PlayFadeIn());
     }
+    public void FadeOut()
+    {
+        StartCoroutine(PlayFadeOut());
+    }
+    public void FadeIn()
+    {
+        StartCoroutine(PlayFadeIn());
+    }
     public void SelectChar()
     {
         innMenu.SetActive(false);
-        _menuBar.playerMenuBar.SetActive(false);
+        SC_MenuBar._menuBar.playerMenuBar.SetActive(false);
         SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
+        SC_PlayerMgr._playerMgr.PlayerInfoInit();
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
-        mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, "AnswerWarriorPick", EVENT_FLAG.EVENT);
-        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, "AnswerMagePick", EVENT_FLAG.EVENT);
-        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, "AnswerRangerPick", EVENT_FLAG.EVENT);
+        mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, AnswerWarriorPick);
+        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, AnswerMagePick);
+        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, AnswerRangerPick);
     }
 
     public void AnswerWarriorPick()
     {
         if (!trigger_FA_Yes)
         {
-            string eventText = "정말 전사를 선택하시겠습니까?";
-            EVENT_FLAG _FLAG = EVENT_FLAG.EVENT;
-            PopupFinalAnswerBar(AnswerWarriorPick, eventText, _FLAG);
+            PopupFinalAnswerBar(AnswerWarriorPick, "정말 전사를 선택하시겠습니까?");
         }
         else
         {
@@ -373,9 +393,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         if (!trigger_FA_Yes)
         {
-            string eventText = "정말 마법사를 선택하시겠습니까?";
-            EVENT_FLAG _FLAG = EVENT_FLAG.EVENT;
-            PopupFinalAnswerBar(AnswerMagePick, eventText, _FLAG);
+            PopupFinalAnswerBar(AnswerMagePick, "정말 마법사를 선택하시겠습니까?");
         }
         else
         {
@@ -388,9 +406,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         if (!trigger_FA_Yes)
         {
-            string eventText = "정말 순찰자를 선택하시겠습니까?";
-            EVENT_FLAG _FLAG = EVENT_FLAG.EVENT;
-            PopupFinalAnswerBar(AnswerRangerPick, eventText, _FLAG);
+            PopupFinalAnswerBar(AnswerRangerPick, "정말 순찰자를 선택하시겠습니까?");
         }
         else
         {
@@ -407,7 +423,7 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void CharaMake()
     {
-        playerIndicator.IndicatorMakeup(_playerMgr.Image, "캐릭터의 정보를 확인합니다.", "PopupPlayerMenu", EVENT_FLAG.MENU);
+        playerIndicator.IndicatorMakeup(_playerMgr.Image, "캐릭터의 정보를 확인합니다.", SC_MenuBar._menuBar.PopupPlayerMenu);
         playerIndicator.gameObject.transform.position = currentPlayerPos;
     }
     public void VisiblePlayer()
@@ -441,14 +457,14 @@ public class SC_GameMgr : MonoBehaviour
     public void AnswerExitInn()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerExitInn, _stringMgr.st_answerInnExit, EVENT_FLAG.EVENT);
+            PopupFinalAnswerBar(AnswerExitInn, _stringMgr.st_answerInnExit);
         else
         {
             PrintTextBox(_stringMgr.st_innExit);
             FadeOutAndIn();
 			InvokeWaitFadeOut(InvisibleInn);
-			InvokeWaitFadeOut(_menuBar.ClosePlayerMenu);
-			InvokeWaitFadeOut("SelectArea");
+			InvokeWaitFadeOut(SC_MenuBar._menuBar.ClosePlayerMenu);
+            InvokeWaitFadeOut("SelectArea");
             isInInn = false;
             trigger_FA_Yes = false;
         }
@@ -472,7 +488,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, "AnswerArea1", EVENT_FLAG.EVENT);
+            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, AnswerArea1);
         }
         mainIndicator[0].ResizeCollider(3f);
         mainIndicator[0].transform.position = new Vector2(-6f, 0f);
@@ -480,7 +496,7 @@ public class SC_GameMgr : MonoBehaviour
     public void AnswerArea1()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea1, "정말 지역1로 떠납니까?", EVENT_FLAG.EVENT);
+            PopupFinalAnswerBar(AnswerArea1, "정말 지역1로 떠납니까?");
         else
         {
             GoToArea1();
@@ -499,14 +515,14 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void IndiSetupArea2()
     {
-        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, "AnswerArea2", EVENT_FLAG.EVENT);
+        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, AnswerArea2);
         mainIndicator[1].ResizeCollider(3f);
         mainIndicator[1].transform.position = new Vector2(-1.5f, 0f);
     }
     public void AnswerArea2()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea2, "정말 지역2로 떠납니까?", EVENT_FLAG.EVENT);
+            PopupFinalAnswerBar(AnswerArea2, "정말 지역2로 떠납니까?");
         else
         {
             GoToArea2();
@@ -522,14 +538,14 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void IndiSetupArea3()
     {
-        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, "AnswerArea3", EVENT_FLAG.EVENT);
+        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, AnswerArea3);
         mainIndicator[2].ResizeCollider(3f);
         mainIndicator[2].transform.position = new Vector2(3f, 0f);
     }
     public void AnswerArea3()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea3, "정말 지역3로 떠납니까?", EVENT_FLAG.EVENT);
+            PopupFinalAnswerBar(AnswerArea3, "정말 지역3로 떠납니까?");
         else
         {
             GoToArea3();

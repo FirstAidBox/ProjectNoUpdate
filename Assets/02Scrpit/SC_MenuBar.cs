@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum MENUPAGE { STAT=1, SKILL, ITEM, BF_SKILL, BB_SKILL, BUY, SELL };
+
 public class SC_MenuBar : MonoBehaviour
     //메뉴바 관리. 메뉴바에 표시되는 내용들을 담당
 {
+    public static SC_MenuBar _menuBar;
     public GameObject playerMenuBar;
 
     public bool isNomalMenu;
     public bool isFieldMenu;
     public bool isInnMenu;
+
+    public MENUPAGE CurrentPage;
 
     public GameObject buttons;
     public GameObject statButton;
@@ -50,11 +55,9 @@ public class SC_MenuBar : MonoBehaviour
 
     public GameObject itemWindow;
 
-    public SC_PlayerMgr _playerMgr;
-
     private void Awake()
     {
-        _playerMgr = GetComponent<SC_PlayerMgr>();
+        _menuBar = this;
     }
     public void PopupPlayerMenu()
     {
@@ -62,6 +65,7 @@ public class SC_MenuBar : MonoBehaviour
         SC_GameMgr._gameMgr.isPopupPlayerBar = true;
         playerMenuBar.SetActive(true);
         OpenStatsWindow();
+        CurrentPage = MENUPAGE.STAT;
     }
     public void ClosePlayerMenu()
     {
@@ -70,13 +74,13 @@ public class SC_MenuBar : MonoBehaviour
     }
     public void RefreshStat()
     {
-        statsImage.sprite = _playerMgr.Image;
-        jobText.text = jobHead + _playerMgr.Job;
-        hpText.text = hpHead + _playerMgr.CurrentHP + "/" + _playerMgr.MaxHP;
-        atkText.text = atkHead + _playerMgr.ATK;
-        defText.text = defHead + _playerMgr.DEF;
-        spdText.text = spdHead + _playerMgr.SPD;
-        moneyText.text = moneyHead + _playerMgr.Money;
+        statsImage.sprite = SC_PlayerMgr._playerMgr.Image;
+        jobText.text = jobHead + SC_PlayerMgr._playerMgr.Job;
+        hpText.text = hpHead + SC_PlayerMgr._playerMgr.CurrentHP + "/" + SC_PlayerMgr._playerMgr.MaxHP;
+        atkText.text = atkHead + SC_PlayerMgr._playerMgr.ATK;
+        defText.text = defHead + SC_PlayerMgr._playerMgr.DEF;
+        spdText.text = spdHead + SC_PlayerMgr._playerMgr.SPD;
+        moneyText.text = moneyHead + SC_PlayerMgr._playerMgr.Money;
     }
     public void OpenStatsWindow()
     {
@@ -91,6 +95,7 @@ public class SC_MenuBar : MonoBehaviour
         statButton.SetActive(true);
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(false);
+        CurrentPage = MENUPAGE.STAT;
     }
     public void OpenSkillWindow()
     {
@@ -104,6 +109,7 @@ public class SC_MenuBar : MonoBehaviour
         statButton.SetActive(true);
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(false);
+        CurrentPage = MENUPAGE.SKILL;
     }
     public void OpenItemWindow()
     {
@@ -117,5 +123,6 @@ public class SC_MenuBar : MonoBehaviour
         statButton.SetActive(true);
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(false);
+        CurrentPage = MENUPAGE.ITEM;
     }
 }

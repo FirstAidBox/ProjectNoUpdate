@@ -11,6 +11,9 @@ public abstract class SC_SlotBase : MonoBehaviour
     public Text text;
     public Image mask;
 
+    public virtual void SlotInit()
+    {
+    }
     public virtual void AddObject(SBO_SlotObject GetObject)
     {
         slotObject = GetObject;
@@ -21,10 +24,18 @@ public abstract class SC_SlotBase : MonoBehaviour
     public virtual void RemoveObject()
     {
     }
-    public virtual void OutByActionBar()
+    /// <summary>
+    /// isStackInAction 을 false 시켜 사용가능하게 만듭니다.
+    /// </summary>
+    public virtual void SlotCanUse()
     {
         isStackInAction = false;
         mask.color = new Color(0, 0, 0, 0);
+    }
+    public virtual void SlotCannotUse()
+    {
+        isStackInAction = true;
+        mask.color = new Color(0, 0, 0, 0.4f);
     }
     public virtual void UseObject()
     {

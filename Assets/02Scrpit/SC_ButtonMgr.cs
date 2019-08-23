@@ -8,7 +8,6 @@ public class SC_ButtonMgr : MonoBehaviour
 //finalAnswer버튼은 GameMgr에서 담당한다.
 {
     public SC_StringMgr _stringMgr;
-    public SC_ResourceMgr _resourceMgr;
     public SC_MenuBar _menuBar;
 
     public readonly string s_inn_buy = "돈으로 물건을 구매합니다.(미구현)";
@@ -22,7 +21,6 @@ public class SC_ButtonMgr : MonoBehaviour
     private void Awake()
     {
         _stringMgr = GetComponent<SC_StringMgr>();
-        _resourceMgr = GetComponent<SC_ResourceMgr>();
         _menuBar = GetComponent<SC_MenuBar>();
     }
 

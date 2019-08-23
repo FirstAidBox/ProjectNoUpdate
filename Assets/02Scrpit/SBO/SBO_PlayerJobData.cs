@@ -9,4 +9,5 @@ public class SBO_PlayerJobData : ScriptableObject
     public int atk;
     public int def;
     public int spd;
+    public int[] defaultSkillIndex;
 }
