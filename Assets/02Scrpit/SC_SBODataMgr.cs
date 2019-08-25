@@ -5,11 +5,10 @@ using UnityEngine;
 public class SC_SBODataMgr : MonoBehaviour
 //SBO데이터들을 불러옵니다.
 {
-	public static SC_SBODataMgr _SBODataMgr;
+    public static SC_SBODataMgr _SBODataMgr;
 
-	public List<SBO_SlotObject> itemData;
+    public List<SBO_SlotObject> itemData;
     public List<SBO_SlotObject> playerSkillData;
-    public List<SBO_SlotObject> builtInSkillData;
 
 	public List<SBO_EnemyData> area1EnemyData;
 	public List<SBO_EnemyData> area2EnemyData;
@@ -24,8 +23,6 @@ public class SC_SBODataMgr : MonoBehaviour
 		SortByIndex (itemData);
         playerSkillData.AddRange(Resources.LoadAll<SBO_SlotObject>("player/skilldata"));
         SortByIndex(playerSkillData);
-        builtInSkillData.AddRange(Resources.LoadAll<SBO_SlotObject>("player/builtinskill"));
-        SortByIndex(builtInSkillData);
 
         area1EnemyData.AddRange(Resources.LoadAll<SBO_EnemyData>("enemy/statdata/area1"));
         SortByIndex(area1EnemyData);

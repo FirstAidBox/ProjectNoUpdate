@@ -9,7 +9,7 @@ public class SC_ActionSelButton : MonoBehaviour
     {
         if (SC_GameMgr._gameMgr.isFade
             || SC_GameMgr._gameMgr.isPopupFABar || SC_GameMgr._gameMgr.isPlayingText
-            || SC_GameMgr._gameMgr.isPlayingText || SC_FieldMgr._fieldMgr.isPlaying)
+            || SC_GameMgr._gameMgr.isPlayingText)
             return false;
         else
             return true;

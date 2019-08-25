@@ -1,0 +1,358 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1102736923088810}
+  m_IsPrefabParent: 1
+--- !u!1 &1102736923088810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4142271429695270}
+  - component: {fileID: 114379241924860024}
+  - component: {fileID: 114502569257645512}
+  - component: {fileID: 114715360205690076}
+  - component: {fileID: 114238948942378822}
+  - component: {fileID: 114726164460016370}
+  - component: {fileID: 114122957846887998}
+  - component: {fileID: 114952304329116516}
+  - component: {fileID: 114079950232520366}
+  - component: {fileID: 114877447077616518}
+  - component: {fileID: 114063639825188712}
+  - component: {fileID: 114600890905339780}
+  - component: {fileID: 114871165471577568}
+  m_Layer: 0
+  m_Name: GameMgr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4142271429695270
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114063639825188712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f7a5f686b257d4b817cdc821e90322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldBackGroup: {fileID: 0}
+  fieldBacks: []
+  topSprites: []
+  midSprites: []
+  bottomSprites: []
+  moveCount: 0
+  actionBar: {fileID: 0}
+  actionIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isPopupFieldMenu: 0
+  selecter: {fileID: 0}
+  executeButton: {fileID: 0}
+  actionIndex: 0
+  actionCounter: 0
+  playerFieldActionSlot: []
+  CurrentTurn: 0
+  TotalTurn: 0
+  FieldActionRemember: 0
+  isInBattle: 0
+  playerBattleActionSlot: []
+  enemyBattleActionSlot: []
+  currentBattlePhase: 0
+  playerBattlePhase: []
+  enemyBattlePhase: []
+--- !u!114 &114079950232520366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4008caf888ab747950a9e2731a7254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMenuBar: {fileID: 0}
+  isPopupPlayerBar: 0
+  CurrentPage: 0
+  buttons: {fileID: 0}
+  statButton: {fileID: 0}
+  skillButton: {fileID: 0}
+  itemButton: {fileID: 0}
+  fieldBSkillButton: {fileID: 0}
+  battelBSkillButton: {fileID: 0}
+  statsWindow: {fileID: 0}
+  titleText: {fileID: 0}
+  statsImage: {fileID: 0}
+  jobText: {fileID: 0}
+  hpText: {fileID: 0}
+  atkText: {fileID: 0}
+  defText: {fileID: 0}
+  spdText: {fileID: 0}
+  moneyText: {fileID: 0}
+  skillWindow: {fileID: 0}
+  fieldBSkillWindow: {fileID: 0}
+  battleBSkillWindow: {fileID: 0}
+  itemWindow: {fileID: 0}
+  innItemWindow: {fileID: 0}
+  moneyIndi: {fileID: 0}
+  moneyIndiText: {fileID: 0}
+--- !u!114 &114122957846887998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e0a01e5da5c940aa4443a24ce874f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isArea1Clear: 0
+  isArea2Clear: 0
+  isArea3Clear: 0
+  KIND: 0
+  Name: 
+  Image: {fileID: 0}
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  MaxHP: 0
+  CurrentHP: 0
+  ATK: 0
+  DEF: 0
+  SPD: 0
+  SkillIndex: 
+  SkillCount: 0
+  EnemyIndicator: {fileID: 0}
+  InInnPos: {x: 2.5, y: 0.5}
+  FieldStartPos: {x: 7.5, y: 0.5}
+  enemyData: []
+  MaxEnemyCount: 0
+  AddStatValue: 0
+--- !u!114 &114238948942378822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1339d6fcac0254ba4ff5632fe8ea84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114379241924860024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffccb6283798cf47923ce6aa42e60d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainTextBar: {fileID: 0}
+  mainText: {fileID: 0}
+  mainSprite: {fileID: 0}
+  baseText: 
+  baseSprite: {fileID: 0}
+  nullSprite: {fileID: 21300000, guid: 9f53b60643105424c832bfa79f486459, type: 3}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  buttons: []
+  eventTriggers: []
+  offWhileEvent: {fileID: 0}
+  systemButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isEventPlaying: 0
+  isPlayingText: 0
+  trigger_Click: 0
+  _resourceMgr: {fileID: 0}
+  _stringMgr: {fileID: 0}
+  finalAnswerBar: {fileID: 0}
+  isPopupFABar: 0
+  trigger_FA_Yes: 0
+  fadeImage: {fileID: 0}
+  isFade: 0
+  isFadeOut: 0
+  isFadeIn: 0
+  isPause: 0
+  mainIndicator:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyIndicator: {fileID: 0}
+  areaNum: 0
+  isAreaClear: 
+  inn: {fileID: 0}
+  innMenu: {fileID: 0}
+  innMasterPos: {x: 2.5, y: 0.5}
+  isRest: 0
+--- !u!114 &114502569257645512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253061f370e84584f83d2fa2d38b1f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114600890905339780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef67edd21a657d4bbdde1cb00619704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: []
+  playerSkillData: []
+  area1EnemyData: []
+  area2EnemyData: []
+  area3EnemyData: []
+  enemySkillData: []
+--- !u!114 &114715360205690076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24937aab6b69ad4db39c2579f9d2e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tempSprite: {fileID: 0}
+  sp_Null: {fileID: 21300000, guid: 05e9cd5569648364586d78c79d173bf7, type: 3}
+  sp_Warrior: {fileID: 21300000, guid: 50e065af9c07c3040846d2246e299b5d, type: 3}
+  sp_Mage: {fileID: 21300000, guid: 57686e0fd7525804f96fbf4ea8c4e51c, type: 3}
+  sp_Ranger: {fileID: 21300000, guid: 11c0fd4797780aa4ca4942285aba8518, type: 3}
+  sp_bg_Tavern: {fileID: 0}
+  sp_npc_Mr: {fileID: 21300000, guid: fe491f7fff3a2eb4bb494b4ab3ca815c, type: 3}
+  sp_48_Area1: {fileID: 21300000, guid: 5b04fd5d84a86d74596d7eb4e4671fde, type: 3}
+  sp_48_Area2: {fileID: 21300000, guid: 1d0abb0af16154d47af8468e3ef1ad23, type: 3}
+  sp_48_Area3: {fileID: 21300000, guid: 580bb7c40de75ed4d851401397347174, type: 3}
+  sp_npc_Monster1: {fileID: 21300000, guid: ddc520ab355a493418b582bf1fe87f62, type: 3}
+  sp_npc_Monster2: {fileID: 21300000, guid: 71e19036910bda0438b1ff3eda1667ad, type: 3}
+  sp_npc_Monster3: {fileID: 21300000, guid: b7079b1e632e00241a54594ad5da5ded, type: 3}
+  sp_npc_Monster4: {fileID: 21300000, guid: ff74de060f85b3c408972b170f6dcf17, type: 3}
+  sp_npc_MonsterBoss: {fileID: 21300000, guid: 28046a01b36207a4387444f0fe4beb1f, type: 3}
+  sp_sk_Attack: {fileID: 21300000, guid: 73c12e6469fc1cb4192e18c6cc2933f0, type: 3}
+  sp_sk_Gurad: {fileID: 21300000, guid: 53b7658b66c35de4d95316e2e901d163, type: 3}
+  sp_sk_Smash: {fileID: 21300000, guid: b0d3053a6a37a674e8f1c7da0b23f770, type: 3}
+--- !u!114 &114726164460016370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12aceb334801dd14f86cb4ead6f4433f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Job: 
+  Image: {fileID: 0}
+  Level: 1
+  MaxHP: 0
+  CurrentHP: 0
+  ATK: 0
+  DEF: 0
+  SPD: 0
+  Money: 0
+  HaveSkillIndex: 
+  TotalSkillNum: 0
+  IsHide: 0
+  IsDash: 0
+  IsGuard: 0
+  IsDown: 0
+  SightRange: 0
+  ProphecyRange: 0
+  playerIndicator: {fileID: 0}
+  currentPlayerPos: {x: -2.5, y: 0.5}
+  SkillContent: {fileID: 0}
+  SkillSlots: []
+  SkillCount: 0
+  ItemContent: {fileID: 0}
+  ItemSlots: []
+  ItemCount: 0
+  InnContent: {fileID: 0}
+  InnSlots: []
+--- !u!114 &114871165471577568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793bebf28c9b0f4479ffa31f5125dbdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indiTr: {fileID: 0}
+  camTr: {fileID: 0}
+  camOriPos: {x: 0, y: 0, z: 0}
+  spriteRen: {fileID: 0}
+  playerPos: {x: -4, y: 0}
+  isEvent: 0
+  e_Coin: {fileID: 21300000, guid: 8fea7a118c8460e43927669e69625f1b, type: 3}
+  e_find: {fileID: 21300000, guid: ebb598832bc944445b7738cdb239d464, type: 3}
+  e_simpleHit: {fileID: 21300000, guid: 99e7c983019edad40a59d04bfc514f93, type: 3}
+--- !u!114 &114877447077616518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d49257dc84a774c8541c17b36a66e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testSkills: []
+  enemySkills: []
+  testSkill: {fileID: 0}
+--- !u!114 &114952304329116516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102736923088810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b8010da55e48141a89c8fbc59a8467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stringMgr: {fileID: 0}

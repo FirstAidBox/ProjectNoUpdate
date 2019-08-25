@@ -18,5 +18,5 @@ MonoBehaviour:
   Tooltip: 
   Image: {fileID: 21300000, guid: 113db88b91c64dd438b086082d630bca, type: 3}
   Color: {r: 1, g: 0, b: 0, a: 1}
-  Price: 100
+  Price: 5
   healvalve: 3

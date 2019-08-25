@@ -15,8 +15,8 @@ public class SC_FieldMgr : MonoBehaviour
     public Sprite[] midSprites;
     public Sprite[] bottomSprites;
 
-    public Vector2 frontPoint = new Vector2(16f, 0f);
-    public Vector2 backMove = new Vector2(-0.1f, 0f);
+    private Vector2 frontPoint = new Vector2(16f, 0f);
+    private Vector2 backMove = new Vector2(-0.1f, 0f);
     public int moveCount = 0;
 
     public GameObject actionBar;
@@ -27,9 +27,9 @@ public class SC_FieldMgr : MonoBehaviour
     public int actionIndex;
     public int actionCounter = 0;
 
-    public bool isPlaying;
-
     public SC_SlotBase[] playerFieldActionSlot;
+    public int CurrentTurn;
+    public int TotalTurn;
     public int FieldActionRemember;
 
     public bool isInBattle = false;
@@ -62,13 +62,6 @@ public class SC_FieldMgr : MonoBehaviour
     {
         return inputArray[Random.Range(0, inputArray.Length)];
     }
-
-    public void Test()
-    {
-        EnableFieldTiles();
-        FieldTilesInit();
-        StartCoroutine("MoveTiles", 2);
-    }
     public void Execute()
     {
         StartCoroutine(_execute());
@@ -76,23 +69,32 @@ public class SC_FieldMgr : MonoBehaviour
     IEnumerator _execute()
     {
         SC_MenuBar._menuBar.ClosePlayerMenu();
-        for (int i = 0; i < 3; i++)
+        for (; CurrentTurn < 3; CurrentTurn++)
         {
-            MoveSelecterOnly(i);
-            StartCoroutine("MoveTiles", 1);
+            TotalTurn++;
+            SC_PlayerMgr._playerMgr.TurnInit();
+            SC_EnemyMgr._enemyMgr.SetPosition();
+            SC_EnemyMgr._enemyMgr.InputEnemyData(TotalTurn);
+            MoveSelecterOnly(CurrentTurn);
+            MoveTiles(1);
             SC_GameMgr._gameMgr.PrintClickTextBox("이동합니다");
             yield return SC_GameMgr._gameMgr.waitText;
-            playerFieldActionSlot[i].UseObject();
+            playerFieldActionSlot[CurrentTurn].UseObject();
+            yield return SC_GameMgr._gameMgr.waitText;
+            SC_EnemyMgr._enemyMgr.EnemyMove();
             yield return SC_GameMgr._gameMgr.waitText;
         }
-        RoundInit();
+        FieldRoundInit();
     }
     public void EnteringField()
     {
         EnableFieldTiles();
         FieldTilesInit();
+        CurrentTurn = 0;
+        TotalTurn = 0;
+        FieldActionRemember = 0;
         actionBar.SetActive(true);
-        SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동을 선택해주세요.");
+        SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
         SC_GameMgr._gameMgr.PrintClickTextBox("도착했습니다.");
     }
     public void FieldTilesInit()
@@ -112,10 +114,10 @@ public class SC_FieldMgr : MonoBehaviour
     }
     public void MoveSelecter(int input)
     {
-        if(!SC_GameMgr._gameMgr.isPopupPlayerBar)
-        {
-            
-        }
+        if (!isInBattle)
+            SC_MenuBar._menuBar.PopupFBSMenu();
+        else
+            SC_MenuBar._menuBar.PopupBBSMenu();
         actionIndex = input;
         selecter.transform.localPosition = new Vector2(input, 0);
         OutFromActionSlot();
@@ -202,17 +204,22 @@ public class SC_FieldMgr : MonoBehaviour
 			}
 		}
     }
-    public void RoundInit()
+    public void FieldRoundInit()
     {
+        for (int i = 0; i < playerFieldActionSlot.Length; i++)
+            playerFieldActionSlot[i] = null;
         IconReset();
         actionCounter = 0;
+        CurrentTurn = 0;
         executeButton.UnableButton();
         executeButton.gameObject.SetActive(true);
+        if (TotalTurn + 1 == SC_EnemyMgr._enemyMgr.MaxEnemyCount)
+            ReadyToBossBattle();
     }
-    IEnumerator MoveTiles(int moveRange)
+    private IEnumerator _MoveTiles(int moveRange)
     {
         SC_GameMgr._gameMgr.isEventPlaying = true;
-        for (int i = 0; i < moveRange*10; i++)
+        for (int i = 0; i < moveRange*5; i++)
         {
             for (int j = 0; j < fieldBacks.Length; j++)//화면 뒤 밖에 있을 경우 앞으로 옮기고 스프라이트 변경
             {
@@ -229,11 +236,18 @@ public class SC_FieldMgr : MonoBehaviour
                 {
                     fieldBacks[j].gameObject.transform.localPosition = (Vector2)fieldBacks[j].gameObject.transform.localPosition + backMove;
                 }
+                SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position = (Vector2)SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position + backMove;
                 yield return SC_GameMgr._gameMgr.delay100ms;
             }
         }
-        moveCount += moveRange;
         SC_GameMgr._gameMgr.isEventPlaying = false;
         yield return null;
     }
+    public void MoveTiles(int moveRange)
+    {
+        StartCoroutine(_MoveTiles(moveRange));
+    }
+    public void ReadyToBossBattle()
+    { 
+}
 }

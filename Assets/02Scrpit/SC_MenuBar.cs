@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum MENUPAGE { STAT=1, SKILL, ITEM, BF_SKILL, BB_SKILL, BUY, SELL };
+public enum MENUPAGE { STAT=1, F_BSKILL, B_BSKILL, BUY, SELL };
 
 public class SC_MenuBar : MonoBehaviour
     //메뉴바 관리. 메뉴바에 표시되는 내용들을 담당
@@ -11,9 +11,7 @@ public class SC_MenuBar : MonoBehaviour
     public static SC_MenuBar _menuBar;
     public GameObject playerMenuBar;
 
-    public bool isNomalMenu;
-    public bool isFieldMenu;
-    public bool isInnMenu;
+    public bool isPopupPlayerBar;
 
     public MENUPAGE CurrentPage;
 
@@ -31,8 +29,8 @@ public class SC_MenuBar : MonoBehaviour
     public const string title_itme = "소지품";
     public const string title_buy = "구매";
     public const string title_sell = "판매";
-    public const string title_fieldBS = "기본기술-탐험";
-    public const string title_battleBS = "기본기술-전투";
+    public const string title_fieldBS = "기본-탐험";
+    public const string title_battleBS = "기본-전투";
     public Image statsImage;
     public Text jobText;
     public const string jobHead = "직업: ";
@@ -55,21 +53,28 @@ public class SC_MenuBar : MonoBehaviour
 
     public GameObject itemWindow;
 
+    public GameObject innItemWindow;
+    public GameObject moneyIndi;
+    public Text moneyIndiText;
+
     private void Awake()
     {
         _menuBar = this;
     }
-    public void PopupPlayerMenu()
+    public void PopupStatMenu()
     {
-        titleText.text = title_stat;
-        SC_GameMgr._gameMgr.isPopupPlayerBar = true;
-        playerMenuBar.SetActive(true);
+        PopupPlayerMenu();
         OpenStatsWindow();
         CurrentPage = MENUPAGE.STAT;
     }
+    private void PopupPlayerMenu()
+    {
+        isPopupPlayerBar = true;
+        playerMenuBar.SetActive(true);
+    }
     public void ClosePlayerMenu()
     {
-        SC_GameMgr._gameMgr.isPopupPlayerBar = false;
+        isPopupPlayerBar = false;
         playerMenuBar.SetActive(false);
     }
     public void RefreshStat()
@@ -82,6 +87,10 @@ public class SC_MenuBar : MonoBehaviour
         spdText.text = spdHead + SC_PlayerMgr._playerMgr.SPD;
         moneyText.text = moneyHead + SC_PlayerMgr._playerMgr.Money;
     }
+    public void RefreshMoneyIndi()
+    {
+        moneyIndiText.text = moneyHead + SC_PlayerMgr._playerMgr.Money;
+    }
     public void OpenStatsWindow()
     {
         RefreshStat();
@@ -91,11 +100,12 @@ public class SC_MenuBar : MonoBehaviour
         fieldBSkillWindow.SetActive(false);
         battleBSkillWindow.SetActive(false);
         itemWindow.SetActive(false);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(false);
         buttons.SetActive(true);
         statButton.SetActive(true);
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(false);
-        CurrentPage = MENUPAGE.STAT;
     }
     public void OpenSkillWindow()
     {
@@ -105,11 +115,27 @@ public class SC_MenuBar : MonoBehaviour
         fieldBSkillWindow.SetActive(false);
         battleBSkillWindow.SetActive(false);
         itemWindow.SetActive(false);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(false);
         buttons.SetActive(true);
-        statButton.SetActive(true);
-        fieldBSkillButton.SetActive(false);
-        battelBSkillButton.SetActive(false);
-        CurrentPage = MENUPAGE.SKILL;
+        if(CurrentPage == MENUPAGE.B_BSKILL)
+        {
+            statButton.SetActive(false);
+            fieldBSkillButton.SetActive(false);
+            battelBSkillButton.SetActive(true);
+        }
+        else if(CurrentPage == MENUPAGE.F_BSKILL)
+        {
+            statButton.SetActive(false);
+            fieldBSkillButton.SetActive(true);
+            battelBSkillButton.SetActive(false);
+        }
+        else
+        {
+            statButton.SetActive(true);
+            fieldBSkillButton.SetActive(false);
+            battelBSkillButton.SetActive(false);
+        }
     }
     public void OpenItemWindow()
     {
@@ -119,10 +145,106 @@ public class SC_MenuBar : MonoBehaviour
         fieldBSkillWindow.SetActive(false);
         battleBSkillWindow.SetActive(false);
         itemWindow.SetActive(true);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(false);
         buttons.SetActive(true);
-        statButton.SetActive(true);
-        fieldBSkillButton.SetActive(false);
+        if (CurrentPage == MENUPAGE.B_BSKILL)
+        {
+            statButton.SetActive(false);
+            fieldBSkillButton.SetActive(false);
+            battelBSkillButton.SetActive(true);
+        }
+        else if (CurrentPage == MENUPAGE.F_BSKILL)
+        {
+            statButton.SetActive(false);
+            fieldBSkillButton.SetActive(true);
+            battelBSkillButton.SetActive(false);
+        }
+        else
+        {
+            statButton.SetActive(true);
+            fieldBSkillButton.SetActive(false);
+            battelBSkillButton.SetActive(false);
+        }
+    }
+    public void OpenBuyWindow()
+    {
+        titleText.text = title_buy;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(false);
+        itemWindow.SetActive(false);
+        innItemWindow.SetActive(true);
+        moneyIndi.SetActive(true);
+        RefreshMoneyIndi();
+        buttons.SetActive(false);
+    }
+    public void PopupBuyMenu()
+    {
+        PopupPlayerMenu();
+        OpenBuyWindow();
+        CurrentPage = MENUPAGE.BUY;
+    }
+    public void OpenSellWindow()
+    {
+        titleText.text = title_sell;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(false);
+        itemWindow.SetActive(true);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(true);
+        RefreshMoneyIndi();
+        buttons.SetActive(false);
+    }
+    public void PopupSellMenu()
+    {
+        PopupPlayerMenu();
+        OpenSellWindow();
+        CurrentPage = MENUPAGE.SELL;
+    }
+    public void OpenFBSWindow()
+    {
+        titleText.text = title_fieldBS;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(true);
+        battleBSkillWindow.SetActive(false);
+        itemWindow.SetActive(false);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(false);
+        buttons.SetActive(true);
+        statButton.SetActive(false);
+        fieldBSkillButton.SetActive(true);
         battelBSkillButton.SetActive(false);
-        CurrentPage = MENUPAGE.ITEM;
+    }
+    public void PopupFBSMenu()
+    {
+        PopupPlayerMenu();
+        OpenFBSWindow();
+        CurrentPage = MENUPAGE.F_BSKILL;
+    }
+    public void OpenBBSWindow()
+    {
+        titleText.text = title_battleBS;
+        statsWindow.SetActive(false);
+        skillWindow.SetActive(false);
+        fieldBSkillWindow.SetActive(false);
+        battleBSkillWindow.SetActive(true);
+        itemWindow.SetActive(false);
+        innItemWindow.SetActive(false);
+        moneyIndi.SetActive(false);
+        buttons.SetActive(true);
+        statButton.SetActive(false);
+        fieldBSkillButton.SetActive(false);
+        battelBSkillButton.SetActive(true);
+    }
+    public void PopupBBSMenu()
+    {
+        PopupPlayerMenu();
+        OpenBBSWindow();
+        CurrentPage = MENUPAGE.B_BSKILL;
     }
 }

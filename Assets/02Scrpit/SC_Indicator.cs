@@ -12,7 +12,7 @@ public class SC_Indicator : MonoBehaviour
     public BoxCollider2D indicatorCollider;
     public bool isPointerIn = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         indicatorRenderer = GetComponent<SpriteRenderer>();
         indicatorCollider = GetComponent<BoxCollider2D>();
@@ -49,7 +49,14 @@ public class SC_Indicator : MonoBehaviour
     {
         Vector2 size = new Vector2(inputsize, inputsize);
         indicatorCollider.size = size;
-        indicatorCollider.offset = size * 0.5f;
+    }
+    public void ColliderOff()
+    {
+        indicatorCollider.enabled = false;
+    }
+    public void ColliderOn()
+    {
+        indicatorCollider.enabled = true;
     }
     /// <summary>
     /// 인디케이터 초기화
@@ -91,4 +98,37 @@ public class SC_Indicator : MonoBehaviour
         else if (IsCanInteract())
             SC_GameMgr._gameMgr.PrintBaseBox();
     }
+    private IEnumerator _IndiFadeOut()
+    {
+        Color o;
+        Color c;
+        o = c = indicatorRenderer.color;
+        SC_GameMgr._gameMgr.isEventPlaying = true;
+        for (float f = 0f; f < 1.1f; f += 0.2f)
+        {
+            c.a = Mathf.Lerp(o.a, 0f, f);
+            indicatorRenderer.color = c;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        SC_GameMgr._gameMgr.isEventPlaying = false;
+    }
+    public void IndiFadeOut()
+    {
+        StartCoroutine(_IndiFadeOut());
+    }
+    private IEnumerator _IndiBlink()
+    {
+        Color o = indicatorRenderer.color;
+        Color c = new Color(0, 0, 0, 0);
+        SC_GameMgr._gameMgr.isEventPlaying = true;
+        for (int i = 0; i < 5; i++)
+        {
+            indicatorRenderer.color = c;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+            indicatorRenderer.color = o;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        SC_GameMgr._gameMgr.isEventPlaying = false;
+    }
+    public void IndiBlink() { StartCoroutine(_IndiBlink()); }
 }

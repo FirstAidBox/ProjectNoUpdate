@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SC_StringMgr : MonoBehaviour
-    //게임 내 대화나 설명 같은 길이가 길거나 자주쓰이는 텍스트들을 모아놓은 스크립트입니다.
-    //PrintTextBox나 BaseText에 자주 쓰이는 문자열들은 여기로
+//게임 내 대화나 설명 같은 길이가 길거나 자주쓰이는 텍스트들을 모아놓은 스크립트입니다.
+//PrintTextBox나 BaseText에 자주 쓰이는 문자열들은 여기로
+//네임스페이스를 사용하는 NS_StringData로 대체 예정.
 {
     public readonly string warriorPick = "힘세고 좋은 전사입니다.\n유용한 기술은 조금 부족하지만, 강인한 체력과 방어력을 가지고있습니다.";
     public readonly string magePick = "총명한 마법사입니다.\n체력은 약하지만 적의 행동을 예측하고 강력한 마법을 사용할 수 있습니다.";
@@ -25,3 +26,4 @@ public class SC_StringMgr : MonoBehaviour
     public readonly string st_tomove = "으로 이동합니다.";
     public readonly string st_moving = "으로 떠납니다.";
 }
+

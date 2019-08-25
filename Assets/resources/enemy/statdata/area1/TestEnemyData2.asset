@@ -17,7 +17,7 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: 71e19036910bda0438b1ff3eda1667ad, type: 3}
   Color: {r: 0.014705896, g: 1, b: 0, a: 1}
   Hp: 3
-  Atk: 1
+  Atk: 4
   Def: 0
   Spd: 1
   SkillIndex: 0000000001000000

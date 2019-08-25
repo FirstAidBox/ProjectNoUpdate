@@ -4,7 +4,6 @@
 public class SBO_Potion : SBO_UseObject, I_FieldStack, I_BattleStack, I_UseInInn
 {
     public int healvalve;
-
     /*아이템의 정보를 넣는게 아닌 슬롯 자체의 정보를 넣는 식으로 변경
     public void FieldStack()
     {

@@ -30,6 +30,24 @@ public class SC_ItemSlot : SC_SlotBase
             RemoveObject();
         }
     }
+    public override void PointerDown()
+    {
+        if (slotObject.Index == 0)
+        {
+            SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image, slotObject.Text, slotObject.Color);     
+        }
+        else
+        {
+            if(SC_MenuBar._menuBar.CurrentPage == MENUPAGE.SELL)
+            {
+                SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image, slotObject.Name + " 을(를) 팔고 돈을 " + slotObject.Price + " 만큼 얻습니다.", slotObject.Color);
+            }
+            else
+            {
+                SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image, slotObject.Text, slotObject.Color);
+            }
+        }
+    }
     public override void ButtonClick()
     {
         if (slotObject.Index == 0)
@@ -46,12 +64,20 @@ public class SC_ItemSlot : SC_SlotBase
             else
                 SC_GameMgr._gameMgr.PrintTextBox("전투 중엔 사용할 수 없는 아이템입니다.");
         }
-        else if (SC_GameMgr._gameMgr.isInInn)
+        else if (SC_GameMgr._gameMgr.isRest)
         {
-            if (slotObject is I_UseInInn)
-                UseObject();
+            if (SC_MenuBar._menuBar.CurrentPage == MENUPAGE.SELL)
+            {
+                SC_PlayerMgr._playerMgr.SellItem(slotObject);
+                RemoveObject();
+            }
             else
-                SC_GameMgr._gameMgr.PrintTextBox("휴식 중엔 사용할 수 없는 아이템입니다.");
+            {
+                if (slotObject is I_UseInInn)
+                    UseObject();
+                else
+                    SC_GameMgr._gameMgr.PrintTextBox("휴식 중엔 사용할 수 없는 아이템입니다.");
+            }
         }
         else if (!SC_FieldMgr._fieldMgr.isInBattle)
         {

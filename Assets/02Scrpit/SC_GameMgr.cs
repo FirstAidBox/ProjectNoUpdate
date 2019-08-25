@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using NS_StringData;
 
 public enum SCENEINFO { START=1, CHARSELECT, INN, AREASELECT, FIELD };
 
@@ -33,6 +34,7 @@ public class SC_GameMgr : MonoBehaviour
     public Button[] buttons;
     public EventTrigger[] eventTriggers;
     public GameObject offWhileEvent;
+    public Button[] systemButtons;
 
     public bool isEventPlaying = false;
     public bool isPlayingText = false;
@@ -47,9 +49,6 @@ public class SC_GameMgr : MonoBehaviour
     public const string clickString = " ▶Click";
 
     public SC_ResourceMgr _resourceMgr;
-    public SC_PlayerMgr _playerMgr;
-    public SC_ItemMgr _itemMgr;
-    public SC_EnemyMgr _enemyMgr;
     public SC_StringMgr _stringMgr;
 
     public GameObject finalAnswerBar;
@@ -61,29 +60,23 @@ public class SC_GameMgr : MonoBehaviour
 	public bool isFade = false;
     public bool isFadeOut = false;
 	public bool isFadeIn = false;
+    public bool isPause = false;
 
     public SC_Indicator[] mainIndicator;
 
-    public SC_PlayerIndi playerIndicator;
-    public Vector2 currentPlayerPos = new Vector2(-4f, 0f);
-    public bool isPopupPlayerBar = false;
-
-    public SC_Indicator monsterIndicator;
+    public SC_EnemyIndi enemyIndicator;
     public int areaNum = 0;
     public bool[] isAreaClear;
 
     public GameObject inn;
     public GameObject innMenu;
     public Vector2 innMasterPos = new Vector2(3f, 0f);
-    public bool isInInn = false;
+    public bool isRest = false;
 
     void Awake()
     {
         _gameMgr = this;
         _resourceMgr = GetComponent<SC_ResourceMgr>();
-        _playerMgr = GetComponent<SC_PlayerMgr>();
-        _itemMgr = GetComponent<SC_ItemMgr>();
-        _enemyMgr = GetComponent<SC_EnemyMgr>();
         _stringMgr = GetComponent<SC_StringMgr>();
 
         buttons = FindObjectsOfType<Button>();
@@ -92,6 +85,11 @@ public class SC_GameMgr : MonoBehaviour
         {
             eventTriggers[n] = buttons[n].gameObject.GetComponent<EventTrigger>();
         }
+        for (int n = 0; n < systemButtons.Length; n++)
+        {
+            systemButtons[n].gameObject.SetActive(true);
+        }
+
         baseText = null;
         baseSprite = nullSprite;
 
@@ -238,12 +236,12 @@ public class SC_GameMgr : MonoBehaviour
     public void OffMainIndicatorCollider()
     {
         for (int i = 0; i < mainIndicator.Length; i++)
-            mainIndicator[i].indicatorCollider.enabled = false;
+            mainIndicator[i].ColliderOff();
     }
     public void OnMainIndicatorCollider()
     {
         for (int i = 0; i < mainIndicator.Length; i++)
-            mainIndicator[i].indicatorCollider.enabled = true;
+            mainIndicator[i].ColliderOn();
     }
     public void OffMainIndicator()
     {
@@ -254,6 +252,36 @@ public class SC_GameMgr : MonoBehaviour
     {
         for (int i = 0; i < mainIndicator.Length; i++)
             mainIndicator[i].gameObject.SetActive(true);
+    }
+    public void OffButtons()
+    {
+        for (int n = 0; n < buttons.Length; n++)
+        {
+            buttons[n].interactable = false;
+            eventTriggers[n].enabled = false;
+        }
+    }
+    public void OnButtons()
+    {
+        for (int n = 0; n < buttons.Length; n++)
+        {
+            buttons[n].interactable = true;
+            eventTriggers[n].enabled = true;
+        }
+    }
+    public void OffSysButtons()
+    {
+        for (int n = 0; n < systemButtons.Length; n++)
+        {
+            systemButtons[n].enabled = false;
+        }
+    }
+    public void OnSysButtons()
+    {
+        for (int n = 0; n < systemButtons.Length; n++)
+        {
+            systemButtons[n].enabled = true;
+        }
     }
     public void PopupFinalAnswerBar(Action eventName, string inputText)
     {
@@ -274,6 +302,11 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void NoClickFinalAnswer()
     {
+        if (isPause)
+        {
+            Time.timeScale = 1;
+            isPause = false;
+        }
         PrintBaseBox();
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
@@ -284,6 +317,7 @@ public class SC_GameMgr : MonoBehaviour
 		isFade = true;
 		isFadeOut = true;
         OffButtons();
+        OffSysButtons();
         for (float f=0f; f<1.1f; f+=0.1f)
         {
             Color c = fadeImage.color;
@@ -305,6 +339,7 @@ public class SC_GameMgr : MonoBehaviour
             yield return delay100ms;
         }
         OnButtons();
+        OnSysButtons();
 		isFadeIn = false;
 		isFade = false;
     }
@@ -313,10 +348,7 @@ public class SC_GameMgr : MonoBehaviour
         yield return waitFadeOut;
         Invoke(name, 0f);
     }
-    /// <summary>
-    /// 해당 함수(메소드)를 페이드 아웃이 완전히 완료 된 이후에 실행합니다.
-    /// </summary>
-    /// <param name="name">실행시킬 함수 이름</param>
+    [Obsolete("메소드를 직접전달하는 함수로 바꿀 것.")]
     public void InvokeWaitFadeOut(string name)
     {
 		StartCoroutine("_WaitFadeOut", name);
@@ -332,23 +364,25 @@ public class SC_GameMgr : MonoBehaviour
     /// <param name="method">실행시킬 함수(메소드)</param>
 	public void InvokeWaitFadeOut(Action method)
 	{
-		StartCoroutine ("_WaitFadeOut", method);
+		StartCoroutine (_WaitFadeOut(method));
 	}
-    public void OffButtons()
+    private IEnumerator _WaitEvent(Action method)
     {
-        for (int n = 0; n < buttons.Length; n++)
-        {
-            buttons[n].interactable = false;
-            eventTriggers[n].enabled = false;
-        }
+        yield return waitEvent;
+        method();
     }
-    public void OnButtons()
+    public void InvokeWaitEvent(Action method)
     {
-        for (int n = 0; n < buttons.Length; n++)
-        {
-            buttons[n].interactable = true;
-            eventTriggers[n].enabled = true;
-        }
+        StartCoroutine(_WaitEvent(method));
+    }
+    private IEnumerator _WaitEvent(Action<int> method, int i)
+    {
+        yield return waitEvent;
+        method(i);
+    }
+    public void InvokeWaitEvent(Action<int> method, int i)
+    {
+        StartCoroutine(_WaitEvent(method, i));
     }
     public void FadeOutAndIn()
     {
@@ -365,14 +399,21 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void SelectChar()
     {
+        Vector2 offset = new Vector2(2.5f, 0f);
+        Vector2 indi0Pos = new Vector2(-2.5f, 0.5f);
+        Vector2 indi1Pos = indi0Pos + offset;
+        Vector2 indi2Pos = indi1Pos + offset;
         innMenu.SetActive(false);
         SC_MenuBar._menuBar.playerMenuBar.SetActive(false);
         SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
         SC_PlayerMgr._playerMgr.PlayerInfoInit();
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
+        mainIndicator[0].gameObject.transform.position = indi0Pos;
         mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_Warrior, _stringMgr.warriorPick, AnswerWarriorPick);
+        mainIndicator[1].gameObject.transform.position = indi1Pos;
         mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, AnswerMagePick);
+        mainIndicator[2].gameObject.transform.position = indi2Pos;
         mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, AnswerRangerPick);
     }
 
@@ -384,7 +425,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Warrior"));
+            SC_PlayerMgr._playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Warrior"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -397,7 +438,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Mage"));
+            SC_PlayerMgr._playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Mage"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -410,7 +451,7 @@ public class SC_GameMgr : MonoBehaviour
         }
         else
         {
-            _playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Ranger"));
+            SC_PlayerMgr._playerMgr.GetJob(Resources.Load<SBO_PlayerJobData>("player/jobdata/Ranger"));
             GameStart();
             trigger_FA_Yes = false;
         }
@@ -419,28 +460,17 @@ public class SC_GameMgr : MonoBehaviour
     {
         EnteringInn();
         PrintTextBox("게임을 시작합니다.");
-		InvokeWaitFadeOut("CharaMake");
+		InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.CharaMake);
     }
-    public void CharaMake()
-    {
-        playerIndicator.IndicatorMakeup(_playerMgr.Image, "캐릭터의 정보를 확인합니다.", SC_MenuBar._menuBar.PopupPlayerMenu);
-        playerIndicator.gameObject.transform.position = currentPlayerPos;
-    }
-    public void VisiblePlayer()
-    {
-        playerIndicator.gameObject.SetActive(true);
-    }
-    public void InvisiblePlayer()
-    {
-        playerIndicator.gameObject.SetActive(false);
-    }
+    
     public void EnteringInn()
     {
         PrintTextBox(_stringMgr.st_enterInnStart);
+        SC_PlayerMgr._playerMgr.Refill_InnItem();
         FadeOutAndIn();
-		InvokeWaitFadeOut("VisibleInn");
-		InvokeWaitFadeOut("OffMainIndicator");
-        isInInn = true;
+		InvokeWaitFadeOut(VisibleInn);
+		InvokeWaitFadeOut(OffMainIndicator);
+        isRest = true;
     }
     public void VisibleInn()
     {
@@ -464,8 +494,10 @@ public class SC_GameMgr : MonoBehaviour
             FadeOutAndIn();
 			InvokeWaitFadeOut(InvisibleInn);
 			InvokeWaitFadeOut(SC_MenuBar._menuBar.ClosePlayerMenu);
-            InvokeWaitFadeOut("SelectArea");
-            isInInn = false;
+            InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.InvisiblePlayer);
+            InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.InvisibleEnemy);
+            InvokeWaitFadeOut(SelectArea);
+            isRest = false;
             trigger_FA_Yes = false;
         }
     }
@@ -477,7 +509,6 @@ public class SC_GameMgr : MonoBehaviour
         IndiSetupArea2();
         IndiSetupArea3();
         OnMainIndicator();
-        playerIndicator.gameObject.SetActive(false);
     }
     public void IndiSetupArea1()
     {
@@ -491,7 +522,7 @@ public class SC_GameMgr : MonoBehaviour
             mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, AnswerArea1);
         }
         mainIndicator[0].ResizeCollider(3f);
-        mainIndicator[0].transform.position = new Vector2(-6f, 0f);
+        mainIndicator[0].transform.position = new Vector2(-4.5f, 1.5f);
     }
     public void AnswerArea1()
     {
@@ -508,16 +539,19 @@ public class SC_GameMgr : MonoBehaviour
         areaNum = 1;
         PrintTextBox(_stringMgr.st_area1 + _stringMgr.st_moving);
         FadeOutAndIn();
-		InvokeWaitFadeOut("OffMainIndicator");
-		InvokeWaitFadeOut("VisiblePlayer");
+		InvokeWaitFadeOut(OffMainIndicator);
+		InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
         SC_FieldMgr._fieldMgr.GetArea1Sprite();
 		InvokeWaitFadeOut (SC_FieldMgr._fieldMgr.EnteringField);
+        SC_EnemyMgr._enemyMgr.GetArea1Data();
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
     }
     public void IndiSetupArea2()
     {
         mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, AnswerArea2);
         mainIndicator[1].ResizeCollider(3f);
-        mainIndicator[1].transform.position = new Vector2(-1.5f, 0f);
+        mainIndicator[1].transform.position = new Vector2(0f, 1.5f);
     }
     public void AnswerArea2()
     {
@@ -540,7 +574,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, AnswerArea3);
         mainIndicator[2].ResizeCollider(3f);
-        mainIndicator[2].transform.position = new Vector2(3f, 0f);
+        mainIndicator[2].transform.position = new Vector2(4.5f, 1.5f);
     }
     public void AnswerArea3()
     {
@@ -558,5 +592,24 @@ public class SC_GameMgr : MonoBehaviour
         PrintTextBox(_stringMgr.st_area3 + _stringMgr.st_moving);
         FadeOutAndIn();
         Invoke("OffMainIndicator", 1f);
+    }
+
+    public void AnswerExitGame()
+    {
+        if (!trigger_FA_Yes)
+        {
+            PopupFinalAnswerBar(AnswerExitGame, "정말 종료하시겠습니까?");
+            isPause = true;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            isPause = false;
+            trigger_FA_Yes = false;
+            PrintTextBox("종료합니다.");
+            FadeOut();
+            InvokeWaitFadeOut(Application.Quit);
+        }
     }
 }

@@ -36,7 +36,7 @@ public class SC_SkillSlot : SC_SlotBase
     public override void ButtonClick()
     {
         if (slotObject is I_Instant)
-            return;
+            SC_GameMgr._gameMgr.PrintTextBox("지속효과(패시브) 기술입니다.");
         else if (isStackInAction)
             SC_GameMgr._gameMgr.PrintTextBox("이미 사용 예약이 되어있습니다.");
         else if (SC_FieldMgr._fieldMgr.isInBattle)
@@ -49,7 +49,7 @@ public class SC_SkillSlot : SC_SlotBase
             else
                 SC_GameMgr._gameMgr.PrintTextBox("전투 중엔 사용할 수 없는 기술입니다.");
         }
-        else if (SC_GameMgr._gameMgr.isInInn)
+        else if (SC_GameMgr._gameMgr.isRest)
         {
             if (slotObject is I_UseInInn)
                 UseObject();
