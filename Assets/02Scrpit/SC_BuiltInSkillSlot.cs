@@ -33,7 +33,6 @@ public class SC_BuiltInSkillSlot : SC_SlotBase
         if (slotObject is I_CanUse)
         {
             (slotObject as I_CanUse).UseEffect();
-            this.SlotCanUse();
         }
     }
     public override void ButtonClick()
@@ -43,7 +42,6 @@ public class SC_BuiltInSkillSlot : SC_SlotBase
             if (slotObject is I_BattleStack)
             {
                 SC_FieldMgr._fieldMgr.PLActionInputInBattle(this);
-                SlotCannotUse();
             }
             else
                 SC_GameMgr._gameMgr.PrintTextBox("전투 중엔 사용할 수 없는 기술입니다.");
@@ -60,7 +58,6 @@ public class SC_BuiltInSkillSlot : SC_SlotBase
             if (slotObject is I_FieldStack)
             {
                 SC_FieldMgr._fieldMgr.PLActionInputInField(this);
-                SlotCannotUse();
             }
             else
                 SC_GameMgr._gameMgr.PrintTextBox("탐사 중엔 사용할 수 없는 기술입니다.");

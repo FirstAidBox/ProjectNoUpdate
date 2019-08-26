@@ -64,7 +64,6 @@ public class SC_GameMgr : MonoBehaviour
 
     public SC_Indicator[] mainIndicator;
 
-    public SC_EnemyIndi enemyIndicator;
     public int areaNum = 0;
     public bool[] isAreaClear;
 

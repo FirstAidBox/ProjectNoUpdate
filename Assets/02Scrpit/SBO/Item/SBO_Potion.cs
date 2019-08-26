@@ -4,19 +4,10 @@
 public class SBO_Potion : SBO_UseObject, I_FieldStack, I_BattleStack, I_UseInInn
 {
     public int healvalve;
-    /*아이템의 정보를 넣는게 아닌 슬롯 자체의 정보를 넣는 식으로 변경
-    public void FieldStack()
+
+    public void WhenIsUse()
     {
-        SC_FieldMgr._fieldMgr.playerFieldActionSlot[SC_FieldMgr._fieldMgr.actionIndex] = this;
-    }
-    public void BattleStack()
-    {
-        SC_FieldMgr._fieldMgr.playerBattleActionSlot[SC_FieldMgr._fieldMgr.actionIndex] = this;
-    }
-    */
-    public void WhenIsUse(SC_SlotBase mySlot)
-    {
-        SC_FieldMgr._fieldMgr.playerBattlePhase[(int)BATTLEPHASE.ITEM] = mySlot;
+        SC_FieldMgr._fieldMgr.playerPhaseAction[(int)BATTLEPHASE.ITEM] = this;
     }
     public override void UseEffect()
     {

@@ -53,8 +53,16 @@ public class SC_ExecuteButton : MonoBehaviour
             {
                 if (isCanExecute)
                 {
-                    this.gameObject.SetActive(false);
-                    SC_FieldMgr._fieldMgr.Execute();
+                    if (SC_FieldMgr._fieldMgr.isInBattle)
+                    {
+                        gameObject.SetActive(false);
+                        SC_FieldMgr._fieldMgr.ExecuteBattle();
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                        SC_FieldMgr._fieldMgr.ExecuteField();
+                    }
                 }
                 else
                     SC_GameMgr._gameMgr.PrintTextBox("아직 턴 행동을 전부 정하지 않았습니다.");

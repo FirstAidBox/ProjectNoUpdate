@@ -30,7 +30,7 @@ public class SC_SkillSlot : SC_SlotBase
         if (slotObject is I_CanUse)
         {
             (slotObject as I_CanUse).UseEffect();
-            this.SlotCanUse();
+            SlotCanUse();
         }
     }
     public override void ButtonClick()

@@ -26,7 +26,7 @@ public class SC_ItemSlot : SC_SlotBase
         if(slotObject is I_CanUse)
         {
             (slotObject as I_CanUse).UseEffect();
-            this.SlotCanUse();
+            SlotCanUse();
             RemoveObject();
         }
     }

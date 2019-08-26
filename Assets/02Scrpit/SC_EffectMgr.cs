@@ -11,6 +11,7 @@ public class SC_EffectMgr : MonoBehaviour
     public Vector3 camOriPos;
     public SpriteRenderer spriteRen;
     public Vector2 playerPos;
+    public Vector2 enemyPos;
     public bool isEvent = false;
 
     private void Awake()
@@ -35,6 +36,8 @@ public class SC_EffectMgr : MonoBehaviour
     {
         spriteRen.sprite = SC_GameMgr._gameMgr.nullSprite;
         spriteRen.color = SC_GameMgr._gameMgr.baseColor;
+        spriteRen.flipX = false;
+        spriteRen.flipY = false;
     }
     private IEnumerator _Shake(int n)
     {
@@ -73,6 +76,30 @@ public class SC_EffectMgr : MonoBehaviour
     public void EffectGetSlotObject(SBO_SlotObject slotObject)
     {
         StartCoroutine(_EffectGetSlotObject(slotObject.Image, slotObject.Color));
+    }
+    private IEnumerator _EffectGetSlotObject(Sprite image, Color color, Vector2 pos)
+    {
+        EventSwitchOn();
+        Vector2 originPos = pos;
+        Vector2 targetpos = pos + new Vector2(0f, 1f);
+        Color c;
+        indiTr.position = originPos;
+        spriteRen.sprite = image;
+        spriteRen.color = c = color;
+        for (float f = 0f; f < 1.1f; f += 0.2f)
+        {
+            indiTr.position = Vector2.Lerp(originPos, targetpos, f);
+            c.a = Mathf.Lerp(color.a, 0f, f);
+            spriteRen.color = c;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectGetSlotObject(SBO_SlotObject slotObject, Vector2 pos)
+    {
+        StartCoroutine(_EffectGetSlotObject(slotObject.Image, slotObject.Color, pos));
     }
 
     public Sprite e_Coin;
@@ -144,4 +171,37 @@ public class SC_EffectMgr : MonoBehaviour
         isEvent = false;
     }
     public void EffectSimpleHit(Vector2 pos) { StartCoroutine(_EffectSimpleHit(pos)); }
+
+    public Sprite e_spot;
+    private IEnumerator _EffectSpot()
+    {
+        EventSwitchOn();
+        indiTr.position = enemyPos + new Vector2(0f, 1f);
+        spriteRen.sprite = e_spot;
+        for (int i = 0; i < 10; i++)
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectSpot() { StartCoroutine(_EffectSpot()); }
+
+    public Sprite e_down;
+    private IEnumerator _EffectDown(Vector2 pos)
+    {
+        EventSwitchOn();
+        indiTr.position = pos;
+        spriteRen.sprite = e_down;
+        for(int i=0;i<5;i++)
+        {
+            spriteRen.flipX = true;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+            spriteRen.flipX = false;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectDown(Vector2 pos) { StartCoroutine(_EffectDown(pos)); }
 }

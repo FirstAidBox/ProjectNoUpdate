@@ -26,6 +26,9 @@ public class SC_EnemyMgr : MonoBehaviour
     public int[] SkillIndex;
     public int SkillCount;
 
+    public bool IsGuard;
+    public bool IsDown;
+
     public SC_EnemyIndi EnemyIndicator;
     public Vector2 InInnPos = new Vector2(2.5f, 0.5f);
     public Vector2 FieldStartPos = new Vector2(7.5f, 0.5f);
@@ -98,6 +101,10 @@ public class SC_EnemyMgr : MonoBehaviour
             else
             {
                 SC_EffectMgr._effectMgr.isEvent = true;
+                SC_EffectMgr._effectMgr.EffectSpot();
+                SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 이(가) 당신을 발견했습니다. 전투를 시작합니다.");
+                SC_FieldMgr._fieldMgr.StopAllCoroutines();
+                SC_FieldMgr._fieldMgr.BattleSetup();
             }
         }
         else if(KIND == KIND_ENEMY.TRAP)
@@ -124,5 +131,33 @@ public class SC_EnemyMgr : MonoBehaviour
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.GetRandomItem);
         }
     }
-    
+    public void BattleActionInput()
+    {
+        for (int i = 0; i < 3; i++)
+            SC_FieldMgr._fieldMgr.enemyBattleActionSlot[i] = SC_SBODataMgr._SBODataMgr.enemySkillData[SkillIndex[Random.Range(0, SkillCount)]];
+    }
+    public void TurnInit()
+    {
+        IsGuard = false;
+        IsDown = false;
+    }
+    public void ApplyDamage(int DmgValue)
+    {
+        int finDmg = Mathf.Clamp(DmgValue - DEF, 0, DmgValue);
+        if (finDmg > 0)
+            SC_EffectMgr._effectMgr.CameraShake(finDmg);
+        EnemyIndicator.IndiBlink();
+        CurrentHP -= finDmg;
+        if (CurrentHP <= 0)
+            EnemyDie();
+        SC_GameMgr._gameMgr.PrintClickTextBox(Name +" 에게 "+ finDmg + " 피해를 입혔습니다.");
+    }
+    public void ApplyDamagePure(int DmgValue)
+    {
+
+    }
+    public void EnemyDie()
+    {
+        Debug.Log("적: 으앙주금");
+    }
 }

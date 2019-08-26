@@ -8,11 +8,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bae9ac1502effc4dae463dfa9936c9f, type: 3}
-  m_Name: TestSkillData1
+  m_Script: {fileID: 11500000, guid: bc8aa75d21d0fbb43b091585fc7cf2da, type: 3}
+  m_Name: Skill_Guard_E
   m_EditorClassIdentifier: 
   Index: 1
   Name: "\uBC29\uC5B4"
-  Tooltip: "\uBC29\uC5B4\uD569\uB2C8\uB2E4."
+  Text: "\uC801\uC758 \uBC29\uC5B4. \uC77C\uBC18\uACF5\uACA9\uC744 \uBB34\uD6A8\uD654
+    \uD558\uC9C0\uB9CC \uAC15\uD0C0\uC5D0\uB294 \uB6AB\uB9B0\uB2E4."
   Image: {fileID: 21300000, guid: 3a66523ec5777f04784a6115c1090f67, type: 3}
   Color: {r: 1, g: 1, b: 1, a: 1}
+  Price: 0

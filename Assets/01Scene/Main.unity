@@ -262,7 +262,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1235963460}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.87666667
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -601,8 +601,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1269529605}
   m_HandleRect: {fileID: 1269529604}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1186,7 +1186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000032434902, y: 0.00000001874927}
+  m_AnchoredPosition: {x: -0.000032434902, y: 0.000030517567}
   m_SizeDelta: {x: 0.00003051725, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &60728480
@@ -1788,7 +1788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000032434902, y: 0.00000001874927}
+  m_AnchoredPosition: {x: -0.000032434902, y: 0.000030517567}
   m_SizeDelta: {x: 0.00003051725, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &82689408
@@ -5474,7 +5474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStackInAction: 0
-  slotObject: {fileID: 0}
+  slotObject: {fileID: 11400000, guid: 8d7e1ee647734094791b52542ed5bba4, type: 2}
   icon: {fileID: 300980939}
   text: {fileID: 740118780}
   mask: {fileID: 357183732}
@@ -5924,7 +5924,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 913594656}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7218,8 +7218,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 108121362}
   m_HandleRect: {fileID: 108121361}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7309,7 +7309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStackInAction: 0
-  slotObject: {fileID: 0}
+  slotObject: {fileID: 11400000, guid: 6cf1b96c5baeac74aa07905c3c7bfa80, type: 2}
   icon: {fileID: 1426732678}
   text: {fileID: 2122219911}
   mask: {fileID: 691145602}
@@ -8582,8 +8582,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1814683884}
   m_HandleRect: {fileID: 1814683883}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10149,7 +10149,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000032434902, y: 0.00000001874927}
+  m_AnchoredPosition: {x: -0.000032434902, y: 0.000030517567}
   m_SizeDelta: {x: 0.00003051725, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &912348612
@@ -10683,41 +10683,11 @@ Prefab:
       propertyPath: spriteRen
       value: 
       objectReference: {fileID: 247920212}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+    - target: {fileID: 114122957846887998, guid: b77bd8fbd474fce4b8fc3440701b5dab,
         type: 2}
-      propertyPath: fieldBackGroup
+      propertyPath: EnemyIndicator
       value: 
-      objectReference: {fileID: 1432350751}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: actionBar
-      value: 
-      objectReference: {fileID: 163434139}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: actionIcons.Array.data[0]
-      value: 
-      objectReference: {fileID: 4219233}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: actionIcons.Array.data[1]
-      value: 
-      objectReference: {fileID: 463305627}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: actionIcons.Array.data[2]
-      value: 
-      objectReference: {fileID: 1384528031}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: selecter
-      value: 
-      objectReference: {fileID: 1183659669}
-    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: executeButton
-      value: 
-      objectReference: {fileID: 2033353549}
+      objectReference: {fileID: 282175580}
     - target: {fileID: 114079950232520366, guid: b77bd8fbd474fce4b8fc3440701b5dab,
         type: 2}
       propertyPath: playerMenuBar
@@ -10833,11 +10803,41 @@ Prefab:
       propertyPath: moneyIndiText
       value: 
       objectReference: {fileID: 57578270}
-    - target: {fileID: 114122957846887998, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
         type: 2}
-      propertyPath: EnemyIndicator
+      propertyPath: fieldBackGroup
       value: 
-      objectReference: {fileID: 282175580}
+      objectReference: {fileID: 1432350751}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: actionBar
+      value: 
+      objectReference: {fileID: 163434139}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: actionIcons.Array.data[0]
+      value: 
+      objectReference: {fileID: 4219233}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: actionIcons.Array.data[1]
+      value: 
+      objectReference: {fileID: 463305627}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: actionIcons.Array.data[2]
+      value: 
+      objectReference: {fileID: 1384528031}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: selecter
+      value: 
+      objectReference: {fileID: 1183659669}
+    - target: {fileID: 114063639825188712, guid: b77bd8fbd474fce4b8fc3440701b5dab,
+        type: 2}
+      propertyPath: executeButton
+      value: 
+      objectReference: {fileID: 2033353549}
     - target: {fileID: 114379241924860024, guid: b77bd8fbd474fce4b8fc3440701b5dab,
         type: 2}
       propertyPath: mainTextBar
@@ -10858,21 +10858,6 @@ Prefab:
       propertyPath: offWhileEvent
       value: 
       objectReference: {fileID: 2038471829}
-    - target: {fileID: 114379241924860024, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: systemButtons.Array.data[0]
-      value: 
-      objectReference: {fileID: 585796595}
-    - target: {fileID: 114379241924860024, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: systemButtons.Array.data[1]
-      value: 
-      objectReference: {fileID: 870225801}
-    - target: {fileID: 114379241924860024, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: systemButtons.Array.data[2]
-      value: 
-      objectReference: {fileID: 1767110816}
     - target: {fileID: 114379241924860024, guid: b77bd8fbd474fce4b8fc3440701b5dab,
         type: 2}
       propertyPath: finalAnswerBar
@@ -10928,16 +10913,6 @@ Prefab:
       propertyPath: InnContent
       value: 
       objectReference: {fileID: 82689406}
-    - target: {fileID: 114871165471577568, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: playerPos.x
-      value: -2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114871165471577568, guid: b77bd8fbd474fce4b8fc3440701b5dab,
-        type: 2}
-      propertyPath: playerPos.y
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b77bd8fbd474fce4b8fc3440701b5dab, type: 2}
   m_IsPrefabParent: 0
@@ -11351,7 +11326,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 206378107}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.87666667
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12310,7 +12285,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 424918484}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.87666667
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14573,8 +14548,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1593580246}
   m_HandleRect: {fileID: 1593580245}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18900,7 +18875,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1582547069}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 0.29222223
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19837,7 +19812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStackInAction: 0
-  slotObject: {fileID: 0}
+  slotObject: {fileID: 11400000, guid: b002a0956f8e0c1419bdb48b47366d00, type: 2}
   icon: {fileID: 1747098832}
   text: {fileID: 130116205}
   mask: {fileID: 443133510}

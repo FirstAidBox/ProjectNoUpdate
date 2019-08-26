@@ -24,6 +24,7 @@ public class SC_PlayerMgr : MonoBehaviour
     public bool IsDash;
     public bool IsGuard;
     public bool IsDown;
+    public bool IsCounter;
 
     public int SightRange;
     public int ProphecyRange;
@@ -227,6 +228,9 @@ public class SC_PlayerMgr : MonoBehaviour
     {
         IsHide = false;
         IsDash = false;
+        IsGuard = false;
+        IsDown = false;
+        IsCounter = false;
     }
     /// <summary>
     /// 플레이어에게 방어력에 의해 감소되는 데미지를 입힌다.
@@ -247,11 +251,12 @@ public class SC_PlayerMgr : MonoBehaviour
     /// 플레이어에게 방어력을 무시하고 데미지를 입힌다.
     /// </summary>
     /// <param name="DmgValue">데미지 값</param>
-    public void ApplyDamgePure(int DmgValue)
+    public void ApplyDamagePure(int DmgValue)
     {
 
     }
     public void PlayerDie()
     {
+        Debug.Log("으앙주금");
     }
 }
