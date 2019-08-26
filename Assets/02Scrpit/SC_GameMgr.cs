@@ -30,6 +30,7 @@ public class SC_GameMgr : MonoBehaviour
     public Sprite baseSprite;
     public Sprite nullSprite; //투명한 스프라이트
     public Color baseColor = Color.white;
+    public bool isBaseTextHide = false;
 
     public Button[] buttons;
     public EventTrigger[] eventTriggers;
@@ -180,9 +181,12 @@ public class SC_GameMgr : MonoBehaviour
     /// </summary>
     public void PrintBaseBox()
     {
-        mainText.text = baseText;
-        mainSprite.sprite = baseSprite;
-        mainSprite.color = baseColor;
+        if (!isBaseTextHide)
+        {
+            mainText.text = baseText;
+            mainSprite.sprite = baseSprite;
+            mainSprite.color = baseColor;
+        }
     }
     /*구버전 이벤트 처리기. Action 사용버전이 문제 없으면 삭제할 것
     /// <summary>

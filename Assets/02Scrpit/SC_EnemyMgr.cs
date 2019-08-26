@@ -159,5 +159,25 @@ public class SC_EnemyMgr : MonoBehaviour
     public void EnemyDie()
     {
         Debug.Log("적: 으앙주금");
+        SC_FieldMgr._fieldMgr.isInBattle = false;
+        SC_FieldMgr._fieldMgr.StopAllCoroutines();
+        if(KIND == KIND_ENEMY.BOSS)
+        {
+            //보스전 승리 시 처리될 부분
+        }
+        else
+        {
+            StartCoroutine(_GetNomalPrice());
+        }
+    }
+    private IEnumerator _GetNomalPrice()
+    {
+        yield return SC_GameMgr._gameMgr.waitText;
+        EnemyIndicator.IndiFadeOut();
+        SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 을(를) 물리쳤습니다.");
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_PlayerMgr._playerMgr.GetRandomItem();
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_FieldMgr._fieldMgr.ExecuteField();
     }
 }

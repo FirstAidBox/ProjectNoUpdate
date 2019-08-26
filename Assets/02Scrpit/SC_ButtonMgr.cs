@@ -11,7 +11,7 @@ public class SC_ButtonMgr : MonoBehaviour
 
     public readonly string s_inn_buy = "돈으로 물건을 구매합니다.";
     public readonly string s_inn_sell = "물건을 판매해 돈을 얻습니다.";
-    public readonly string s_inn_exit = "여관을 떠나 모험을 시작합니다";
+    public readonly string s_inn_exit = "여관을 떠나 탐험을 시작합니다";
     public readonly string s_plm_stat = "캐릭터의 능력치를 확인합니다.";
     public readonly string s_plm_skill = "캐릭터의 기술을 확인합니다.";
     public readonly string s_plm_item = "캐릭터의 소지품을 확인합니다.";

@@ -71,6 +71,7 @@ public class SC_FieldMgr : MonoBehaviour
     {
         SC_MenuBar._menuBar.ClosePlayerMenu();
         IndiIconField();
+        IconReset();
         while (CurrentTurn < 3)
         {
             TotalTurn++;
@@ -94,13 +95,27 @@ public class SC_FieldMgr : MonoBehaviour
     {
         EnableFieldTiles();
         FieldTilesInit();
-        CurrentTurn = 0;
+        FieldRoundInit();
         TotalTurn = 0;
         CurrentRound = 0;
         actionBar.SetActive(true);
-        IndiIconField();
         SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
         SC_GameMgr._gameMgr.PrintClickTextBox("도착했습니다.");
+    }
+    public void FieldRoundInit()
+    {
+        for (int i = 0; i < playerFieldActionSlot.Length; i++)
+            playerFieldActionSlot[i] = null;
+        IconReset();
+        actionCounter = 0;
+        CurrentTurn = 0;
+        SelecterInit();
+        executeButton.UnableButton();
+        executeButton.gameObject.SetActive(true);
+        if (TotalTurn + 1 == SC_EnemyMgr._enemyMgr.MaxEnemyCount)
+            ReadyToBossBattle();
+        else
+            IndiIconField();
     }
     public void FieldTilesInit()
     {
@@ -224,20 +239,6 @@ public class SC_FieldMgr : MonoBehaviour
 			}
 		}
     }
-    public void FieldRoundInit()
-    {
-        for (int i = 0; i < playerFieldActionSlot.Length; i++)
-            playerFieldActionSlot[i] = null;
-        IconReset();
-        actionCounter = 0;
-        CurrentTurn = 0;
-        executeButton.UnableButton();
-        executeButton.gameObject.SetActive(true);
-        if (TotalTurn + 1 == SC_EnemyMgr._enemyMgr.MaxEnemyCount)
-            ReadyToBossBattle();
-        else
-            IndiIconField();
-    }
     private IEnumerator _MoveTiles(int moveRange)
     {
         SC_GameMgr._gameMgr.isEventPlaying = true;
@@ -279,9 +280,19 @@ public class SC_FieldMgr : MonoBehaviour
     {
         yield return SC_GameMgr._gameMgr.waitText;
         isInBattle = true;
+        BattleRoundInit();
+    }
+    public void BattleRoundInit()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            playerBattleActionSlot[i] = null;
+            enemyBattleActionSlot[i] = null;
+        }
+        IconReset();
         SC_EnemyMgr._enemyMgr.BattleActionInput();
         IndiIconBattle();
-        IconReset();
+        SelecterInit();
         actionCounter = 0;
         executeButton.UnableButton();
         executeButton.gameObject.SetActive(true);
@@ -307,6 +318,11 @@ public class SC_FieldMgr : MonoBehaviour
         {
             SC_PlayerMgr._playerMgr.TurnInit();
             SC_EnemyMgr._enemyMgr.TurnInit();
+            for (int n = 0; n < 5; n++)
+            {
+                playerPhaseAction[n] = null;
+                enemyPhaseAction[n] = null;
+            }
             MoveSelecterOnly(i);
             (playerBattleActionSlot[i].slotObject as I_BattleStack).WhenIsUse();
             playerBattleActionSlot[i].SlotCanUse();
@@ -315,45 +331,33 @@ public class SC_FieldMgr : MonoBehaviour
             {
                 if (SC_PlayerMgr._playerMgr.SPD >= SC_EnemyMgr._enemyMgr.SPD)
                 {
-                    if(playerPhaseAction[(int)currentBattlePhase] != null)
+                    if (playerPhaseAction[(int)currentBattlePhase] != null)
+                    {
                         (playerPhaseAction[(int)currentBattlePhase] as I_CanUse).UseEffect();
-                    yield return SC_GameMgr._gameMgr.waitText;
-                    if(enemyPhaseAction[(int)currentBattlePhase] != null)
+                        yield return SC_GameMgr._gameMgr.waitText;
+                    }
+                    if (enemyPhaseAction[(int)currentBattlePhase] != null)
+                    {
                         (enemyPhaseAction[(int)currentBattlePhase] as I_CanUse).UseEffect();
-                    yield return SC_GameMgr._gameMgr.waitText;
+                        yield return SC_GameMgr._gameMgr.waitText;
+                    }
                 }
                 else
                 {
                     if (enemyPhaseAction[(int)currentBattlePhase] != null)
+                    {
                         (enemyPhaseAction[(int)currentBattlePhase] as I_CanUse).UseEffect();
-                    yield return SC_GameMgr._gameMgr.waitText;
+                        yield return SC_GameMgr._gameMgr.waitText;
+                    }
                     if (playerPhaseAction[(int)currentBattlePhase] != null)
+                    {
                         (playerPhaseAction[(int)currentBattlePhase] as I_CanUse).UseEffect();
-                    yield return SC_GameMgr._gameMgr.waitText;
+                        yield return SC_GameMgr._gameMgr.waitText;
+                    }
                 }
-            }
-            for(int n=0; n<5; n++)
-            {
-                playerPhaseAction[n] = null;
-                enemyPhaseAction[n] = null;
             }
         }
         BattleRoundInit();
     }
     public void ExecuteBattle() { StartCoroutine(_executeBattle()); }
-
-    public void BattleRoundInit()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            playerBattleActionSlot[i] = null;
-            enemyBattleActionSlot[i] = null;
-        }
-        IconReset();
-        SC_EnemyMgr._enemyMgr.BattleActionInput();
-        IndiIconBattle();
-        actionCounter = 0;
-        executeButton.UnableButton();
-        executeButton.gameObject.SetActive(true);
-    }
 }
