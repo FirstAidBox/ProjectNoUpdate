@@ -18,6 +18,6 @@ MonoBehaviour:
   Color: {r: 0.014705896, g: 1, b: 0, a: 1}
   Hp: 3
   Atk: 4
-  Def: 0
+  Def: 2
   Spd: 1
-  SkillIndex: 0000000001000000
+  SkillIndex: 000000000100000002000000

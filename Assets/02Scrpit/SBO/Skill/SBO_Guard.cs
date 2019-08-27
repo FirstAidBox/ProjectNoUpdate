@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Skill_Guard", menuName = "SBO/Skill/Builtin/Guard", order = 5)]
+[CreateAssetMenu(fileName = "Skill_Guard", menuName = "SBO/Skill/Builtin/Guard", order = 15)]
 public class SBO_Guard : SBO_UseObject, I_BattleStack
 {
     public void WhenIsUse()

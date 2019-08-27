@@ -409,6 +409,7 @@ public class SC_GameMgr : MonoBehaviour
         innMenu.SetActive(false);
         SC_MenuBar._menuBar.playerMenuBar.SetActive(false);
         SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
+        SC_FieldMgr._fieldMgr.executeButton.gameObject.SetActive(false);
         SC_PlayerMgr._playerMgr.PlayerInfoInit();
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
@@ -470,6 +471,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         PrintTextBox(_stringMgr.st_enterInnStart);
         SC_PlayerMgr._playerMgr.Refill_InnItem();
+        SC_PlayerMgr._playerMgr.CurrentHP = SC_PlayerMgr._playerMgr.MaxHP;
         FadeOutAndIn();
 		InvokeWaitFadeOut(VisibleInn);
 		InvokeWaitFadeOut(OffMainIndicator);
@@ -552,7 +554,15 @@ public class SC_GameMgr : MonoBehaviour
     }
     public void IndiSetupArea2()
     {
-        mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, AnswerArea2);
+        if (isAreaClear[2])
+        {
+            mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, "이미 우두머리를 물리친 지역입니다.");
+            mainIndicator[1].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+        }
+        else
+        {
+            mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, AnswerArea2);
+        }
         mainIndicator[1].ResizeCollider(3f);
         mainIndicator[1].transform.position = new Vector2(0f, 1.5f);
     }
@@ -571,11 +581,25 @@ public class SC_GameMgr : MonoBehaviour
         areaNum = 2;
         PrintTextBox(_stringMgr.st_area2 + _stringMgr.st_moving);
         FadeOutAndIn();
-        Invoke("OffMainIndicator", 1f);
+        InvokeWaitFadeOut(OffMainIndicator);
+        InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
+        SC_FieldMgr._fieldMgr.GetArea2Sprite();
+        InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.EnteringField);
+        SC_EnemyMgr._enemyMgr.GetArea2Data();
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
     }
     public void IndiSetupArea3()
     {
-        mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, AnswerArea3);
+        if (isAreaClear[3])
+        {
+            mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, "이미 우두머리를 물리친 지역입니다.");
+            mainIndicator[2].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+        }
+        else
+        {
+            mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, AnswerArea3);
+        }
         mainIndicator[2].ResizeCollider(3f);
         mainIndicator[2].transform.position = new Vector2(4.5f, 1.5f);
     }
@@ -594,7 +618,13 @@ public class SC_GameMgr : MonoBehaviour
         areaNum = 3;
         PrintTextBox(_stringMgr.st_area3 + _stringMgr.st_moving);
         FadeOutAndIn();
-        Invoke("OffMainIndicator", 1f);
+        InvokeWaitFadeOut(OffMainIndicator);
+        InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
+        SC_FieldMgr._fieldMgr.GetArea3Sprite();
+        InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.EnteringField);
+        SC_EnemyMgr._enemyMgr.GetArea3Data();
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
     }
 
     public void AnswerExitGame()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BATTLEPHASE { ITEM = 0, GUARD, ATTACK, SMASH, EXTRA }
 
@@ -29,9 +30,13 @@ public class SC_FieldMgr : MonoBehaviour
     public int actionCounter = 0;
 
     public SC_SlotBase[] playerFieldActionSlot;
+    public int MaxFieldLength;
     public int CurrentTurn;
     public int TotalTurn;
     public int CurrentRound;
+    public Text FieldStateText;
+    public const string st_maxlength = "최대 길이: ";
+    public const string st_remainturn = "남은 턴수: ";
 
     public bool isInBattle = false;
     public SC_SlotBase[] playerBattleActionSlot;
@@ -43,6 +48,7 @@ public class SC_FieldMgr : MonoBehaviour
     private void Awake()
     {
         _fieldMgr = this;
+        Init();
         fieldBacks = fieldBackGroup.GetComponentsInChildren<SC_FieldBack>();
         DisableFieldTiles();
         playerFieldActionSlot = new SC_SlotBase[3];
@@ -51,7 +57,15 @@ public class SC_FieldMgr : MonoBehaviour
         playerPhaseAction = new SBO_SlotObject[5];
         enemyPhaseAction = new SBO_SlotObject[5];
     }
-
+    public void Init()
+    {
+        MaxFieldLength = 4;
+    }
+    public void AreaLevelUp()
+    {
+        MaxFieldLength += 3;
+        SC_EnemyMgr._enemyMgr.AddStatValue += 1;
+    }
     public void GetArea1Sprite()
     {
         topSprites = Resources.LoadAll<Sprite>("sprite/field/area1/top");
@@ -76,6 +90,7 @@ public class SC_FieldMgr : MonoBehaviour
         {
             TotalTurn++;
             CurrentTurn++;
+            RefreshFieldStateText();
             SC_PlayerMgr._playerMgr.TurnInit();
             SC_EnemyMgr._enemyMgr.SetPosition();
             SC_EnemyMgr._enemyMgr.InputEnemyData(TotalTurn);
@@ -99,6 +114,8 @@ public class SC_FieldMgr : MonoBehaviour
         TotalTurn = 0;
         CurrentRound = 0;
         actionBar.SetActive(true);
+        executeButton.gameObject.SetActive(true);
+        FieldStateText.enabled = true;
         SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
         SC_GameMgr._gameMgr.PrintClickTextBox("도착했습니다.");
     }
@@ -112,7 +129,7 @@ public class SC_FieldMgr : MonoBehaviour
         SelecterInit();
         executeButton.UnableButton();
         executeButton.gameObject.SetActive(true);
-        if (TotalTurn + 1 == SC_EnemyMgr._enemyMgr.MaxEnemyCount)
+        if (TotalTurn + 1 == MaxFieldLength)
             ReadyToBossBattle();
         else
             IndiIconField();
@@ -132,6 +149,10 @@ public class SC_FieldMgr : MonoBehaviour
         for (int j = 0; j < fieldBacks.Length; j++)
             fieldBacks[j].gameObject.SetActive(false);
     }
+    public void RefreshFieldStateText()
+    {
+        FieldStateText.text = st_maxlength + MaxFieldLength + "\n" + st_remainturn + (MaxFieldLength - TotalTurn);
+    }
     public void IndiIconField()
     {
         for (int i = 0; i < SC_GameMgr._gameMgr.mainIndicator.Length; i++)
@@ -142,7 +163,8 @@ public class SC_FieldMgr : MonoBehaviour
         for (int i = 0; i < SC_PlayerMgr._playerMgr.SightRange; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup
                 (SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].Image,
-                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].EnemyName);
+                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].EnemyName,
+                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].Color);
         for (int i = SC_PlayerMgr._playerMgr.SightRange; i < 3; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup(imageUnknown, "알수없음");
         SC_GameMgr._gameMgr.OnMainIndicator();
@@ -270,10 +292,46 @@ public class SC_FieldMgr : MonoBehaviour
 
     public void ReadyToBossBattle()
     {
+        SC_GameMgr._gameMgr.isRest = true;
         actionBar.SetActive(false);
+        executeButton.gameObject.SetActive(true);
+        executeButton.EnableButton();
         SC_GameMgr._gameMgr.OffMainIndicator();
-        SC_GameMgr._gameMgr.SetBaseText("보스전투 준비중");
+        SC_GameMgr._gameMgr.SetBaseText("이 앞엔 이 지역의 우두머리가 있습니다. 전투 시작 전 소지품으로 회복을 할 수 있습니다.");
         SC_GameMgr._gameMgr.PrintBaseBox();
+    }
+
+    public void AnswerBossBattle()
+    {
+        if (!SC_GameMgr._gameMgr.trigger_FA_Yes)
+            SC_GameMgr._gameMgr.PopupFinalAnswerBar(AnswerBossBattle, "정말 우두머리와의 전투를 시작하시겠습니까?");
+        else
+        {
+            MoveToBoss();
+            SC_GameMgr._gameMgr.trigger_FA_Yes = false;
+        }
+    }
+    public void MoveToBoss()
+    {
+        StartCoroutine(_moveToBoss());
+    }
+    private IEnumerator _moveToBoss()
+    {
+        SC_GameMgr._gameMgr.isRest = false;
+        SC_MenuBar._menuBar.ClosePlayerMenu();
+        executeButton.gameObject.SetActive(false);
+        TotalTurn++;
+        RefreshFieldStateText();
+        SC_EnemyMgr._enemyMgr.SetPosition();
+        SC_EnemyMgr._enemyMgr.InputEnemyData(0);
+        MoveTiles(1);
+        SC_GameMgr._gameMgr.PrintClickTextBox("우두머리에게 이동합니다");
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_EffectMgr._effectMgr.isEvent = true;
+        SC_EffectMgr._effectMgr.EffectSpot();
+        SC_GameMgr._gameMgr.PrintClickTextBox(SC_EnemyMgr._enemyMgr.Name + " 와(과) 의 전투를 시작합니다.");
+        SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
+        BattleSetup();
     }
 
     private IEnumerator _BattleSetup()
@@ -282,6 +340,7 @@ public class SC_FieldMgr : MonoBehaviour
         isInBattle = true;
         BattleRoundInit();
     }
+    public void BattleSetup() { StartCoroutine(_BattleSetup()); }
     public void BattleRoundInit()
     {
         for (int i = 0; i < 3; i++)
@@ -294,10 +353,10 @@ public class SC_FieldMgr : MonoBehaviour
         IndiIconBattle();
         SelecterInit();
         actionCounter = 0;
+        actionBar.SetActive(true);
         executeButton.UnableButton();
         executeButton.gameObject.SetActive(true);
     }
-    public void BattleSetup() { StartCoroutine(_BattleSetup()); }
     public void IndiIconBattle()
     {
         for (int i = 0; i < SC_GameMgr._gameMgr.mainIndicator.Length; i++)
@@ -360,4 +419,15 @@ public class SC_FieldMgr : MonoBehaviour
         BattleRoundInit();
     }
     public void ExecuteBattle() { StartCoroutine(_executeBattle()); }
+
+    /// <summary>
+    /// 필드전용 요소들을 비표시 상태로 만든다.
+    /// </summary>
+    public void ExitField()
+    {
+        DisableFieldTiles();
+        actionBar.SetActive(false);
+        executeButton.gameObject.SetActive(false);
+        FieldStateText.enabled = false;
+    }
 }

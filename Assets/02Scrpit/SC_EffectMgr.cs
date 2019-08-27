@@ -20,11 +20,11 @@ public class SC_EffectMgr : MonoBehaviour
         camTr = Camera.main.transform;
         camOriPos = Camera.main.transform.position;
     }
-    
+
     private void EventSwitchOn()
     {
-        if(isEvent)
-                SC_GameMgr._gameMgr.isEventPlaying = true;
+        if (isEvent)
+            SC_GameMgr._gameMgr.isEventPlaying = true;
     }
     private void EventSwitchOff()
     {
@@ -52,7 +52,7 @@ public class SC_EffectMgr : MonoBehaviour
         camTr.position = camOriPos;
     }
     public void CameraShake(int shakePower) { StartCoroutine(_Shake(shakePower)); }
-    
+
     private IEnumerator _EffectGetSlotObject(Sprite image, Color color)
     {
         EventSwitchOn();
@@ -107,7 +107,7 @@ public class SC_EffectMgr : MonoBehaviour
     {
         EventSwitchOn();
         Vector2 originPos = playerPos;
-        Vector2 targetpos = new Vector2(-4f, 1f);
+        Vector2 targetpos = originPos + new Vector2(0f, 1f);
         Color c = Color.white;
         indiTr.position = originPos;
         spriteRen.sprite = e_Coin;
@@ -192,7 +192,7 @@ public class SC_EffectMgr : MonoBehaviour
         EventSwitchOn();
         indiTr.position = pos;
         spriteRen.sprite = e_down;
-        for(int i=0;i<5;i++)
+        for (int i = 0; i < 5; i++)
         {
             spriteRen.flipX = true;
             yield return SC_GameMgr._gameMgr.delay100ms;
@@ -204,4 +204,105 @@ public class SC_EffectMgr : MonoBehaviour
         isEvent = false;
     }
     public void EffectDown(Vector2 pos) { StartCoroutine(_EffectDown(pos)); }
+
+    public Sprite e_potion;
+    private IEnumerator _EffectPotion(Color color)
+    {
+        EventSwitchOn();
+        indiTr.position = playerPos;
+        spriteRen.sprite = e_potion;
+        spriteRen.color = color;
+        for (int i = 0; i < 5; i++)
+        {
+            spriteRen.flipX = true;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+            spriteRen.flipX = false;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectPotion(Color color) { StartCoroutine(_EffectPotion(color)); }
+
+    public Sprite e_bome;
+    private IEnumerator _EffectBome()
+    {
+        EventSwitchOn();
+        indiTr.position = enemyPos;
+        spriteRen.sprite = e_bome;
+        spriteRen.color = new Color(1, 1, 1, 0);
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.color = new Color(1, 1, 1, 0.5f);
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.color = Color.white;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.color = new Color(1, 1, 1, 0.9f);
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.color = new Color(1, 1, 1, 0.6f);
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.color = new Color(1, 1, 1, 0.3f);
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectBome() { StartCoroutine(_EffectBome()); }
+
+    public Sprite e_guard;
+    private IEnumerator _EffectGuard(Vector2 pos)
+    {
+        EventSwitchOn();
+        Color c = Color.white;
+        indiTr.position = pos;
+        spriteRen.sprite = e_guard;
+        for (float f = 1f; f > -0.1f; f -= 0.2f)
+        {
+            c.a = f;
+            spriteRen.color = c;
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        }
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectGuard(Vector2 pos) { StartCoroutine(_EffectGuard(pos)); }
+
+    public Sprite e_counter;
+    private IEnumerator _EffectCounter()
+    {
+        EventSwitchOn();
+        indiTr.position = playerPos;
+        spriteRen.sprite = e_counter;
+        for (int i = 0; i < 8; i++)
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectCounter() { StartCoroutine(_EffectCounter()); }
+
+    private IEnumerator _EffectActiveCounter()
+    {
+        EventSwitchOn();
+        indiTr.position = playerPos;
+        spriteRen.sprite = e_counter;
+        for (int i = 0; i < 8; i++)
+            yield return SC_GameMgr._gameMgr.delay100ms;
+        indiTr.position = enemyPos;
+        spriteRen.sprite = e_simpleHit;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.flipX = true;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.flipY = true;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.flipX = false;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        spriteRen.flipY = false;
+        yield return SC_GameMgr._gameMgr.delay100ms;
+        Clear();
+        EventSwitchOff();
+        isEvent = false;
+    }
+    public void EffectActiveCounter() { StartCoroutine(_EffectActiveCounter()); }
 }

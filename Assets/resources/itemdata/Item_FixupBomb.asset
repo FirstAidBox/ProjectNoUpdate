@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff6446b393f6b4485d131c3819c3c3, type: 3}
+  m_Name: Item_FixupBomb
+  m_EditorClassIdentifier: 
+  Index: 4
+  Name: "\uAC1C\uB7C9\uB41C \uD3ED\uD0C4"
+  Text: "\uB354\uC6B1 \uAC15\uD574\uC9C4 \uD3ED\uD0C4\uC785\uB2C8\uB2E4. \uC801\uC5D0\uAC8C
+    \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD55C 6 \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  Image: {fileID: 21300000, guid: e30404b9592a0a34793e91bcd7742e4f, type: 3}
+  Color: {r: 1, g: 0.35172415, b: 0, a: 1}
+  Price: 10
+  dmgvalue: 6

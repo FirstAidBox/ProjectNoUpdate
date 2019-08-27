@@ -9,10 +9,6 @@ public class SC_EnemyMgr : MonoBehaviour
     //몬스터나 함정의 능력치와 배치 등을 담당하는 스크립트입니다.
     public static SC_EnemyMgr _enemyMgr;
 
-    public bool isArea1Clear = false;
-    public bool isArea2Clear = false;
-    public bool isArea3Clear = false;
-
     public KIND_ENEMY KIND;
     public string Name;
     public Sprite Image;
@@ -27,6 +23,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public int SkillCount;
 
     public bool IsGuard;
+    public bool IsDmg;
     public bool IsDown;
 
     public SC_EnemyIndi EnemyIndicator;
@@ -34,7 +31,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public Vector2 FieldStartPos = new Vector2(7.5f, 0.5f);
 
     public SBO_EnemyData[] enemyData;
-    public int MaxEnemyCount;
+
     public int AddStatValue;
 
     void Awake()
@@ -46,18 +43,12 @@ public class SC_EnemyMgr : MonoBehaviour
     }
     public void Init()
     {
-        MaxEnemyCount = 4;
         AddStatValue = 0;
-    }
-    public void AreaLevelUp()
-    {
-        MaxEnemyCount += 3;
-        AddStatValue += 1;
     }
     public void GetArea1Data()
     {
         enemyData[0] = SC_SBODataMgr._SBODataMgr.area1EnemyData[0];
-        for(int i=1; i<MaxEnemyCount;i++)
+        for(int i=1; i<SC_FieldMgr._fieldMgr.MaxFieldLength;i++)
         {
             enemyData[i] = SC_SBODataMgr._SBODataMgr.area1EnemyData[Random.Range(1, SC_SBODataMgr._SBODataMgr.area1EnemyData.Count)];
         }
@@ -75,7 +66,7 @@ public class SC_EnemyMgr : MonoBehaviour
         SkillCount = enemyData[i].SkillIndex.Length;
         for (int n = 0; n < SkillCount; n++)
             SkillIndex[n] = enemyData[i].SkillIndex[n];
-        EnemyIndicator.IndicatorMakeup(enemyData[i].Image, enemyData[i].EnemyName);
+        EnemyIndicator.IndicatorMakeup(enemyData[i].Image, enemyData[i].EnemyName, enemyData[i].Color);
     }
     public void VisibleEnemy()
     {
@@ -140,6 +131,7 @@ public class SC_EnemyMgr : MonoBehaviour
     {
         IsGuard = false;
         IsDown = false;
+        IsDmg = false;
     }
     public void ApplyDamage(int DmgValue)
     {
@@ -154,16 +146,21 @@ public class SC_EnemyMgr : MonoBehaviour
     }
     public void ApplyDamagePure(int DmgValue)
     {
-
+        if (DmgValue > 0)
+            SC_EffectMgr._effectMgr.CameraShake(DmgValue);
+        EnemyIndicator.IndiBlink();
+        CurrentHP -= DmgValue;
+        if (CurrentHP <= 0)
+            EnemyDie();
+        SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 에게 " + DmgValue + " 피해를 입혔습니다.");
     }
     public void EnemyDie()
     {
-        Debug.Log("적: 으앙주금");
         SC_FieldMgr._fieldMgr.isInBattle = false;
         SC_FieldMgr._fieldMgr.StopAllCoroutines();
         if(KIND == KIND_ENEMY.BOSS)
         {
-            //보스전 승리 시 처리될 부분
+            StartCoroutine(_GetBossPrice());
         }
         else
         {
@@ -179,5 +176,24 @@ public class SC_EnemyMgr : MonoBehaviour
         SC_PlayerMgr._playerMgr.GetRandomItem();
         yield return SC_GameMgr._gameMgr.waitText;
         SC_FieldMgr._fieldMgr.ExecuteField();
+    }
+    private IEnumerator _GetBossPrice()
+    {
+        yield return SC_GameMgr._gameMgr.waitText;
+        EnemyIndicator.IndiFadeOut();
+        SC_GameMgr._gameMgr.PrintClickTextBox("이 지역 우두머리 " + Name + " 을(를) 물리쳤습니다.");
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_PlayerMgr._playerMgr.GetRandomItem();
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_PlayerMgr._playerMgr.LevelUp();
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_PlayerMgr._playerMgr.GetRandomSkill();
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_GameMgr._gameMgr.isAreaClear[SC_GameMgr._gameMgr.areaNum] = true;
+        SC_FieldMgr._fieldMgr.AreaLevelUp();
+        SC_GameMgr._gameMgr.PrintClickTextBox("우두머리를 무찌른걸 다른지역의 괴물들이 알아차렸습니다. 남은 지역들의 난이도가 상승합니다.");
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_GameMgr._gameMgr.EnteringInn();
+        SC_GameMgr._gameMgr.InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
     }
 }

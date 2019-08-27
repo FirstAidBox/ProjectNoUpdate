@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287a9e49d13979f459a6ec8948efc175, type: 3}
+  m_Name: Skill_SuperSmash
+  m_EditorClassIdentifier: 
+  Index: 3
+  Name: "\uCD08\uAC15\uD0C0"
+  Text: "\uB354 \uAC15\uD574\uC9C4 \uAC15\uD0C0\uC785\uB2C8\uB2E4. \uAE30\uBCF8\uC801\uC778
+    \uD2B9\uC131\uC740 \uC77C\uBC18\uC801\uC778 \uAC15\uD0C0\uC640 \uAC19\uC9C0\uB9CC
+    \uD53C\uD574\uB7C9\uC774 \uACF5\uACA9\uB825\uC758 \uB450\uBC30\uC785\uB2C8\uB2E4."
+  Image: {fileID: 21300006, guid: 3f53025d4de68104bbbdec08c4bc500e, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  Price: 0
+  increaseValue: 2

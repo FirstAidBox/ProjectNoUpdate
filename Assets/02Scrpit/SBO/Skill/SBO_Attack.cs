@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Skill_Attack", menuName = "SBO/Skill/Builtin/Attack", order = 4)]
+[CreateAssetMenu(fileName = "Skill_Attack", menuName = "SBO/Skill/Builtin/Attack", order = 14)]
 public class SBO_Attack : SBO_UseObject, I_BattleStack
 {
     public void WhenIsUse()
@@ -22,7 +22,7 @@ public class SBO_Attack : SBO_UseObject, I_BattleStack
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectSimpleHit(SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position);
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_EnemyMgr._enemyMgr.ApplyDamage, SC_PlayerMgr._playerMgr.ATK);
-            SC_EnemyMgr._enemyMgr.IsDown = true;
+            SC_EnemyMgr._enemyMgr.IsDmg = true;
         }
     }
 }

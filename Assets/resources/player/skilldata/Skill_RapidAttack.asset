@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e1967a99db70042a37288509dfdcdf, type: 3}
+  m_Name: Skill_RapidAttack
+  m_EditorClassIdentifier: 
+  Index: 5
+  Name: "\uC18D\uACF5"
+  Text: "\uC801\uC5D0\uAC8C \uC77C\uBC18 \uACF5\uACA9\uC744 \uD569\uB2C8\uB2E4. \uC0C1\uB300\uC758
+    \uC790\uC138\uB97C \uBB34\uB108\uB728\uB9AC\uB294\uB370 \uC131\uACF5\uD588\uB2E4\uBA74
+    \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uACE0 \uC18D\uB3C4\uB9CC\uD07C\uC758
+    \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  Image: {fileID: 21300010, guid: 3f53025d4de68104bbbdec08c4bc500e, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  Price: 0

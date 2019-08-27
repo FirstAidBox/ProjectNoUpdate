@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Skill_Smash", menuName = "SBO/Skill/Builtin/Smash", order = 6)]
+[CreateAssetMenu(fileName = "Skill_Smash", menuName = "SBO/Skill/Builtin/Smash", order = 16)]
 public class SBO_Smash : SBO_UseObject, I_BattleStack
 {
     public void WhenIsUse()
@@ -9,10 +9,11 @@ public class SBO_Smash : SBO_UseObject, I_BattleStack
     }
     public override void UseEffect()
     {
-        if(SC_PlayerMgr._playerMgr.IsDown)
+        if(SC_PlayerMgr._playerMgr.IsDmg)
         {
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectDown(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
+            SC_PlayerMgr._playerMgr.IsDown = true;
             SC_GameMgr._gameMgr.PrintClickTextBox("자세가 무너져 제대로 행동할 수 없습니다.");
         }
         else
@@ -23,7 +24,7 @@ public class SBO_Smash : SBO_UseObject, I_BattleStack
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectSimpleHit(SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position);
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_EnemyMgr._enemyMgr.ApplyDamage, (int)finDmg);
-            SC_EnemyMgr._enemyMgr.IsDown = true;
+            SC_EnemyMgr._enemyMgr.IsDmg = true;
         }
     }
 }

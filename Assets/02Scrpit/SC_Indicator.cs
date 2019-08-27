@@ -24,11 +24,24 @@ public class SC_Indicator : MonoBehaviour
         IndicatorInit();
         indicatorRenderer.sprite = inputSprite;
     }
+    public void IndicatorMakeup(Sprite inputSprite, Color inputColor)
+    {
+        IndicatorInit();
+        indicatorRenderer.sprite = inputSprite;
+        indicatorRenderer.color = inputColor;
+    }
     public void IndicatorMakeup(Sprite inputSprite, string inputText)
     {
         IndicatorInit();
         indicatorRenderer.sprite = inputSprite;
         indicatorText = inputText;
+    }
+    public void IndicatorMakeup(Sprite inputSprite, string inputText, Color inputColor)
+    {
+        IndicatorInit();
+        indicatorRenderer.sprite = inputSprite;
+        indicatorText = inputText;
+        indicatorRenderer.color = inputColor;
     }
     public void IndicatorMakeup(Sprite inputSprite,string inputText, Action eventName)
     {

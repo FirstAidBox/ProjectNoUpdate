@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a685e4ffe8b6c4e9df18275154e3c0, type: 3}
+  m_Name: Skill_HpUp
+  m_EditorClassIdentifier: 
+  Index: 6
+  Name: "\uC0DD\uBA85\uB825 \uC99D\uAC00"
+  Text: "\uC0DD\uBA85\uB825\uC774 2 \uC99D\uAC00\uD569\uB2C8\uB2E4. \uC2EC\uD50C\uD558\uB124\uC694."
+  Image: {fileID: 21300012, guid: 3f53025d4de68104bbbdec08c4bc500e, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  Price: 0
+  EffectText: 
+  increaseValue: 2

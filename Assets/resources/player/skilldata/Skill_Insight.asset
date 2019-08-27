@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f94ff8cdd3953042b676eb5fbede00c, type: 3}
+  m_Name: Skill_Insight
+  m_EditorClassIdentifier: 
+  Index: 2
+  Name: "\uD1B5\uCC30\uB825"
+  Text: "\uC804\uD22C \uC2DC \uC801\uC758 \uD589\uB3D9\uC744 \uC608\uCE21\uD560 \uC218
+    \uC788\uB294 \uBC94\uC704\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  Image: {fileID: 21300004, guid: 3f53025d4de68104bbbdec08c4bc500e, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  Price: 0
+  EffectText: 

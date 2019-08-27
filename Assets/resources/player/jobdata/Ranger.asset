@@ -17,3 +17,6 @@ MonoBehaviour:
   atk: 2
   def: 1
   spd: 4
+  defaultSkills:
+  - {fileID: 11400000, guid: d457e21f777871a4284a198428a1e6df, type: 2}
+  - {fileID: 11400000, guid: e6d0911a4b944e645aa2a6094dd86774, type: 2}

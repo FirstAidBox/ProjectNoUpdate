@@ -43,7 +43,12 @@ public class SC_ExecuteButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (IsCanInteract())
-            SC_GameMgr._gameMgr.PrintTextBox("턴 행동을 실행합니다.");
+        {
+            if (SC_GameMgr._gameMgr.isRest)
+                SC_GameMgr._gameMgr.PrintTextBox("우두머리와의 전투를 시작합니다.");
+            else
+                SC_GameMgr._gameMgr.PrintTextBox("턴 행동을 실행합니다.");
+        }
     }
     private void OnMouseUp()
     {
@@ -57,6 +62,10 @@ public class SC_ExecuteButton : MonoBehaviour
                     {
                         gameObject.SetActive(false);
                         SC_FieldMgr._fieldMgr.ExecuteBattle();
+                    }
+                    else if(SC_GameMgr._gameMgr.isRest)
+                    {
+                        SC_FieldMgr._fieldMgr.AnswerBossBattle();
                     }
                     else
                     {

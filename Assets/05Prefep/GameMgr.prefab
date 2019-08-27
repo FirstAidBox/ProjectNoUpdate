@@ -80,9 +80,11 @@ MonoBehaviour:
   actionIndex: 0
   actionCounter: 0
   playerFieldActionSlot: []
+  MaxFieldLength: 0
   CurrentTurn: 0
   TotalTurn: 0
   CurrentRound: 0
+  FieldStateText: {fileID: 0}
   isInBattle: 0
   playerBattleActionSlot: []
   enemyBattleActionSlot: []
@@ -136,9 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7e0a01e5da5c940aa4443a24ce874f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isArea1Clear: 0
-  isArea2Clear: 0
-  isArea3Clear: 0
   KIND: 0
   Name: 
   Image: {fileID: 0}
@@ -151,12 +150,12 @@ MonoBehaviour:
   SkillIndex: 
   SkillCount: 0
   IsGuard: 0
+  IsDmg: 0
   IsDown: 0
   EnemyIndicator: {fileID: 0}
   InInnPos: {x: 2.5, y: 0.5}
   FieldStartPos: {x: 7.5, y: 0.5}
   enemyData: []
-  MaxEnemyCount: 0
   AddStatValue: 0
 --- !u!114 &114238948942378822
 MonoBehaviour:
@@ -187,6 +186,7 @@ MonoBehaviour:
   baseSprite: {fileID: 0}
   nullSprite: {fileID: 21300000, guid: 9f53b60643105424c832bfa79f486459, type: 3}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
+  isBaseTextHide: 0
   buttons: []
   eventTriggers: []
   offWhileEvent: {fileID: 0}
@@ -296,6 +296,7 @@ MonoBehaviour:
   IsHide: 0
   IsDash: 0
   IsGuard: 0
+  IsDmg: 0
   IsDown: 0
   IsCounter: 0
   SightRange: 0
@@ -333,6 +334,10 @@ MonoBehaviour:
   e_simpleHit: {fileID: 21300000, guid: 99e7c983019edad40a59d04bfc514f93, type: 3}
   e_spot: {fileID: 21300000, guid: c61a94708ab073b42b669180a0544792, type: 3}
   e_down: {fileID: 21300000, guid: 319ef1eb2d0d9d74ab4d9c7e38ad92dd, type: 3}
+  e_potion: {fileID: 21300000, guid: 1dc34de2533ccad489739ff296240909, type: 3}
+  e_bome: {fileID: 21300000, guid: ef4c10daa3fe8564a8fc924c4928aef1, type: 3}
+  e_guard: {fileID: 0}
+  e_counter: {fileID: 21300000, guid: 7390fc646d10cdf42bdf817dd3a6199f, type: 3}
 --- !u!114 &114877447077616518
 MonoBehaviour:
   m_ObjectHideFlags: 1

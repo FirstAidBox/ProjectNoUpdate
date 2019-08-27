@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Skill_Hide", menuName = "SBO/Skill/Builtin/Hide", order = 2)]
+[CreateAssetMenu(fileName = "Skill_Hide", menuName = "SBO/Skill/Builtin/Hide", order = 12)]
 public class SBO_Hide : SBO_UseObject, I_FieldStack
 {
     public override void UseEffect()

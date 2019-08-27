@@ -23,6 +23,7 @@ public class SC_PlayerMgr : MonoBehaviour
     public bool IsHide;
     public bool IsDash;
     public bool IsGuard;
+    public bool IsDmg;
     public bool IsDown;
     public bool IsCounter;
 
@@ -88,20 +89,23 @@ public class SC_PlayerMgr : MonoBehaviour
         SkillCount = 0;
     }
     public SBO_SlotObject RandomSkill()//이미 플레이어가 배운 스킬을 제외하고 리턴
-        //스킬데이터의 수가 스킬슬롯 수(6개)보다 적으면 무한 반복의 위험이 있다.
     {
-        bool already;
-        int index;
-        for(; ; )
+        bool already = true;
+        int index = 0;
+        while (already)
         {
-            index = UnityEngine.Random.Range(0, SC_SBODataMgr._SBODataMgr.playerSkillData.Count);
             already = false;
-            for (int i = 0; i < SkillCount; i++)//스킬슬롯에 있는 스킬인덱스를 대조하여 같지 않으면 리턴, 하나라도 같으면 인덱스를 다시뽑아 반복
-                if (SkillSlots[i].slotObject.Index == index)
-                    already = true;
-            if (!already)
-                return SC_SBODataMgr._SBODataMgr.playerSkillData[index];
-        }
+            index = Random.Range(0, SC_SBODataMgr._SBODataMgr.playerSkillData.Count);
+            for (int i = 0; i < SkillCount; i++)
+            {
+                if (SkillSlots[i].slotObject != null)
+                {
+                    if (SkillSlots[i].slotObject.Index == index)
+                        already = true;
+                }
+            }
+        }     
+        return SC_SBODataMgr._SBODataMgr.playerSkillData[index];
     }
     public void GetSkill(SBO_SlotObject skill)
     {
@@ -170,6 +174,8 @@ public class SC_PlayerMgr : MonoBehaviour
         {
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectGetSlotObject(Item);
+            Money -= Item.Price;
+            SC_MenuBar._menuBar.RefreshMoneyIndi();
             SC_GameMgr._gameMgr.PrintClickTextBox(Item.Name + " 을(를) 구매했습니다. " + (Item as SBO_InstantObject).EffectText);
             (Item as SBO_InstantObject).GetEffect();
         }
@@ -211,6 +217,16 @@ public class SC_PlayerMgr : MonoBehaviour
             InnSlots[i].AddObject(RandomItem());
         }
     }
+    public void LevelUp()
+    {
+        SC_GameMgr._gameMgr.PrintClickTextBox("레벨이 올랐습니다. 모든 능력치가 1 상승했습니다.");
+        Level++;
+        MaxHP++;
+        CurrentHP++;
+        ATK++;
+        DEF++;
+        SPD++;
+    }
     public void CharaMake()
     {
         playerIndicator.IndicatorMakeup(Image, "캐릭터의 정보를 확인합니다.", SC_MenuBar._menuBar.PopupStatMenu);
@@ -231,6 +247,15 @@ public class SC_PlayerMgr : MonoBehaviour
         IsGuard = false;
         IsDown = false;
         IsCounter = false;
+        IsDmg = false;
+        for (int i = 0; i < ItemSlots.Length; i++)
+        {
+            ItemSlots[i].SlotCanUse();
+        }
+        for (int i = 0; i < SkillSlots.Length; i++)
+        {
+            SkillSlots[i].SlotCanUse();
+        }
     }
     /// <summary>
     /// 플레이어에게 방어력에 의해 감소되는 데미지를 입힌다.
