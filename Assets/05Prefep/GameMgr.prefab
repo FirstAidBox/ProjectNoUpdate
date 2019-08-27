@@ -190,7 +190,10 @@ MonoBehaviour:
   buttons: []
   eventTriggers: []
   offWhileEvent: {fileID: 0}
-  systemButtons: []
+  systemButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isEventPlaying: 0
   isPlayingText: 0
   trigger_Click: 0
