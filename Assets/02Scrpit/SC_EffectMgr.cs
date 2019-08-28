@@ -131,6 +131,7 @@ public class SC_EffectMgr : MonoBehaviour
     private IEnumerator _EffectFind()
     {
         EventSwitchOn();
+        SC_SoundMgr._soundMgr.SFX_Find();
         Vector2 originPos = playerPos + new Vector2(1f, 0f);
         Color c = new Color(0, 0, 0, 0);
         indiTr.position = originPos;
@@ -176,6 +177,7 @@ public class SC_EffectMgr : MonoBehaviour
     private IEnumerator _EffectSpot()
     {
         EventSwitchOn();
+        SC_SoundMgr._soundMgr.SFX_Spot();
         indiTr.position = enemyPos + new Vector2(0f, 1f);
         spriteRen.sprite = e_spot;
         for (int i = 0; i < 10; i++)

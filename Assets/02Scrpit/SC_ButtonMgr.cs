@@ -29,37 +29,41 @@ public class SC_ButtonMgr : MonoBehaviour
         if (!SC_GameMgr._gameMgr.trigger_Click)
             return;
         SC_GameMgr._gameMgr.trigger_Click = false;
+        SC_SoundMgr._soundMgr.SFX_ClickOK();
     }
 
     public void PointerUpPrintBase() { SC_GameMgr._gameMgr.PrintBaseBox(); }
 
-    public void SysExitPointerDown() { }
-    public void SysExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitGame(); }
+    public void SysHelpButtonClick() { SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+
+    public void SysOptionButtonClick() { SC_MenuBar._menuBar.OptionMenuOnOff(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+
+    public void SysExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitGame(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void InnBuyPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_buy); }
-    public void InnBuyButtonClick() { SC_MenuBar._menuBar.PopupBuyMenu(); }
+    public void InnBuyButtonClick() { SC_MenuBar._menuBar.PopupBuyMenu(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void InnSellPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_sell); }
-    public void InnSellButtonClick() { SC_MenuBar._menuBar.PopupSellMenu(); }
+    public void InnSellButtonClick() { SC_MenuBar._menuBar.PopupSellMenu(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void InnExitPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_exit); }
-    public void InnExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitInn(); }
+    public void InnExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitInn(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuStatPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_stat); }
-    public void PLMenuStatClickButton() { SC_MenuBar._menuBar.OpenStatsWindow(); }
+    public void PLMenuStatClickButton() { SC_MenuBar._menuBar.OpenStatsWindow(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuSkillPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_skill); }
-    public void PLMenuSkillClickButton() { SC_MenuBar._menuBar.OpenSkillWindow(); }
+    public void PLMenuSkillClickButton() { SC_MenuBar._menuBar.OpenSkillWindow(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuItemPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_item); }
-    public void PLMenuItemClickButton() { SC_MenuBar._menuBar.OpenItemWindow(); }
+    public void PLMenuItemClickButton() { SC_MenuBar._menuBar.OpenItemWindow(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuExitPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_exit); }
-    public void PLMenuExitButtonClick() { SC_MenuBar._menuBar.ClosePlayerMenu(); }
+    public void PLMenuExitButtonClick() { SC_MenuBar._menuBar.ClosePlayerMenu(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuFBSPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_FBskill); }
-    public void PLMenuFBSButtonClick() { SC_MenuBar._menuBar.OpenFBSWindow(); }
+    public void PLMenuFBSButtonClick() { SC_MenuBar._menuBar.OpenFBSWindow(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void PLMenuBBSPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_plm_BBskill); }
-    public void PLMenuBBSButtonClick() { SC_MenuBar._menuBar.OpenBBSWindow(); }
+    public void PLMenuBBSButtonClick() { SC_MenuBar._menuBar.OpenBBSWindow(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 }

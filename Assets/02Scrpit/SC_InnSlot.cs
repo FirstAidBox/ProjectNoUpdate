@@ -34,13 +34,23 @@ public class SC_InnSlot : MonoBehaviour
     public void ButtonClick()
     {
         if (slotObject.Index == 0)
+        {
             SC_GameMgr._gameMgr.PrintTextBox("이미 구매한 물건입니다.");
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
+        }
         else if (SC_PlayerMgr._playerMgr.ItemCount >= 9)
+        {
             SC_GameMgr._gameMgr.PrintTextBox("가방이 가득차 구매할 수 없습니다.");
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
+        }
         else if (slotObject.Price > SC_PlayerMgr._playerMgr.Money)
+        {
             SC_GameMgr._gameMgr.PrintTextBox("돈이 부족해 구매할 수 없습니다.");
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
+        }
         else
         {
+            SC_SoundMgr._soundMgr.SFX_Coin();
             SC_PlayerMgr._playerMgr.BuyItem(slotObject);
             RemoveObject();
         }

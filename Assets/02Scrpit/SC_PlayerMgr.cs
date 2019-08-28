@@ -120,6 +120,7 @@ public class SC_PlayerMgr : MonoBehaviour
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectGetSlotObject(skill);
             SC_GameMgr._gameMgr.PrintClickTextBox("새 기술 "+ skill.Name + " 을(를) 배웠습니다.");
+            SC_SoundMgr._soundMgr.SFX_SkillGet();
         }
     }
     public void GetRandomSkill()
@@ -138,6 +139,7 @@ public class SC_PlayerMgr : MonoBehaviour
             SC_EffectMgr._effectMgr.EffectGetSlotObject(Item);
             SC_GameMgr._gameMgr.PrintClickTextBox(Item.Name + " 을(를) 찾았습니다. "+(Item as SBO_InstantObject).EffectText);
             (Item as SBO_InstantObject).GetEffect();
+            SC_SoundMgr._soundMgr.SFX_PutinBag();
         }
         else if (ItemCount >= 9)
         {
@@ -156,6 +158,7 @@ public class SC_PlayerMgr : MonoBehaviour
                     SC_EffectMgr._effectMgr.isEvent = true;
                     SC_EffectMgr._effectMgr.EffectGetSlotObject(Item);
                     SC_GameMgr._gameMgr.PrintClickTextBox(Item.Name + " 을(를) 찾아서 가방에 넣었습니다.");
+                    SC_SoundMgr._soundMgr.SFX_PutinBag();
                 }
                 else
                 {
@@ -265,7 +268,12 @@ public class SC_PlayerMgr : MonoBehaviour
     {
         int finDmg = Mathf.Clamp(DmgValue - DEF, 0, DmgValue);
         if (finDmg > 0)
+        {
             SC_EffectMgr._effectMgr.CameraShake(finDmg);
+            SC_SoundMgr._soundMgr.SFX_Dmg();
+        }
+        else
+            SC_SoundMgr._soundMgr.SFX_NoDmg();
         playerIndicator.IndiBlink();
         CurrentHP -= finDmg;
         if (CurrentHP <= 0)
@@ -278,7 +286,18 @@ public class SC_PlayerMgr : MonoBehaviour
     /// <param name="DmgValue">데미지 값</param>
     public void ApplyDamagePure(int DmgValue)
     {
-
+        if (DmgValue > 0)
+        {
+            SC_EffectMgr._effectMgr.CameraShake(DmgValue);
+            SC_SoundMgr._soundMgr.SFX_Dmg();
+        }
+        else
+            SC_SoundMgr._soundMgr.SFX_NoDmg();
+        playerIndicator.IndiBlink();
+        CurrentHP -= DmgValue;
+        if (CurrentHP <= 0)
+            PlayerDie();
+        SC_GameMgr._gameMgr.PrintClickTextBox(DmgValue + " 피해를 입었습니다.");
     }
     public void PlayerDie()
     {

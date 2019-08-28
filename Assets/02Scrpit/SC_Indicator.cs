@@ -11,6 +11,7 @@ public class SC_Indicator : MonoBehaviour
     public SpriteRenderer indicatorRenderer;
     public BoxCollider2D indicatorCollider;
     public bool isPointerIn = false;
+    public bool isbiff = false;
 
     protected virtual void Awake()
     {
@@ -23,18 +24,21 @@ public class SC_Indicator : MonoBehaviour
     {
         IndicatorInit();
         indicatorRenderer.sprite = inputSprite;
+        isbiff = false;
     }
     public void IndicatorMakeup(Sprite inputSprite, Color inputColor)
     {
         IndicatorInit();
         indicatorRenderer.sprite = inputSprite;
         indicatorRenderer.color = inputColor;
+        isbiff = false;
     }
     public void IndicatorMakeup(Sprite inputSprite, string inputText)
     {
         IndicatorInit();
         indicatorRenderer.sprite = inputSprite;
         indicatorText = inputText;
+        isbiff = false;
     }
     public void IndicatorMakeup(Sprite inputSprite, string inputText, Color inputColor)
     {
@@ -42,6 +46,7 @@ public class SC_Indicator : MonoBehaviour
         indicatorRenderer.sprite = inputSprite;
         indicatorText = inputText;
         indicatorRenderer.color = inputColor;
+        isbiff = false;
     }
     public void IndicatorMakeup(Sprite inputSprite,string inputText, Action eventName)
     {
@@ -49,6 +54,7 @@ public class SC_Indicator : MonoBehaviour
         indicatorRenderer.sprite = inputSprite;
         indicatorText = inputText;
         indicatorEvent = eventName;
+        isbiff = false;
     }
     public void IndicatorMakeup(Sprite inputSprite, Color inputColor, string inputText, Action eventName)
     {
@@ -57,6 +63,7 @@ public class SC_Indicator : MonoBehaviour
         indicatorRenderer.color = inputColor;
         indicatorText = inputText;
         indicatorEvent = eventName;
+        isbiff = false;
     }
     public void ResizeCollider(float inputsize)
     {
@@ -106,8 +113,13 @@ public class SC_Indicator : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        if (IsCanInteract() && indicatorEvent != null && isPointerIn)
+        if(IsCanInteract() && isPointerIn && isbiff)
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
+        else if (IsCanInteract() && indicatorEvent != null && isPointerIn)
+        {
             indicatorEvent();
+            SC_SoundMgr._soundMgr.SFX_ClickOK();
+        }
         else if (IsCanInteract())
             SC_GameMgr._gameMgr.PrintBaseBox();
     }

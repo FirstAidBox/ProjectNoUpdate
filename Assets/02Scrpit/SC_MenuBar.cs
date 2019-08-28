@@ -57,6 +57,8 @@ public class SC_MenuBar : MonoBehaviour
     public GameObject moneyIndi;
     public Text moneyIndiText;
 
+    public GameObject optionWindow;
+
     private void Awake()
     {
         _menuBar = this;
@@ -246,5 +248,12 @@ public class SC_MenuBar : MonoBehaviour
         PopupPlayerMenu();
         OpenBBSWindow();
         CurrentPage = MENUPAGE.B_BSKILL;
+    }
+    public void OptionMenuOnOff()
+    {
+        if (optionWindow.activeSelf)
+            optionWindow.SetActive(false);
+        else
+            optionWindow.SetActive(true);
     }
 }

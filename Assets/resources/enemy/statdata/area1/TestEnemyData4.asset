@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: TestEnemyData4
   m_EditorClassIdentifier: 
   Index: 4
-  KIND: 4
-  EnemyName: Area1Box
-  Image: {fileID: 21300000, guid: 4c22aea17d584d84985737e43405ddd6, type: 3}
+  KIND: 2
+  EnemyName: Area1Enemy4
+  Image: {fileID: 21300000, guid: ff74de060f85b3c408972b170f6dcf17, type: 3}
   Color: {r: 0.014705896, g: 1, b: 0, a: 1}
-  Hp: 1
-  Atk: 0
-  Def: 0
-  Spd: 0
-  SkillIndex: 
+  Hp: 3
+  Atk: 2
+  Def: 2
+  Spd: 4
+  SkillIndex: 000000000100000002000000

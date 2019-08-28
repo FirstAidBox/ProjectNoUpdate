@@ -18,13 +18,14 @@ public class SC_EnemyIndi : SC_Indicator
     private IEnumerator _moveOutWindow()
     {
         SC_GameMgr._gameMgr.isEventPlaying = true;
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
         for(int i=0; i<20; i++)
         {
             gameObject.transform.position = (Vector2)gameObject.transform.position + backMove;
             yield return SC_GameMgr._gameMgr.delay100ms;
         }
         SC_GameMgr._gameMgr.isEventPlaying = false;
-        yield return null;
+        SC_SoundMgr._soundMgr.SFX_FootStepStop();
     }
     public void MoveOutWindow()
     {

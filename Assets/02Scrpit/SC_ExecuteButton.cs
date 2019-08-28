@@ -62,19 +62,25 @@ public class SC_ExecuteButton : MonoBehaviour
                     {
                         gameObject.SetActive(false);
                         SC_FieldMgr._fieldMgr.ExecuteBattle();
+                        SC_SoundMgr._soundMgr.SFX_ClickOK();
                     }
-                    else if(SC_GameMgr._gameMgr.isRest)
+                    else if (SC_GameMgr._gameMgr.isRest)
                     {
                         SC_FieldMgr._fieldMgr.AnswerBossBattle();
+                        SC_SoundMgr._soundMgr.SFX_ClickOK();
                     }
                     else
                     {
                         gameObject.SetActive(false);
                         SC_FieldMgr._fieldMgr.ExecuteField();
+                        SC_SoundMgr._soundMgr.SFX_ClickOK();
                     }
                 }
                 else
+                {
                     SC_GameMgr._gameMgr.PrintTextBox("아직 턴 행동을 전부 정하지 않았습니다.");
+                    SC_SoundMgr._soundMgr.SFX_ClickBiff();
+                }
             }
             else
                 SC_GameMgr._gameMgr.PrintBaseBox();

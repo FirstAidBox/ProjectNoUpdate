@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using NS_StringData;
 
 public enum SCENEINFO { START=1, CHARSELECT, INN, AREASELECT, FIELD };
 
@@ -143,9 +142,9 @@ public class SC_GameMgr : MonoBehaviour
         OffButtons();
         offWhileEvent.SetActive(false);
         isPlayingText = true;
-        trigger_Click = true;
         PrintTextBox(inputText);
         yield return waitEvent;
+        trigger_Click = true;
         PrintTextBox(inputText + clickString);
         yield return waitClick;
         isPlayingText = false;
@@ -302,6 +301,7 @@ public class SC_GameMgr : MonoBehaviour
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
         OnButtons();
+        SC_SoundMgr._soundMgr.SFX_ClickOK();
     }
     public void NoClickFinalAnswer()
     {
@@ -314,6 +314,7 @@ public class SC_GameMgr : MonoBehaviour
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
         OnButtons();
+        SC_SoundMgr._soundMgr.SFX_ClickOK();
     }
     private IEnumerator PlayFadeOut()
     {
@@ -476,6 +477,10 @@ public class SC_GameMgr : MonoBehaviour
 		InvokeWaitFadeOut(VisibleInn);
 		InvokeWaitFadeOut(OffMainIndicator);
         isRest = true;
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.BGM_Inn);
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_InnDoor);
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
     }
     public void VisibleInn()
     {
@@ -504,6 +509,10 @@ public class SC_GameMgr : MonoBehaviour
             InvokeWaitFadeOut(SelectArea);
             isRest = false;
             trigger_FA_Yes = false;
+            SC_SoundMgr._soundMgr.BGM_Stop();
+            SC_SoundMgr._soundMgr.SFX_InnDoor();
+            SC_SoundMgr._soundMgr.SFX_FootStepStart();
+            InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
         }
     }
     public void SelectArea()
@@ -520,7 +529,8 @@ public class SC_GameMgr : MonoBehaviour
         if (isAreaClear[1])
         {
             mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, "이미 우두머리를 물리친 지역입니다.");
-            mainIndicator[0].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);   
+            mainIndicator[0].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[0].isbiff = true;
         }
         else
         {
@@ -551,6 +561,9 @@ public class SC_GameMgr : MonoBehaviour
         SC_EnemyMgr._enemyMgr.GetArea1Data();
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.BGM_Area1);
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
     }
     public void IndiSetupArea2()
     {
@@ -558,6 +571,7 @@ public class SC_GameMgr : MonoBehaviour
         {
             mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, "이미 우두머리를 물리친 지역입니다.");
             mainIndicator[1].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[1].isbiff = true;
         }
         else
         {
@@ -588,6 +602,9 @@ public class SC_GameMgr : MonoBehaviour
         SC_EnemyMgr._enemyMgr.GetArea2Data();
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.BGM_Area2);
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
     }
     public void IndiSetupArea3()
     {
@@ -595,6 +612,7 @@ public class SC_GameMgr : MonoBehaviour
         {
             mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, "이미 우두머리를 물리친 지역입니다.");
             mainIndicator[2].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[2].isbiff = true;
         }
         else
         {
@@ -625,6 +643,9 @@ public class SC_GameMgr : MonoBehaviour
         SC_EnemyMgr._enemyMgr.GetArea3Data();
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetPosition);
         InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.VisibleEnemy);
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.BGM_Area3);
+        InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
     }
 
     public void AnswerExitGame()
@@ -644,5 +665,12 @@ public class SC_GameMgr : MonoBehaviour
             FadeOut();
             InvokeWaitFadeOut(Application.Quit);
         }
+    }
+    public bool IsGameClear()
+    {
+        if (isAreaClear[1] && isAreaClear[2] && isAreaClear[3])
+            return true;
+        else
+            return false;
     }
 }

@@ -36,7 +36,10 @@ public class SC_ActionSelButton : MonoBehaviour
         if (IsCanInteract())
         {
             if (isPointerIn)
-                 SC_FieldMgr._fieldMgr.MoveSelecter(buttonIndex);
+            {
+                SC_FieldMgr._fieldMgr.MoveSelecter(buttonIndex);
+                SC_SoundMgr._soundMgr.SFX_ClickOK();
+            }
             SC_GameMgr._gameMgr.PrintBaseBox();
         }
     }

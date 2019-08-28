@@ -72,7 +72,18 @@ public class SC_FieldMgr : MonoBehaviour
         midSprites = Resources.LoadAll<Sprite>("sprite/field/area1/mid");
         bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area1/bottom");
     }
-
+    public void GetArea2Sprite()
+    {
+        topSprites = Resources.LoadAll<Sprite>("sprite/field/area2/top");
+        midSprites = Resources.LoadAll<Sprite>("sprite/field/area2/mid");
+        bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area2/bottom");
+    }
+    public void GetArea3Sprite()
+    {
+        topSprites = Resources.LoadAll<Sprite>("sprite/field/area3/top");
+        midSprites = Resources.LoadAll<Sprite>("sprite/field/area3/mid");
+        bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area3/bottom");
+    }
     public Sprite GetRandomSprite(Sprite[] inputArray)
     {
         return inputArray[Random.Range(0, inputArray.Length)];
@@ -108,14 +119,15 @@ public class SC_FieldMgr : MonoBehaviour
     }
     public void EnteringField()
     {
+        TotalTurn = 0;
+        CurrentRound = 0;
         EnableFieldTiles();
         FieldTilesInit();
         FieldRoundInit();
-        TotalTurn = 0;
-        CurrentRound = 0;
         actionBar.SetActive(true);
         executeButton.gameObject.SetActive(true);
         FieldStateText.enabled = true;
+        RefreshFieldStateText();
         SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
         SC_GameMgr._gameMgr.PrintClickTextBox("도착했습니다.");
     }
@@ -162,9 +174,9 @@ public class SC_FieldMgr : MonoBehaviour
         }
         for (int i = 0; i < SC_PlayerMgr._playerMgr.SightRange; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup
-                (SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].Image,
-                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].EnemyName,
-                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound + i + 1].Color);
+                (SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].Image,
+                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].EnemyName,
+                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].Color);
         for (int i = SC_PlayerMgr._playerMgr.SightRange; i < 3; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup(imageUnknown, "알수없음");
         SC_GameMgr._gameMgr.OnMainIndicator();
@@ -264,6 +276,7 @@ public class SC_FieldMgr : MonoBehaviour
     private IEnumerator _MoveTiles(int moveRange)
     {
         SC_GameMgr._gameMgr.isEventPlaying = true;
+        SC_SoundMgr._soundMgr.SFX_FootStepStart();
         for (int i = 0; i < moveRange*5; i++)
         {
             for (int j = 0; j < fieldBacks.Length; j++)//화면 뒤 밖에 있을 경우 앞으로 옮기고 스프라이트 변경
@@ -286,7 +299,7 @@ public class SC_FieldMgr : MonoBehaviour
             }
         }
         SC_GameMgr._gameMgr.isEventPlaying = false;
-        yield return null;
+        SC_SoundMgr._soundMgr.SFX_FootStepStop();
     }
     public void MoveTiles(int moveRange)    {   StartCoroutine(_MoveTiles(moveRange));  }
 

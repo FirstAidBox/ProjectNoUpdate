@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "Item_Elixir", menuName = "SBO/Item/Elixir", order = 3)]
 public class SBO_Elixir : SBO_InstantObject
 {
-    public enum STAT { ATK = 1, DEF, SPD}
+    public enum STAT { ATK = 1, DEF, SPD, HP}
 
     public STAT increaseStat;
     public int increaseValue;
@@ -16,5 +16,10 @@ public class SBO_Elixir : SBO_InstantObject
             SC_PlayerMgr._playerMgr.DEF += increaseValue;
         else if (increaseStat == STAT.SPD)
             SC_PlayerMgr._playerMgr.SPD += increaseValue;
+        else if (increaseStat == STAT.HP)
+        {
+            SC_PlayerMgr._playerMgr.MaxHP += increaseValue;
+            SC_PlayerMgr._playerMgr.CurrentHP += increaseValue;
+        }
     }
 }

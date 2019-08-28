@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4c0dac6244e624eae731202303ed14, type: 3}
+  m_Name: TestEnemyData0
+  m_EditorClassIdentifier: 
+  Index: 0
+  KIND: 1
+  EnemyName: Area2Boss
+  Image: {fileID: 21300000, guid: 28046a01b36207a4387444f0fe4beb1f, type: 3}
+  Color: {r: 1, g: 0.9264706, b: 0, a: 1}
+  Hp: 5
+  Atk: 4
+  Def: 1
+  Spd: 1
+  SkillIndex: 000000000100000002000000

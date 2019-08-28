@@ -53,6 +53,22 @@ public class SC_EnemyMgr : MonoBehaviour
             enemyData[i] = SC_SBODataMgr._SBODataMgr.area1EnemyData[Random.Range(1, SC_SBODataMgr._SBODataMgr.area1EnemyData.Count)];
         }
     }
+    public void GetArea2Data()
+    {
+        enemyData[0] = SC_SBODataMgr._SBODataMgr.area2EnemyData[0];
+        for (int i = 1; i < SC_FieldMgr._fieldMgr.MaxFieldLength; i++)
+        {
+            enemyData[i] = SC_SBODataMgr._SBODataMgr.area2EnemyData[Random.Range(1, SC_SBODataMgr._SBODataMgr.area2EnemyData.Count)];
+        }
+    }
+    public void GetArea3Data()
+    {
+        enemyData[0] = SC_SBODataMgr._SBODataMgr.area3EnemyData[0];
+        for (int i = 1; i < SC_FieldMgr._fieldMgr.MaxFieldLength; i++)
+        {
+            enemyData[i] = SC_SBODataMgr._SBODataMgr.area3EnemyData[Random.Range(1, SC_SBODataMgr._SBODataMgr.area3EnemyData.Count)];
+        }
+    }
     public void InputEnemyData(int i)
     {
         KIND = enemyData[i].KIND;
@@ -111,13 +127,14 @@ public class SC_EnemyMgr : MonoBehaviour
                 SC_GameMgr._gameMgr.PrintTextBox(Name + " 이 작동되었습니다.");
                 SC_EffectMgr._effectMgr.EffectSimpleHit(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
                 EnemyIndicator.IndiFadeOut();
-                SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.ApplyDamage, ATK);
+                SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.ApplyDamagePure, ATK);
             }
         }
         else if(KIND == KIND_ENEMY.BOX)
         {
             SC_GameMgr._gameMgr.isPlayingText = true;
             SC_GameMgr._gameMgr.PrintTextBox("상자를 발견해 열어봤습니다.");
+            SC_SoundMgr._soundMgr.SFX_Box();
             EnemyIndicator.IndiFadeOut();
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.GetRandomItem);
         }
@@ -137,7 +154,12 @@ public class SC_EnemyMgr : MonoBehaviour
     {
         int finDmg = Mathf.Clamp(DmgValue - DEF, 0, DmgValue);
         if (finDmg > 0)
+        {
             SC_EffectMgr._effectMgr.CameraShake(finDmg);
+            SC_SoundMgr._soundMgr.SFX_Dmg();
+        }
+        else
+            SC_SoundMgr._soundMgr.SFX_NoDmg();
         EnemyIndicator.IndiBlink();
         CurrentHP -= finDmg;
         if (CurrentHP <= 0)
@@ -147,7 +169,12 @@ public class SC_EnemyMgr : MonoBehaviour
     public void ApplyDamagePure(int DmgValue)
     {
         if (DmgValue > 0)
+        {
             SC_EffectMgr._effectMgr.CameraShake(DmgValue);
+            SC_SoundMgr._soundMgr.SFX_Dmg();
+        }
+        else
+            SC_SoundMgr._soundMgr.SFX_NoDmg();
         EnemyIndicator.IndiBlink();
         CurrentHP -= DmgValue;
         if (CurrentHP <= 0)
@@ -171,6 +198,7 @@ public class SC_EnemyMgr : MonoBehaviour
     {
         yield return SC_GameMgr._gameMgr.waitText;
         EnemyIndicator.IndiFadeOut();
+        SC_SoundMgr._soundMgr.SFX_Die();
         SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 을(를) 물리쳤습니다.");
         yield return SC_GameMgr._gameMgr.waitText;
         SC_PlayerMgr._playerMgr.GetRandomItem();
@@ -179,21 +207,28 @@ public class SC_EnemyMgr : MonoBehaviour
     }
     private IEnumerator _GetBossPrice()
     {
+        SC_GameMgr._gameMgr.isAreaClear[SC_GameMgr._gameMgr.areaNum] = true;
         yield return SC_GameMgr._gameMgr.waitText;
         EnemyIndicator.IndiFadeOut();
+        SC_SoundMgr._soundMgr.SFX_Die();
         SC_GameMgr._gameMgr.PrintClickTextBox("이 지역 우두머리 " + Name + " 을(를) 물리쳤습니다.");
         yield return SC_GameMgr._gameMgr.waitText;
-        SC_PlayerMgr._playerMgr.GetRandomItem();
-        yield return SC_GameMgr._gameMgr.waitText;
-        SC_PlayerMgr._playerMgr.LevelUp();
-        yield return SC_GameMgr._gameMgr.waitText;
-        SC_PlayerMgr._playerMgr.GetRandomSkill();
-        yield return SC_GameMgr._gameMgr.waitText;
-        SC_GameMgr._gameMgr.isAreaClear[SC_GameMgr._gameMgr.areaNum] = true;
-        SC_FieldMgr._fieldMgr.AreaLevelUp();
-        SC_GameMgr._gameMgr.PrintClickTextBox("우두머리를 무찌른걸 다른지역의 괴물들이 알아차렸습니다. 남은 지역들의 난이도가 상승합니다.");
-        yield return SC_GameMgr._gameMgr.waitText;
-        SC_GameMgr._gameMgr.EnteringInn();
-        SC_GameMgr._gameMgr.InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
+        if (SC_GameMgr._gameMgr.IsGameClear())
+        {//게임 클리어
+        }
+        else
+        {
+            SC_PlayerMgr._playerMgr.GetRandomItem();
+            yield return SC_GameMgr._gameMgr.waitText;
+            SC_PlayerMgr._playerMgr.LevelUp();
+            yield return SC_GameMgr._gameMgr.waitText;
+            SC_PlayerMgr._playerMgr.GetRandomSkill();
+            yield return SC_GameMgr._gameMgr.waitText;
+            SC_FieldMgr._fieldMgr.AreaLevelUp();
+            SC_GameMgr._gameMgr.PrintClickTextBox("우두머리를 무찌른걸 다른지역의 몬스터들이 알아차렸습니다. 남은 지역들의 난이도가 상승합니다.");
+            yield return SC_GameMgr._gameMgr.waitText;
+            SC_GameMgr._gameMgr.EnteringInn();
+            SC_GameMgr._gameMgr.InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
+        }
     }
 }

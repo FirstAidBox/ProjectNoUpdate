@@ -51,18 +51,25 @@ public class SC_ItemSlot : SC_SlotBase
     public override void ButtonClick()
     {
         if (slotObject.Index == 0)
-            return;
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
         else if (isStackInAction)
+        {
             SC_GameMgr._gameMgr.PrintTextBox("이미 사용 예약이 되어있습니다.");
+            SC_SoundMgr._soundMgr.SFX_ClickBiff();
+        }
         else if (SC_FieldMgr._fieldMgr.isInBattle)
         {
             if (slotObject is I_BattleStack)
             {
                 SC_FieldMgr._fieldMgr.PLActionInputInBattle(this);
                 SlotCannotUse();
+                SC_SoundMgr._soundMgr.SFX_ClickOK();
             }
             else
+            {
                 SC_GameMgr._gameMgr.PrintTextBox("전투 중엔 사용할 수 없는 아이템입니다.");
+                SC_SoundMgr._soundMgr.SFX_ClickBiff();
+            }
         }
         else if (SC_GameMgr._gameMgr.isRest)
         {
@@ -70,13 +77,20 @@ public class SC_ItemSlot : SC_SlotBase
             {
                 SC_PlayerMgr._playerMgr.SellItem(slotObject);
                 RemoveObject();
+                SC_SoundMgr._soundMgr.SFX_Coin();
             }
             else
             {
                 if (slotObject is I_UseInInn)
+                {
                     UseObject();
+                    SC_SoundMgr._soundMgr.SFX_ClickOK();
+                }
                 else
+                {
                     SC_GameMgr._gameMgr.PrintTextBox("휴식 중엔 사용할 수 없는 아이템입니다.");
+                    SC_SoundMgr._soundMgr.SFX_ClickBiff();
+                }
             }
         }
         else if (!SC_FieldMgr._fieldMgr.isInBattle)
@@ -85,9 +99,13 @@ public class SC_ItemSlot : SC_SlotBase
             {
                 SC_FieldMgr._fieldMgr.PLActionInputInField(this);
                 SlotCannotUse();
+                SC_SoundMgr._soundMgr.SFX_ClickOK();
             }
             else
+            {
                 SC_GameMgr._gameMgr.PrintTextBox("탐사 중엔 사용할 수 없는 아이템입니다.");
+                SC_SoundMgr._soundMgr.SFX_ClickBiff();
+            }
         }
         else
             Debug.Log("상상조차 못한 상황 ㄴㅇㄱ");

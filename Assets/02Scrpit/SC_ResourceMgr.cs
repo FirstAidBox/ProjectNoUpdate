@@ -36,7 +36,7 @@ public class SC_ResourceMgr : MonoBehaviour
     /// </summary>
     /// <param name="spritename">스프라이트 이름</param>
     /// <returns></returns>
-    public Sprite GetSprite(string spritename)
+    public Sprite GetSprite(string spritename)//만들어두긴 했지만 쓰지 않을 것 같다...
     {
         FieldInfo fld = typeof(SC_ResourceMgr).GetField(spritename);
         _tempSprite = (Sprite)fld.GetValue(this);

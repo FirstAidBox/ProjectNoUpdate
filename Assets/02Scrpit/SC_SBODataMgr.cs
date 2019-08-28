@@ -26,10 +26,10 @@ public class SC_SBODataMgr : MonoBehaviour
 
         area1EnemyData.AddRange(Resources.LoadAll<SBO_EnemyData>("enemy/statdata/area1"));
         SortByIndex(area1EnemyData);
-        /*area2EnemyData.AddRange(Resources.LoadAll<SBO_EnemyData>("enemy/statdata/area2"));
+        area2EnemyData.AddRange(Resources.LoadAll<SBO_EnemyData>("enemy/statdata/area2"));
         SortByIndex(area2EnemyData);
         area3EnemyData.AddRange(Resources.LoadAll<SBO_EnemyData>("enemy/statdata/area3"));
-        SortByIndex(area3EnemyData);*/
+        SortByIndex(area3EnemyData);
         enemySkillData.AddRange(Resources.LoadAll<SBO_SlotObject>("enemy/skilldata"));
         SortByIndex(enemySkillData);
     }
