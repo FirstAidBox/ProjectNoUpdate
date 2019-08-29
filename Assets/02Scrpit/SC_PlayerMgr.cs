@@ -251,14 +251,6 @@ public class SC_PlayerMgr : MonoBehaviour
         IsDown = false;
         IsCounter = false;
         IsDmg = false;
-        for (int i = 0; i < ItemSlots.Length; i++)
-        {
-            ItemSlots[i].SlotCanUse();
-        }
-        for (int i = 0; i < SkillSlots.Length; i++)
-        {
-            SkillSlots[i].SlotCanUse();
-        }
     }
     /// <summary>
     /// 플레이어에게 방어력에 의해 감소되는 데미지를 입힌다.

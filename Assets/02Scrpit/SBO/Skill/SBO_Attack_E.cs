@@ -22,6 +22,7 @@ public class SBO_Attack_E : SBO_UseObject, I_BattleStack
         {
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectSimpleHit(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
+            SC_SoundMgr._soundMgr.SFX_Guard();
             SC_GameMgr._gameMgr.PrintClickTextBox(SC_EnemyMgr._enemyMgr.Name + " 이(가) 공격했지만 잘 막아냈습니다.");
         }
         else
@@ -30,6 +31,7 @@ public class SBO_Attack_E : SBO_UseObject, I_BattleStack
             SC_GameMgr._gameMgr.PrintTextBox(SC_EnemyMgr._enemyMgr.Name + " 의 공격");
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectSimpleHit(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
+            SC_SoundMgr._soundMgr.SFX_SimpleHit();
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.ApplyDamage, SC_EnemyMgr._enemyMgr.ATK);
             SC_PlayerMgr._playerMgr.IsDmg = true;
         }

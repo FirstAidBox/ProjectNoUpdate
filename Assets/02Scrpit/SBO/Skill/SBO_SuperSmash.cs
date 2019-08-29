@@ -14,6 +14,7 @@ public class SBO_SuperSmash : SBO_UseObject, I_BattleStack
         {
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectDown(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
+            SC_SoundMgr._soundMgr.SFX_Guard();
             SC_PlayerMgr._playerMgr.IsDown = true;
             SC_GameMgr._gameMgr.PrintClickTextBox("자세가 무너져 제대로 행동할 수 없습니다.");
         }
@@ -24,6 +25,7 @@ public class SBO_SuperSmash : SBO_UseObject, I_BattleStack
             SC_GameMgr._gameMgr.PrintTextBox(SC_EnemyMgr._enemyMgr.Name + " 을(를) 매우 강하게 공격합니다.");
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectSimpleHit(SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position);
+            SC_SoundMgr._soundMgr.SFX_SimpleHit();
             SC_GameMgr._gameMgr.InvokeWaitEvent(SC_EnemyMgr._enemyMgr.ApplyDamage, (int)finDmg);
             SC_EnemyMgr._enemyMgr.IsDmg = true;
         }

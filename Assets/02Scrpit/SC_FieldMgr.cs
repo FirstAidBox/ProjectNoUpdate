@@ -342,6 +342,7 @@ public class SC_FieldMgr : MonoBehaviour
         yield return SC_GameMgr._gameMgr.waitText;
         SC_EffectMgr._effectMgr.isEvent = true;
         SC_EffectMgr._effectMgr.EffectSpot();
+        SC_SoundMgr._soundMgr.SFX_Spot();
         SC_GameMgr._gameMgr.PrintClickTextBox(SC_EnemyMgr._enemyMgr.Name + " 와(과) 의 전투를 시작합니다.");
         SC_GameMgr._gameMgr.SetBaseText("3턴간 할 행동들을 선택해주세요.");
         BattleSetup();
@@ -398,6 +399,8 @@ public class SC_FieldMgr : MonoBehaviour
             MoveSelecterOnly(i);
             (playerBattleActionSlot[i].slotObject as I_BattleStack).WhenIsUse();
             playerBattleActionSlot[i].SlotCanUse();
+            if (playerBattleActionSlot[i] is SC_ItemSlot)
+                playerBattleActionSlot[i].RemoveObject();
             (enemyBattleActionSlot[i] as I_BattleStack).WhenIsUse();
             for (currentBattlePhase = 0; (int)currentBattlePhase < 5; currentBattlePhase++)
             {
@@ -442,5 +445,13 @@ public class SC_FieldMgr : MonoBehaviour
         actionBar.SetActive(false);
         executeButton.gameObject.SetActive(false);
         FieldStateText.enabled = false;
+    }
+    public void BattleEndInit()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (playerBattleActionSlot[i] != null)
+                playerBattleActionSlot[i].SlotCanUse();
+        }
     }
 }

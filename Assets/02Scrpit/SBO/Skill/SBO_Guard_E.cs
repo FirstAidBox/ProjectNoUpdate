@@ -11,7 +11,8 @@ public class SBO_Guard_E : SBO_UseObject, I_BattleStack
     {
         SC_EnemyMgr._enemyMgr.IsGuard = true;
         SC_EffectMgr._effectMgr.isEvent = true;
-        SC_EffectMgr._effectMgr.EffectGetSlotObject(this, SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position);
+        SC_EffectMgr._effectMgr.EffectGuard(SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position);
+        SC_SoundMgr._soundMgr.SFX_Guard();
         SC_GameMgr._gameMgr.PrintClickTextBox(SC_EnemyMgr._enemyMgr.Name + " 이(가) 방어합니다.");
     }
 }

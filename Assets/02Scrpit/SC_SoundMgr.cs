@@ -89,4 +89,22 @@ public class SC_SoundMgr : MonoBehaviour
     public void SFX_NoDmg() { source.PlayOneShot(_s_NoDmg, sfxVolume); }
     public AudioClip _s_Die;
     public void SFX_Die() { source.PlayOneShot(_s_Die, sfxVolume); }
+    public AudioClip _s_Stun;
+    public void SFX_Stun() { source.PlayOneShot(_s_Stun, sfxVolume); }
+    public AudioClip _s_Counter;
+    public void SFX_Counter() { source.PlayOneShot(_s_Counter, sfxVolume); }
+    public AudioClip _s_Bomb;
+    public void SFX_Bomb() { source.PlayOneShot(_s_Bomb, sfxVolume); }
+    public AudioClip _s_SimpleSkill;
+    public void SFX_SimpleSkill() { source.PlayOneShot(_s_SimpleSkill, sfxVolume); }
+    public AudioClip _s_SimpleHit;
+    public void SFX_SimpleHit() { source.PlayOneShot(_s_SimpleHit, sfxVolume); }
+    public AudioClip _s_Switch;
+    public void SFX_Switch() { source.PlayOneShot(_s_Switch, sfxVolume); }
+    public AudioClip _s_PlayerFail;
+    public void SFX_PlayerFail() { source.PlayOneShot(_s_PlayerFail, sfxVolume); }
+    public AudioClip _s_PlayerWin;
+    public void SFX_PlayerWin() { source.PlayOneShot(_s_PlayerWin, sfxVolume); }
+    public AudioClip _s_Guard;
+    public void SFX_Guard() { source.PlayOneShot(_s_Guard, sfxVolume); }
 }

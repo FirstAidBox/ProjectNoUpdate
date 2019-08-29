@@ -131,7 +131,6 @@ public class SC_EffectMgr : MonoBehaviour
     private IEnumerator _EffectFind()
     {
         EventSwitchOn();
-        SC_SoundMgr._soundMgr.SFX_Find();
         Vector2 originPos = playerPos + new Vector2(1f, 0f);
         Color c = new Color(0, 0, 0, 0);
         indiTr.position = originPos;
@@ -177,7 +176,6 @@ public class SC_EffectMgr : MonoBehaviour
     private IEnumerator _EffectSpot()
     {
         EventSwitchOn();
-        SC_SoundMgr._soundMgr.SFX_Spot();
         indiTr.position = enemyPos + new Vector2(0f, 1f);
         spriteRen.sprite = e_spot;
         for (int i = 0; i < 10; i++)
@@ -249,7 +247,7 @@ public class SC_EffectMgr : MonoBehaviour
         EventSwitchOff();
         isEvent = false;
     }
-    public void EffectBome() { StartCoroutine(_EffectBome()); }
+    public void EffectBomb() { StartCoroutine(_EffectBome()); }
 
     public Sprite e_guard;
     private IEnumerator _EffectGuard(Vector2 pos)
@@ -289,10 +287,12 @@ public class SC_EffectMgr : MonoBehaviour
         EventSwitchOn();
         indiTr.position = playerPos;
         spriteRen.sprite = e_counter;
+        SC_SoundMgr._soundMgr.SFX_Counter();
         for (int i = 0; i < 8; i++)
             yield return SC_GameMgr._gameMgr.delay100ms;
         indiTr.position = enemyPos;
         spriteRen.sprite = e_simpleHit;
+        SC_SoundMgr._soundMgr.SFX_SimpleHit();
         yield return SC_GameMgr._gameMgr.delay100ms;
         spriteRen.flipX = true;
         yield return SC_GameMgr._gameMgr.delay100ms;

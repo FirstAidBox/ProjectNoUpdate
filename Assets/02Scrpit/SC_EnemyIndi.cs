@@ -5,6 +5,7 @@ using UnityEngine;
 public class SC_EnemyIndi : SC_Indicator
 {
     private Vector2 backMove = new Vector2(-0.5f, 0f);
+    public bool isInnMaster = false;
 
     public override bool IsCanInteract()
     {

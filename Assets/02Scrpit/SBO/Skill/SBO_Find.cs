@@ -9,6 +9,7 @@ public class SBO_Find : SBO_UseObject, I_FieldStack
         SC_GameMgr._gameMgr.PrintTextBox("탐색중...");
         SC_EffectMgr._effectMgr.isEvent = true;
         SC_EffectMgr._effectMgr.EffectFind();
+        SC_SoundMgr._soundMgr.SFX_Find();
         SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.GetRandomItem);
     }
 }

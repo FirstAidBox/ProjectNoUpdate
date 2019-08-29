@@ -27,7 +27,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public bool IsDown;
 
     public SC_EnemyIndi EnemyIndicator;
-    public Vector2 InInnPos = new Vector2(2.5f, 0.5f);
+    public Vector2 InInnPos = new Vector2(3.5f, 0.5f);
     public Vector2 FieldStartPos = new Vector2(7.5f, 0.5f);
 
     public SBO_EnemyData[] enemyData;
@@ -109,6 +109,7 @@ public class SC_EnemyMgr : MonoBehaviour
             {
                 SC_EffectMgr._effectMgr.isEvent = true;
                 SC_EffectMgr._effectMgr.EffectSpot();
+                SC_SoundMgr._soundMgr.SFX_Spot();
                 SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 이(가) 당신을 발견했습니다. 전투를 시작합니다.");
                 SC_FieldMgr._fieldMgr.StopAllCoroutines();
                 SC_FieldMgr._fieldMgr.BattleSetup();
@@ -119,12 +120,14 @@ public class SC_EnemyMgr : MonoBehaviour
             if(SC_PlayerMgr._playerMgr.IsDash)
             {
                 EnemyIndicator.IndiFadeOut();
+                SC_SoundMgr._soundMgr.SFX_Switch();
                 SC_GameMgr._gameMgr.PrintClickTextBox(Name + " 이(가) 작동되었지만 피했습니다.");
             }
             else
             {
                 SC_GameMgr._gameMgr.isPlayingText = true;
                 SC_GameMgr._gameMgr.PrintTextBox(Name + " 이 작동되었습니다.");
+                SC_SoundMgr._soundMgr.SFX_Switch();
                 SC_EffectMgr._effectMgr.EffectSimpleHit(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
                 EnemyIndicator.IndiFadeOut();
                 SC_GameMgr._gameMgr.InvokeWaitEvent(SC_PlayerMgr._playerMgr.ApplyDamagePure, ATK);
@@ -185,6 +188,7 @@ public class SC_EnemyMgr : MonoBehaviour
     {
         SC_FieldMgr._fieldMgr.isInBattle = false;
         SC_FieldMgr._fieldMgr.StopAllCoroutines();
+        SC_FieldMgr._fieldMgr.BattleEndInit();
         if(KIND == KIND_ENEMY.BOSS)
         {
             StartCoroutine(_GetBossPrice());
@@ -214,7 +218,10 @@ public class SC_EnemyMgr : MonoBehaviour
         SC_GameMgr._gameMgr.PrintClickTextBox("이 지역 우두머리 " + Name + " 을(를) 물리쳤습니다.");
         yield return SC_GameMgr._gameMgr.waitText;
         if (SC_GameMgr._gameMgr.IsGameClear())
-        {//게임 클리어
+        {
+            SC_GameMgr._gameMgr.SetBaseText("모든 지역의 우두머리를 처치했습니다. 당신의 승리입니다.");
+            SC_GameMgr._gameMgr.PrintBaseBox();
+            SC_SoundMgr._soundMgr.SFX_PlayerWin();
         }
         else
         {
@@ -230,5 +237,11 @@ public class SC_EnemyMgr : MonoBehaviour
             SC_GameMgr._gameMgr.EnteringInn();
             SC_GameMgr._gameMgr.InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
         }
+    }
+    public void SetInnMaster()
+    {
+        EnemyIndicator.IndicatorInit();
+        EnemyIndicator.gameObject.transform.position = InInnPos;
+        EnemyIndicator.isInnMaster = true;
     }
 }

@@ -8,6 +8,7 @@ public class SBO_Hide : SBO_UseObject, I_FieldStack
         SC_PlayerMgr._playerMgr.IsHide = true;
         SC_EffectMgr._effectMgr.isEvent = true;
         SC_EffectMgr._effectMgr.EffectGetSlotObject(this);
+        SC_SoundMgr._soundMgr.SFX_SimpleSkill();
         SC_GameMgr._gameMgr.PrintClickTextBox("기척을 숨깁니다.");
     }
 }

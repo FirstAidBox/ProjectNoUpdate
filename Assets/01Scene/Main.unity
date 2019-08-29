@@ -261,8 +261,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1235963461}
   m_HandleRect: {fileID: 1235963460}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.87666667
+  m_Value: 1
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -601,8 +601,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1269529605}
   m_HandleRect: {fileID: 1269529604}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1995,7 +1995,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &115455749
@@ -3605,6 +3605,7 @@ MonoBehaviour:
   indicatorCollider: {fileID: 0}
   isPointerIn: 0
   isbiff: 0
+  isInnMaster: 0
 --- !u!61 &282175581
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6223,8 +6224,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 913594657}
   m_HandleRect: {fileID: 913594656}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6623,7 +6624,7 @@ MonoBehaviour:
   e_down: {fileID: 21300000, guid: 319ef1eb2d0d9d74ab4d9c7e38ad92dd, type: 3}
   e_potion: {fileID: 21300000, guid: 1dc34de2533ccad489739ff296240909, type: 3}
   e_bome: {fileID: 21300000, guid: ef4c10daa3fe8564a8fc924c4928aef1, type: 3}
-  e_guard: {fileID: 0}
+  e_guard: {fileID: 21300000, guid: 3a66523ec5777f04784a6115c1090f67, type: 3}
   e_counter: {fileID: 21300000, guid: 7390fc646d10cdf42bdf817dd3a6199f, type: 3}
 --- !u!114 &571134634
 MonoBehaviour:
@@ -6764,7 +6765,7 @@ MonoBehaviour:
   IsDmg: 0
   IsDown: 0
   EnemyIndicator: {fileID: 282175580}
-  InInnPos: {x: 2.5, y: 0.5}
+  InInnPos: {x: 3.5, y: 0.5}
   FieldStartPos: {x: 7.5, y: 0.5}
   enemyData: []
   AddStatValue: 0
@@ -6871,7 +6872,7 @@ MonoBehaviour:
   _s_innDoor: {fileID: 8300000, guid: e4af630bec5410542af273a29ac14a27, type: 3}
   _s_Box: {fileID: 8300000, guid: ffe90d32701db5c44b3d7e4da975f521, type: 3}
   _s_biff: {fileID: 8300000, guid: e6931bd57bac6744a89807e68f231db8, type: 3}
-  _s_click: {fileID: 8300000, guid: 74b174db340c9834386d27479a9e011b, type: 3}
+  _s_click: {fileID: 8300000, guid: 102a808017b24734eb197d2d9119f082, type: 3}
   _s_Coin: {fileID: 8300000, guid: 15bd2f2df5a249446b15f05e15358245, type: 3}
   _s_PutinBag: {fileID: 8300000, guid: 5ed8b23cf1a406040b6d657ecc485f66, type: 3}
   _s_Find: {fileID: 8300000, guid: 7495bb8e5931c8f449f8378f21305e6c, type: 3}
@@ -6881,6 +6882,15 @@ MonoBehaviour:
   _s_Dmg: {fileID: 8300000, guid: 302face5341bbca48ba10dd026a97a04, type: 3}
   _s_NoDmg: {fileID: 8300000, guid: 59442e9a9f984ce4995d8e12dc80d6fb, type: 3}
   _s_Die: {fileID: 8300000, guid: f010707f59b85b64e83990ae960f7f20, type: 3}
+  _s_Stun: {fileID: 8300000, guid: b88d7c5f22b50a74b95074f38a3f6a18, type: 3}
+  _s_Counter: {fileID: 8300000, guid: 6179d791aec71754692298f3a941a16e, type: 3}
+  _s_Bomb: {fileID: 8300000, guid: 46aea58499b6e7440be9438947f03745, type: 3}
+  _s_SimpleSkill: {fileID: 8300000, guid: f1e87125046c0e64eb57f4a4c7f9c00f, type: 3}
+  _s_SimpleHit: {fileID: 8300000, guid: 332668017d28cae47974f833388bc18a, type: 3}
+  _s_Switch: {fileID: 8300000, guid: 870bd8f38c444344d8279c205ae4c339, type: 3}
+  _s_PlayerFail: {fileID: 8300000, guid: 1e5ec6b3045b2ba4bab2859ff1829f89, type: 3}
+  _s_PlayerWin: {fileID: 8300000, guid: 41f398441fbdda046af16c5db749f7ab, type: 3}
+  _s_Guard: {fileID: 8300000, guid: 1e600b1f154a5c04d9691ea508b30fdd, type: 3}
 --- !u!1 &579421247
 GameObject:
   m_ObjectHideFlags: 0
@@ -7828,8 +7838,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 108121362}
   m_HandleRect: {fileID: 108121361}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9341,8 +9351,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1814683884}
   m_HandleRect: {fileID: 1814683883}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11833,8 +11843,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 206378108}
   m_HandleRect: {fileID: 206378107}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.87666667
+  m_Value: 1
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12333,7 +12343,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 40, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102142121
 MonoBehaviour:
@@ -12860,8 +12870,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 424918485}
   m_HandleRect: {fileID: 424918484}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.87666667
+  m_Value: 1
+  m_Size: 0.8766668
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15475,8 +15485,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1593580246}
   m_HandleRect: {fileID: 1593580245}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15948,8 +15958,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 0, y: -80}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1436458390
 MonoBehaviour:
@@ -17158,6 +17168,24 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: -1, y: 0, z: 0}
+    second:
+      m_TileIndex: 3
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 3
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
+  - first: {x: 0, y: 0, z: 0}
+    second:
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 3
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: 2, y: 0, z: 0}
     second:
       m_TileIndex: 1
@@ -17193,17 +17221,23 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 1cdb5193d31f2c342891ad755d4c1549, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: fc887dc8024444e46afd4a6d29e6c427, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: afa56d750f6cc5247a1dcf8d7e06ef0d, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 40fe96a2da7524c459cb0519bcf05be7, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: d62db71fdb582334288e702069d46b6e, type: 3}
   - m_RefCount: 14
     m_Data: {fileID: 21300000, guid: 8153df384e116764e89db2fb36ddee8b, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 4c22aea17d584d84985737e43405ddd6, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: fe491f7fff3a2eb4bb494b4ab3ca815c, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 9e531c15ecdd9de43ad062c3a8b3c7d1, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 17
+  - m_RefCount: 19
     m_Data:
       e00: 1
       e01: 0
@@ -17228,7 +17262,7 @@ Tilemap:
     m_Data: {r: 8.805446e-39, g: 0, b: 21.722155, a: 1e-45}
   - m_RefCount: 0
     m_Data: {r: NaN, g: NaN, b: 0, a: NaN}
-  - m_RefCount: 17
+  - m_RefCount: 19
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -17254,6 +17288,10 @@ Tilemap:
     e32: 0
     e33: 1
   m_TileRefreshArray:
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
   - serializedVersion: 1
@@ -18998,7 +19036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1708434199
@@ -20643,7 +20681,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 40, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1896708542
 MonoBehaviour:
@@ -22693,8 +22731,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 0, y: 10}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2049125215
 MonoBehaviour:

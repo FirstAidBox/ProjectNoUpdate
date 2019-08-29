@@ -476,6 +476,7 @@ public class SC_GameMgr : MonoBehaviour
         FadeOutAndIn();
 		InvokeWaitFadeOut(VisibleInn);
 		InvokeWaitFadeOut(OffMainIndicator);
+        InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.SetInnMaster);
         isRest = true;
         SC_SoundMgr._soundMgr.SFX_FootStepStart();
         InvokeWaitFadeOut(SC_SoundMgr._soundMgr.BGM_Inn);
@@ -506,6 +507,7 @@ public class SC_GameMgr : MonoBehaviour
 			InvokeWaitFadeOut(SC_MenuBar._menuBar.ClosePlayerMenu);
             InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.InvisiblePlayer);
             InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.InvisibleEnemy);
+            SC_EnemyMgr._enemyMgr.EnemyIndicator.isInnMaster = false;
             InvokeWaitFadeOut(SelectArea);
             isRest = false;
             trigger_FA_Yes = false;
