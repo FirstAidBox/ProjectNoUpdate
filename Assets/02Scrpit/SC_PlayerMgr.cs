@@ -293,6 +293,15 @@ public class SC_PlayerMgr : MonoBehaviour
     }
     public void PlayerDie()
     {
-        Debug.Log("으앙주금");
+        SC_FieldMgr._fieldMgr.isInBattle = false;
+        SC_FieldMgr._fieldMgr.StopAllCoroutines();
+        SC_FieldMgr._fieldMgr.BattleEndInit();
+    }
+    private IEnumerator _PlayerDie()
+    {
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_GameMgr._gameMgr.PrintTextBox("의식이 희미해진다...");
+        SC_GameMgr._gameMgr.FadeOutAndIn();
+        yield return SC_GameMgr._gameMgr.waitFadeOut;
     }
 }

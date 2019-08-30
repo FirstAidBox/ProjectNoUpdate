@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Item_ElixirATK
   m_EditorClassIdentifier: 
   Index: 5
-  Name: "\uAD34\uB825\uC758 \uD658\uC57D"
+  Name: "\uAD34\uB825\uC758 \uBB3C\uC57D"
   Text: "\uB9C8\uC2DC\uBA74 \uD798\uC774 \uC138\uC9C4\uB2E4\uB294 \uC218\uC0C1\uCA4D\uC740
     \uBB3C\uC57D\uC785\uB2C8\uB2E4. \uACF5\uACA9\uB825\uC774 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   Image: {fileID: 21300000, guid: ec49c28916e370e49adbf42c4d129579, type: 3}

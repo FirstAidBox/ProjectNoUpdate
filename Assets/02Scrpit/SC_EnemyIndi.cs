@@ -10,7 +10,7 @@ public class SC_EnemyIndi : SC_Indicator
     public override bool IsCanInteract()
     {
         if (indicatorText == null || SC_GameMgr._gameMgr.isFade
-            || SC_GameMgr._gameMgr.isPopupFABar || SC_MenuBar._menuBar.isPopupPlayerBar
+            || SC_GameMgr._gameMgr.isPopupFABar
             || SC_GameMgr._gameMgr.isPlayingText)
             return false;
         else
@@ -23,7 +23,7 @@ public class SC_EnemyIndi : SC_Indicator
         for(int i=0; i<20; i++)
         {
             gameObject.transform.position = (Vector2)gameObject.transform.position + backMove;
-            yield return SC_GameMgr._gameMgr.delay100ms;
+            yield return SC_GameMgr._gameMgr.delay50ms;
         }
         SC_GameMgr._gameMgr.isEventPlaying = false;
         SC_SoundMgr._soundMgr.SFX_FootStepStop();

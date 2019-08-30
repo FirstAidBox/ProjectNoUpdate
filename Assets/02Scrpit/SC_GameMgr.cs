@@ -30,6 +30,7 @@ public class SC_GameMgr : MonoBehaviour
     public Sprite nullSprite; //투명한 스프라이트
     public Color baseColor = Color.white;
     public bool isBaseTextHide = false;
+    public Sprite BaseBackSprite;
 
     public Button[] buttons;
     public EventTrigger[] eventTriggers;
@@ -40,7 +41,8 @@ public class SC_GameMgr : MonoBehaviour
     public bool isPlayingText = false;
     public bool trigger_Click = false;
     public WaitForSeconds delay100ms = new WaitForSeconds(0.1f); // 0.1초
-    public WaitForSeconds delay2s = new WaitForSeconds(2.0f);
+    public WaitForSeconds delay50ms = new WaitForSeconds(0.05f); // 0.05초
+    public WaitForSeconds delay2s = new WaitForSeconds(2.0f); // 2초
     public WaitWhile waitFadeOut;
 	public WaitWhile waitFadeIn;
     public WaitWhile waitEvent;

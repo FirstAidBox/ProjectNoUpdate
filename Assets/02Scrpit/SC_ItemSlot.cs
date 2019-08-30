@@ -40,7 +40,7 @@ public class SC_ItemSlot : SC_SlotBase
         {
             if(SC_MenuBar._menuBar.CurrentPage == MENUPAGE.SELL)
             {
-                SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image, slotObject.Name + " 을(를) 팔고 돈을 " + slotObject.Price + " 만큼 얻습니다.", slotObject.Color);
+                SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image, slotObject.Name + " 판매 가격: " + slotObject.Price + " " + slotObject.Text, slotObject.Color);
             }
             else
             {

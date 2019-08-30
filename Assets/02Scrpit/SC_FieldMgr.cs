@@ -16,6 +16,8 @@ public class SC_FieldMgr : MonoBehaviour
     public Sprite[] midSprites;
     public Sprite[] bottomSprites;
     public Sprite imageUnknown;
+    public Material backGroundMat;
+    public Sprite backGroundSprite;
 
     private Vector2 frontPoint = new Vector2(16f, 0f);
     private Vector2 backMove = new Vector2(-0.1f, 0f);
@@ -56,6 +58,7 @@ public class SC_FieldMgr : MonoBehaviour
         enemyBattleActionSlot = new SBO_SlotObject[3];
         playerPhaseAction = new SBO_SlotObject[5];
         enemyPhaseAction = new SBO_SlotObject[5];
+        backGroundMat.mainTextureOffset = Vector2.zero;
     }
     public void Init()
     {
@@ -231,6 +234,11 @@ public class SC_FieldMgr : MonoBehaviour
         actionIcons[actionIndex].sprite = inputSlot.icon.sprite;
         actionIcons[actionIndex].color = inputSlot.icon.color;
         actionCounter++;
+        if (actionIndex < 2)
+        {
+            if (playerFieldActionSlot[actionIndex + 1] == null)
+                MoveSelecter(actionIndex + 1);
+        }
         if (actionCounter >= 3)
             executeButton.EnableButton();
     }
@@ -241,6 +249,11 @@ public class SC_FieldMgr : MonoBehaviour
         actionIcons[actionIndex].sprite = inputSlot.icon.sprite;
         actionIcons[actionIndex].color = inputSlot.icon.color;
         actionCounter++;
+        if (actionIndex < 2)
+        {
+            if(playerBattleActionSlot[actionIndex + 1] == null)
+                MoveSelecter(actionIndex + 1);
+        }
         if (actionCounter >= 3)
             executeButton.EnableButton();
     }
@@ -295,7 +308,8 @@ public class SC_FieldMgr : MonoBehaviour
                     fieldBacks[j].gameObject.transform.localPosition = (Vector2)fieldBacks[j].gameObject.transform.localPosition + backMove;
                 }
                 SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position = (Vector2)SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.transform.position + backMove;
-                yield return SC_GameMgr._gameMgr.delay100ms;
+                backGroundMat.mainTextureOffset = backGroundMat.mainTextureOffset + (backMove * -0.01f);
+                yield return SC_GameMgr._gameMgr.delay50ms;
             }
         }
         SC_GameMgr._gameMgr.isEventPlaying = false;
@@ -445,6 +459,7 @@ public class SC_FieldMgr : MonoBehaviour
         actionBar.SetActive(false);
         executeButton.gameObject.SetActive(false);
         FieldStateText.enabled = false;
+        backGroundMat.mainTextureOffset = Vector2.zero;
     }
     public void BattleEndInit()
     {

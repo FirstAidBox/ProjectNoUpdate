@@ -25,7 +25,7 @@ public class SC_InnSlot : MonoBehaviour
         if (slotObject.Index == 0)
             SC_GameMgr._gameMgr.PrintTextBox("이미 구매한 물건입니다.");
         else
-            SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image,slotObject.Name + " 가격: " + slotObject.Price + " " + slotObject.Text , slotObject.Color);
+            SC_GameMgr._gameMgr.PrintTextBox(slotObject.Image,slotObject.Name + " 구매 가격: " + slotObject.Price + " " + slotObject.Text , slotObject.Color);
     }
     public void PointerUp()
     {

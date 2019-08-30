@@ -17,12 +17,18 @@ public class SC_MenuBar : MonoBehaviour
 
     public GameObject buttons;
     public GameObject statButton;
+    public Image statImage;
     public GameObject skillButton;
+    public Image skillImage;
     public GameObject itemButton;
+    public Image itemImage;
     public GameObject fieldBSkillButton;
+    public Image fieldBSkillImage;
     public GameObject battelBSkillButton;
+    public Image battleBSkillImage;
 
     public GameObject statsWindow;
+    public GameObject title;
     public Text titleText;
     public const string title_stat = "능력치";
     public const string title_skill = "기술";
@@ -96,7 +102,7 @@ public class SC_MenuBar : MonoBehaviour
     public void OpenStatsWindow()
     {
         RefreshStat();
-        titleText.text = title_stat;
+        title.SetActive(false);
         statsWindow.SetActive(true);
         skillWindow.SetActive(false);
         fieldBSkillWindow.SetActive(false);
@@ -106,12 +112,15 @@ public class SC_MenuBar : MonoBehaviour
         moneyIndi.SetActive(false);
         buttons.SetActive(true);
         statButton.SetActive(true);
+        statImage.color = Color.yellow;
+        skillImage.color = Color.white;
+        itemImage.color = Color.white;
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(false);
     }
     public void OpenSkillWindow()
     {
-        titleText.text = title_skill;
+        title.SetActive(false);
         statsWindow.SetActive(false);
         skillWindow.SetActive(true);
         fieldBSkillWindow.SetActive(false);
@@ -125,23 +134,32 @@ public class SC_MenuBar : MonoBehaviour
             statButton.SetActive(false);
             fieldBSkillButton.SetActive(false);
             battelBSkillButton.SetActive(true);
+            battleBSkillImage.color = Color.white;
+            skillImage.color = Color.yellow;
+            itemImage.color = Color.white;
         }
         else if(CurrentPage == MENUPAGE.F_BSKILL)
         {
             statButton.SetActive(false);
             fieldBSkillButton.SetActive(true);
             battelBSkillButton.SetActive(false);
+            fieldBSkillImage.color = Color.white;
+            skillImage.color = Color.yellow;
+            itemImage.color = Color.white;
         }
         else
         {
             statButton.SetActive(true);
             fieldBSkillButton.SetActive(false);
             battelBSkillButton.SetActive(false);
+            statImage.color = Color.white;
+            skillImage.color = Color.yellow;
+            itemImage.color = Color.white;
         }
     }
     public void OpenItemWindow()
     {
-        titleText.text = title_itme;
+        title.SetActive(false);
         statsWindow.SetActive(false);
         skillWindow.SetActive(false);
         fieldBSkillWindow.SetActive(false);
@@ -155,23 +173,33 @@ public class SC_MenuBar : MonoBehaviour
             statButton.SetActive(false);
             fieldBSkillButton.SetActive(false);
             battelBSkillButton.SetActive(true);
+            battleBSkillImage.color = Color.white;
+            skillImage.color = Color.white;
+            itemImage.color = Color.yellow;
         }
         else if (CurrentPage == MENUPAGE.F_BSKILL)
         {
             statButton.SetActive(false);
             fieldBSkillButton.SetActive(true);
             battelBSkillButton.SetActive(false);
+            fieldBSkillImage.color = Color.white;
+            skillImage.color = Color.white;
+            itemImage.color = Color.yellow;
         }
         else
         {
             statButton.SetActive(true);
             fieldBSkillButton.SetActive(false);
             battelBSkillButton.SetActive(false);
+            statImage.color = Color.white;
+            skillImage.color = Color.white;
+            itemImage.color = Color.yellow;
         }
     }
     public void OpenBuyWindow()
     {
         titleText.text = title_buy;
+        title.SetActive(true);
         statsWindow.SetActive(false);
         skillWindow.SetActive(false);
         fieldBSkillWindow.SetActive(false);
@@ -191,6 +219,7 @@ public class SC_MenuBar : MonoBehaviour
     public void OpenSellWindow()
     {
         titleText.text = title_sell;
+        title.SetActive(true);
         statsWindow.SetActive(false);
         skillWindow.SetActive(false);
         fieldBSkillWindow.SetActive(false);
@@ -221,6 +250,9 @@ public class SC_MenuBar : MonoBehaviour
         statButton.SetActive(false);
         fieldBSkillButton.SetActive(true);
         battelBSkillButton.SetActive(false);
+        fieldBSkillImage.color = Color.yellow;
+        skillImage.color = Color.white;
+        itemImage.color = Color.white;
     }
     public void PopupFBSMenu()
     {
@@ -242,6 +274,9 @@ public class SC_MenuBar : MonoBehaviour
         statButton.SetActive(false);
         fieldBSkillButton.SetActive(false);
         battelBSkillButton.SetActive(true);
+        battleBSkillImage.color = Color.yellow;
+        skillImage.color = Color.white;
+        itemImage.color = Color.white;
     }
     public void PopupBBSMenu()
     {
