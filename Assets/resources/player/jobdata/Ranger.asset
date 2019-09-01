@@ -14,7 +14,7 @@ MonoBehaviour:
   jobName: "\uC21C\uCC30\uC790"
   image: {fileID: 21300000, guid: 11c0fd4797780aa4ca4942285aba8518, type: 3}
   hp: 5
-  atk: 2
+  atk: 3
   def: 1
   spd: 4
   defaultSkills:

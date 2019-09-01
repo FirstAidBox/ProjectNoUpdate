@@ -34,11 +34,18 @@ public class SC_ButtonMgr : MonoBehaviour
 
     public void PointerUpPrintBase() { SC_GameMgr._gameMgr.PrintBaseBox(); }
 
-    public void SysHelpButtonClick() { SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+    public void TitleStartButtionClick() { SC_GameMgr._gameMgr.FirstGameStart(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+
+    public void TitleQuitButtionClick() { SC_GameMgr._gameMgr.ExitGameinstant(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+
+    public void SysHelpButtonClick() { SC_MenuBar._menuBar.HelpMenuOnOff(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void SysOptionButtonClick() { SC_MenuBar._menuBar.OptionMenuOnOff(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
-    public void SysExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitGame(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+    public void SysExitButtonClick() { SC_MenuBar._menuBar.ExitMenuOnOff(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+
+    public void ExitMenuRestartButtonClick() { SC_GameMgr._gameMgr.AnswerRestartGame(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
+    public void ExitMenuExitButtonClick() { SC_GameMgr._gameMgr.AnswerExitGame(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }
 
     public void InnBuyPointerDown() { SC_GameMgr._gameMgr.PrintTextBox(s_inn_buy); }
     public void InnBuyButtonClick() { SC_MenuBar._menuBar.PopupBuyMenu(); SC_SoundMgr._soundMgr.SFX_ClickOK(); }

@@ -17,7 +17,7 @@ public class SC_FieldMgr : MonoBehaviour
     public Sprite[] bottomSprites;
     public Sprite imageUnknown;
     public Material backGroundMat;
-    public Sprite backGroundSprite;
+    public Texture backGroundTexture;
 
     private Vector2 frontPoint = new Vector2(16f, 0f);
     private Vector2 backMove = new Vector2(-0.1f, 0f);
@@ -74,18 +74,21 @@ public class SC_FieldMgr : MonoBehaviour
         topSprites = Resources.LoadAll<Sprite>("sprite/field/area1/top");
         midSprites = Resources.LoadAll<Sprite>("sprite/field/area1/mid");
         bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area1/bottom");
+        backGroundTexture = Resources.Load<Texture>("sprite/field/area1/area1back");
     }
     public void GetArea2Sprite()
     {
         topSprites = Resources.LoadAll<Sprite>("sprite/field/area2/top");
         midSprites = Resources.LoadAll<Sprite>("sprite/field/area2/mid");
         bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area2/bottom");
+        backGroundTexture = Resources.Load<Texture>("sprite/field/area2/area2back");
     }
     public void GetArea3Sprite()
     {
         topSprites = Resources.LoadAll<Sprite>("sprite/field/area3/top");
         midSprites = Resources.LoadAll<Sprite>("sprite/field/area3/mid");
         bottomSprites = Resources.LoadAll<Sprite>("sprite/field/area3/bottom");
+        backGroundTexture = Resources.Load<Texture>("sprite/field/area3/area3back");
     }
     public Sprite GetRandomSprite(Sprite[] inputArray)
     {
@@ -127,6 +130,7 @@ public class SC_FieldMgr : MonoBehaviour
         EnableFieldTiles();
         FieldTilesInit();
         FieldRoundInit();
+        backGroundMat.mainTexture = backGroundTexture;
         actionBar.SetActive(true);
         executeButton.gameObject.SetActive(true);
         FieldStateText.enabled = true;
@@ -178,7 +182,7 @@ public class SC_FieldMgr : MonoBehaviour
         for (int i = 0; i < SC_PlayerMgr._playerMgr.SightRange; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup
                 (SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].Image,
-                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].EnemyName,
+                SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].EnemyName + " " + SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].text,
                 SC_EnemyMgr._enemyMgr.enemyData[CurrentRound * 3 + i + 1].Color);
         for (int i = SC_PlayerMgr._playerMgr.SightRange; i < 3; i++)
             SC_GameMgr._gameMgr.mainIndicator[i].IndicatorMakeup(imageUnknown, "알수없음");
@@ -460,6 +464,9 @@ public class SC_FieldMgr : MonoBehaviour
         executeButton.gameObject.SetActive(false);
         FieldStateText.enabled = false;
         backGroundMat.mainTextureOffset = Vector2.zero;
+        SC_GameMgr._gameMgr.OffMainIndicator();
+        SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.SetActive(false);
+        SC_SoundMgr._soundMgr.BGM_Stop();
     }
     public void BattleEndInit()
     {

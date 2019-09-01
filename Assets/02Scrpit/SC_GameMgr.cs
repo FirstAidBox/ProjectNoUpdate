@@ -22,6 +22,7 @@ public class SC_GameMgr : MonoBehaviour
 {
     //게임의 주요 흐름을 담당하는 스크립트입니다.
     public static SC_GameMgr _gameMgr;
+    public GameObject titleScreen;
     public GameObject mainTextBar;
     public Text mainText;
     public Image mainSprite;
@@ -30,12 +31,13 @@ public class SC_GameMgr : MonoBehaviour
     public Sprite nullSprite; //투명한 스프라이트
     public Color baseColor = Color.white;
     public bool isBaseTextHide = false;
-    public Sprite BaseBackSprite;
+    public Texture baseBackTexture;
+    public Texture black;
 
     public Button[] buttons;
     public EventTrigger[] eventTriggers;
+    public Button[] sysButtons;
     public GameObject offWhileEvent;
-    public Button[] systemButtons;
 
     public bool isEventPlaying = false;
     public bool isPlayingText = false;
@@ -86,9 +88,9 @@ public class SC_GameMgr : MonoBehaviour
         {
             eventTriggers[n] = buttons[n].gameObject.GetComponent<EventTrigger>();
         }
-        for (int n = 0; n < systemButtons.Length; n++)
+        for(int n=0; n<sysButtons.Length; n++)
         {
-            systemButtons[n].gameObject.SetActive(true);
+            sysButtons[n].gameObject.SetActive(true);
         }
 
         baseText = null;
@@ -101,10 +103,7 @@ public class SC_GameMgr : MonoBehaviour
         waitEvent = new WaitWhile(() => isEventPlaying); //IEnumerator용 isEventPlaying가 false 될 때 까지 대기.
         waitText = new WaitWhile(() => isPlayingText); //IEnumerator용 isPlayingText가 false 될 때 까지 대기.
         waitClick = new WaitWhile(() => trigger_Click); //IEnumerator용 trigger_Click가 false 될 때 까지 대기.
-    }
-    private void Start()
-    {
-        SelectChar();
+        FadeIn();
     }
     /// <summary>
     /// 하단 텍스트 박스에 문자열 표시. 왼쪽의 이미지 박스는 공백.
@@ -265,26 +264,22 @@ public class SC_GameMgr : MonoBehaviour
             eventTriggers[n].enabled = false;
         }
     }
+    public void OffSysButtons()
+    {
+        for (int i = 0; i < sysButtons.Length; i++)
+            sysButtons[i].interactable = false;
+    }
+    public void OnSysButtons()
+    {
+        for (int i = 0; i < sysButtons.Length; i++)
+            sysButtons[i].interactable = true;
+    }
     public void OnButtons()
     {
         for (int n = 0; n < buttons.Length; n++)
         {
             buttons[n].interactable = true;
             eventTriggers[n].enabled = true;
-        }
-    }
-    public void OffSysButtons()
-    {
-        for (int n = 0; n < systemButtons.Length; n++)
-        {
-            systemButtons[n].enabled = false;
-        }
-    }
-    public void OnSysButtons()
-    {
-        for (int n = 0; n < systemButtons.Length; n++)
-        {
-            systemButtons[n].enabled = true;
         }
     }
     public void PopupFinalAnswerBar(Action eventName, string inputText)
@@ -295,6 +290,7 @@ public class SC_GameMgr : MonoBehaviour
         PrintTextBox(inputText);
         finalAnswerAction = eventName;
         OffButtons();
+        OffSysButtons();
     }
     public void YesClickFinalAnswer()
     {
@@ -302,7 +298,11 @@ public class SC_GameMgr : MonoBehaviour
         finalAnswerAction();
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
-        OnButtons();
+        if (!isFade)
+        {
+            OnButtons();
+            OnSysButtons();
+        }
         SC_SoundMgr._soundMgr.SFX_ClickOK();
     }
     public void NoClickFinalAnswer()
@@ -316,6 +316,7 @@ public class SC_GameMgr : MonoBehaviour
         finalAnswerBar.SetActive(false);
         isPopupFABar = false;
         OnButtons();
+        OnSysButtons();
         SC_SoundMgr._soundMgr.SFX_ClickOK();
     }
     private IEnumerator PlayFadeOut()
@@ -337,6 +338,8 @@ public class SC_GameMgr : MonoBehaviour
     {
         yield return waitFadeOut;
 		isFadeIn = true;
+        OffButtons();
+        OffSysButtons();
         for (float f = 1f; f > -0.1f; f -= 0.1f)
         {
             Color c = fadeImage.color;
@@ -372,6 +375,12 @@ public class SC_GameMgr : MonoBehaviour
 	{
 		StartCoroutine (_WaitFadeOut(method));
 	}
+    private IEnumerator _WaitFadeIn (Action method)
+    {
+        yield return waitFadeIn;
+        method();
+    }
+    public void InvokeWaitFadeIn(Action method){ StartCoroutine(_WaitFadeIn(method)); }
     private IEnumerator _WaitEvent(Action method)
     {
         yield return waitEvent;
@@ -410,10 +419,16 @@ public class SC_GameMgr : MonoBehaviour
         Vector2 indi1Pos = indi0Pos + offset;
         Vector2 indi2Pos = indi1Pos + offset;
         innMenu.SetActive(false);
-        SC_MenuBar._menuBar.playerMenuBar.SetActive(false);
+        for (int i = 1; i < 4; i++)
+            isAreaClear[i] = false;
+        SC_MenuBar._menuBar.ClosePlayerMenu();
+        SC_MenuBar._menuBar.ExitMenuOff();
         SC_FieldMgr._fieldMgr.actionBar.SetActive(false);
         SC_FieldMgr._fieldMgr.executeButton.gameObject.SetActive(false);
+        SC_FieldMgr._fieldMgr.backGroundMat.mainTexture = baseBackTexture;
         SC_PlayerMgr._playerMgr.PlayerInfoInit();
+        SC_PlayerMgr._playerMgr.InvisiblePlayer();
+        SC_EnemyMgr._enemyMgr.InvisibleEnemy();
         baseText = "캐릭터를 선택해주세요.";
         PrintBaseBox();
         mainIndicator[0].gameObject.transform.position = indi0Pos;
@@ -422,6 +437,7 @@ public class SC_GameMgr : MonoBehaviour
         mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_Mage, _stringMgr.magePick, AnswerMagePick);
         mainIndicator[2].gameObject.transform.position = indi2Pos;
         mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_Ranger, _stringMgr.rangerPick, AnswerRangerPick);
+        OnMainIndicator();
     }
 
     public void AnswerWarriorPick()
@@ -491,11 +507,21 @@ public class SC_GameMgr : MonoBehaviour
         innMenu.SetActive(true);
         baseText = _stringMgr.st_enterInnEnd;
         PrintBaseBox();
+        SC_FieldMgr._fieldMgr.backGroundMat.mainTexture = baseBackTexture;
     }
     public void InvisibleInn()
     {
         inn.SetActive(false);
         innMenu.SetActive(false);
+    }
+    public void ExitInn()
+    {
+        InvisibleInn();
+        SC_SoundMgr._soundMgr.BGM_Stop();
+        SC_MenuBar._menuBar.ClosePlayerMenu();
+        SC_PlayerMgr._playerMgr.InvisiblePlayer();
+        SC_EnemyMgr._enemyMgr.InvisibleEnemy();
+        SC_EnemyMgr._enemyMgr.EnemyIndicator.isInnMaster = false;
     }
     public void AnswerExitInn()
     {
@@ -505,15 +531,10 @@ public class SC_GameMgr : MonoBehaviour
         {
             PrintTextBox(_stringMgr.st_innExit);
             FadeOutAndIn();
-			InvokeWaitFadeOut(InvisibleInn);
-			InvokeWaitFadeOut(SC_MenuBar._menuBar.ClosePlayerMenu);
-            InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.InvisiblePlayer);
-            InvokeWaitFadeOut(SC_EnemyMgr._enemyMgr.InvisibleEnemy);
-            SC_EnemyMgr._enemyMgr.EnemyIndicator.isInnMaster = false;
+            InvokeWaitFadeOut(ExitInn);
             InvokeWaitFadeOut(SelectArea);
             isRest = false;
             trigger_FA_Yes = false;
-            SC_SoundMgr._soundMgr.BGM_Stop();
             SC_SoundMgr._soundMgr.SFX_InnDoor();
             SC_SoundMgr._soundMgr.SFX_FootStepStart();
             InvokeWaitFadeOut(SC_SoundMgr._soundMgr.SFX_FootStepStop);
@@ -533,12 +554,12 @@ public class SC_GameMgr : MonoBehaviour
         if (isAreaClear[1])
         {
             mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, "이미 우두머리를 물리친 지역입니다.");
-            mainIndicator[0].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[0].indicatorRenderer.color = new Color(0.3f, 0.3f, 0.3f);
             mainIndicator[0].isbiff = true;
         }
         else
         {
-            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1 + _stringMgr.st_tomove, AnswerArea1);
+            mainIndicator[0].IndicatorMakeup(_resourceMgr.sp_48_Area1, _stringMgr.st_area1, AnswerArea1);
         }
         mainIndicator[0].ResizeCollider(3f);
         mainIndicator[0].transform.position = new Vector2(-4.5f, 1.5f);
@@ -546,7 +567,7 @@ public class SC_GameMgr : MonoBehaviour
     public void AnswerArea1()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea1, "정말 지역1로 떠납니까?");
+            PopupFinalAnswerBar(AnswerArea1, "정말 녹빛 숲으로 떠납니까?");
         else
         {
             GoToArea1();
@@ -556,7 +577,7 @@ public class SC_GameMgr : MonoBehaviour
     public void GoToArea1()
     {
         areaNum = 1;
-        PrintTextBox(_stringMgr.st_area1 + _stringMgr.st_moving);
+        PrintTextBox("녹빛 숲으로 떠닙니다.");
         FadeOutAndIn();
 		InvokeWaitFadeOut(OffMainIndicator);
 		InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
@@ -574,12 +595,12 @@ public class SC_GameMgr : MonoBehaviour
         if (isAreaClear[2])
         {
             mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, "이미 우두머리를 물리친 지역입니다.");
-            mainIndicator[1].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[1].indicatorRenderer.color = new Color(0.3f, 0.3f, 0.3f);
             mainIndicator[1].isbiff = true;
         }
         else
         {
-            mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2 + _stringMgr.st_tomove, AnswerArea2);
+            mainIndicator[1].IndicatorMakeup(_resourceMgr.sp_48_Area2, _stringMgr.st_area2, AnswerArea2);
         }
         mainIndicator[1].ResizeCollider(3f);
         mainIndicator[1].transform.position = new Vector2(0f, 1.5f);
@@ -587,7 +608,7 @@ public class SC_GameMgr : MonoBehaviour
     public void AnswerArea2()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea2, "정말 지역2로 떠납니까?");
+            PopupFinalAnswerBar(AnswerArea2, "정말 버려진 묘지로 떠납니까?");
         else
         {
             GoToArea2();
@@ -597,7 +618,7 @@ public class SC_GameMgr : MonoBehaviour
     public void GoToArea2()
     {
         areaNum = 2;
-        PrintTextBox(_stringMgr.st_area2 + _stringMgr.st_moving);
+        PrintTextBox("버려진 묘지로 떠납니다.");
         FadeOutAndIn();
         InvokeWaitFadeOut(OffMainIndicator);
         InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
@@ -615,12 +636,12 @@ public class SC_GameMgr : MonoBehaviour
         if (isAreaClear[3])
         {
             mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, "이미 우두머리를 물리친 지역입니다.");
-            mainIndicator[2].indicatorRenderer.color = new Color(0.5f, 0.5f, 0.5f);
+            mainIndicator[2].indicatorRenderer.color = new Color(0.3f, 0.3f, 0.3f);
             mainIndicator[2].isbiff = true;
         }
         else
         {
-            mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3 + _stringMgr.st_tomove, AnswerArea3);
+            mainIndicator[2].IndicatorMakeup(_resourceMgr.sp_48_Area3, _stringMgr.st_area3, AnswerArea3);
         }
         mainIndicator[2].ResizeCollider(3f);
         mainIndicator[2].transform.position = new Vector2(4.5f, 1.5f);
@@ -628,7 +649,7 @@ public class SC_GameMgr : MonoBehaviour
     public void AnswerArea3()
     {
         if(!trigger_FA_Yes)
-            PopupFinalAnswerBar(AnswerArea3, "정말 지역3로 떠납니까?");
+            PopupFinalAnswerBar(AnswerArea3, "정말 설산으로 떠납니까?");
         else
         {
             GoToArea3();
@@ -638,7 +659,7 @@ public class SC_GameMgr : MonoBehaviour
     public void GoToArea3()
     {
         areaNum = 3;
-        PrintTextBox(_stringMgr.st_area3 + _stringMgr.st_moving);
+        PrintTextBox("설산으로 떠납니다.");
         FadeOutAndIn();
         InvokeWaitFadeOut(OffMainIndicator);
         InvokeWaitFadeOut(SC_PlayerMgr._playerMgr.VisiblePlayer);
@@ -656,7 +677,7 @@ public class SC_GameMgr : MonoBehaviour
     {
         if (!trigger_FA_Yes)
         {
-            PopupFinalAnswerBar(AnswerExitGame, "정말 종료하시겠습니까?");
+            PopupFinalAnswerBar(AnswerExitGame, "정말 종료 하시겠습니까?");
             isPause = true;
             Time.timeScale = 0;
         }
@@ -670,11 +691,62 @@ public class SC_GameMgr : MonoBehaviour
             InvokeWaitFadeOut(Application.Quit);
         }
     }
+    public void ExitGameinstant()
+    {
+        FadeOut();
+        InvokeWaitFadeOut(Application.Quit);
+    }
     public bool IsGameClear()
     {
         if (isAreaClear[1] && isAreaClear[2] && isAreaClear[3])
             return true;
         else
             return false;
+    }
+    public void AnswerRestartGame()
+    {
+        if (!trigger_FA_Yes)
+        {
+            PopupFinalAnswerBar(AnswerRestartGame, "정말 재시작 하시겠습니까?");
+        }
+        else
+        {
+            trigger_FA_Yes = false;
+            PrintTextBox("재시작합니다.");
+            FadeOutAndIn();
+            InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
+            InvokeWaitFadeOut(ExitInn);
+            InvokeWaitFadeOut(SelectChar);
+        }
+    }
+    private void _FirstGameStart()
+    {
+        titleScreen.SetActive(false);
+        SelectChar();
+        SC_SoundMgr._soundMgr.BGM_Stop();
+    }
+    public void FirstGameStart()
+    {
+        FadeOutAndIn();
+        InvokeWaitFadeOut(_FirstGameStart);
+    }
+    public void PlayerDie()
+    {
+        SC_FieldMgr._fieldMgr.backGroundMat.mainTexture = black;
+        SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position = new Vector2(0f, 0.5f);
+        SC_PlayerMgr._playerMgr.playerIndicator.IndicatorMakeup(_resourceMgr.sp_TomeStone);
+        SetBaseText("당신은 죽었습니다.");
+        PrintBaseBox();
+        SC_MenuBar._menuBar.ExitMenuOn();
+        InvokeWaitFadeIn(SC_SoundMgr._soundMgr.SFX_PlayerFail);
+    }
+    public void PlayerWin()
+    {
+        SC_FieldMgr._fieldMgr.backGroundMat.mainTexture = baseBackTexture;
+        SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position = new Vector2(0f, 0.5f);
+        SetBaseText("모든 지역의 우두머리를 처치했습니다. 당신의 승리입니다.");
+        PrintBaseBox();
+        SC_MenuBar._menuBar.ExitMenuOn();
+        InvokeWaitFadeIn(SC_SoundMgr._soundMgr.SFX_PlayerWin);
     }
 }

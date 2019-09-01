@@ -234,6 +234,7 @@ public class SC_PlayerMgr : MonoBehaviour
     {
         playerIndicator.IndicatorMakeup(Image, "캐릭터의 정보를 확인합니다.", SC_MenuBar._menuBar.PopupStatMenu);
         playerIndicator.gameObject.transform.position = currentPlayerPos;
+        VisiblePlayer();
     }
     public void VisiblePlayer()
     {
@@ -296,6 +297,7 @@ public class SC_PlayerMgr : MonoBehaviour
         SC_FieldMgr._fieldMgr.isInBattle = false;
         SC_FieldMgr._fieldMgr.StopAllCoroutines();
         SC_FieldMgr._fieldMgr.BattleEndInit();
+        StartCoroutine(_PlayerDie());
     }
     private IEnumerator _PlayerDie()
     {
@@ -303,5 +305,7 @@ public class SC_PlayerMgr : MonoBehaviour
         SC_GameMgr._gameMgr.PrintTextBox("의식이 희미해진다...");
         SC_GameMgr._gameMgr.FadeOutAndIn();
         yield return SC_GameMgr._gameMgr.waitFadeOut;
+        SC_FieldMgr._fieldMgr.ExitField();
+        SC_GameMgr._gameMgr.PlayerDie();
     }
 }

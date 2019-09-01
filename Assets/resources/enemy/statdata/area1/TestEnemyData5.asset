@@ -13,11 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Index: 5
   KIND: 3
-  EnemyName: Area1Trap
+  EnemyName: "\uCE7C\uB0A0\uD568\uC815"
   Image: {fileID: 21300000, guid: 2ad4484b79c072543826315d5868f2ba, type: 3}
-  Color: {r: 0.014705896, g: 1, b: 0, a: 1}
+  Color: {r: 1, g: 1, b: 1, a: 1}
   Hp: 1
-  Atk: 1
+  Atk: 2
   Def: 0
   Spd: 1
   SkillIndex: 
+  text: "\uB0A0\uBD99\uC774\uB4E4\uC744 \uC0AC\uC6A9\uD55C \uD3C9\uBC94\uD55C \uD568\uC815."

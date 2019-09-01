@@ -15,9 +15,10 @@ MonoBehaviour:
   KIND: 4
   EnemyName: Area2Box
   Image: {fileID: 21300000, guid: a6d171c345adf6e49bb2ced084130246, type: 3}
-  Color: {r: 1, g: 0.9264706, b: 0, a: 1}
+  Color: {r: 0.7413793, g: 0.7413793, b: 0.7413793, a: 1}
   Hp: 1
   Atk: 0
   Def: 0
   Spd: 0
   SkillIndex: 
+  text: "\uC544\uC774\uD15C\uC744 \uC5BB\uC744 \uC218 \uC788\uB2E4."

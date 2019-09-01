@@ -64,6 +64,8 @@ public class SC_MenuBar : MonoBehaviour
     public Text moneyIndiText;
 
     public GameObject optionWindow;
+    public GameObject exitWindow;
+    public GameObject helpWindow;
 
     private void Awake()
     {
@@ -290,5 +292,29 @@ public class SC_MenuBar : MonoBehaviour
             optionWindow.SetActive(false);
         else
             optionWindow.SetActive(true);
+    }
+    public void ExitMenuOnOff()
+    {
+        if (exitWindow.activeSelf)
+            ExitMenuOff();
+        else
+            ExitMenuOn();
+    }
+    public void ExitMenuOff()
+    {
+        exitWindow.SetActive(false);
+        SC_GameMgr._gameMgr.isPopupFABar = false;
+    }
+    public void ExitMenuOn()
+    {
+        exitWindow.SetActive(true);
+        SC_GameMgr._gameMgr.isPopupFABar = true;
+    }
+    public void HelpMenuOnOff()
+    {
+        if (helpWindow.activeSelf)
+            helpWindow.SetActive(false);
+        else
+            helpWindow.SetActive(true);
     }
 }

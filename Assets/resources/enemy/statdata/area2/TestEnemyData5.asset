@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: TestEnemyData5
   m_EditorClassIdentifier: 
   Index: 5
-  KIND: 3
-  EnemyName: Area2Trap
-  Image: {fileID: 21300000, guid: 2ad4484b79c072543826315d5868f2ba, type: 3}
-  Color: {r: 1, g: 0.9264706, b: 0, a: 1}
-  Hp: 1
+  KIND: 2
+  EnemyName: "\uBD89\uC740\uD574\uACE8"
+  Image: {fileID: 21300000, guid: b778a089876c02641815b75b7863a260, type: 3}
+  Color: {r: 0.8724138, g: 0, b: 0, a: 1}
+  Hp: 8
   Atk: 1
-  Def: 0
-  Spd: 1
-  SkillIndex: 
+  Def: 1
+  Spd: 10
+  SkillIndex: 000000000100000002000000
+  text: "\uC5B8\uB370\uB4DC\uB2F5\uC9C0 \uC54A\uAC8C \uBE60\uB978 \uC6C0\uC9C1\uC784\uC744
+    \uBCF4\uC774\uB294 \uD574\uACE8."

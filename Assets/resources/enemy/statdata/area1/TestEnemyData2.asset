@@ -13,11 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Index: 2
   KIND: 2
-  EnemyName: Area1Enemy2
-  Image: {fileID: 21300000, guid: 71e19036910bda0438b1ff3eda1667ad, type: 3}
-  Color: {r: 0.014705896, g: 1, b: 0, a: 1}
-  Hp: 3
-  Atk: 4
-  Def: 2
-  Spd: 1
-  SkillIndex: 000000000100000002000000
+  EnemyName: "\uAC1C"
+  Image: {fileID: 21300000, guid: 60d325df8b5af764dbde2742421706f1, type: 3}
+  Color: {r: 1, g: 0.82125866, b: 0.5808824, a: 1}
+  Hp: 6
+  Atk: 2
+  Def: 1
+  Spd: 6
+  SkillIndex: 000000000100000003000000
+  text: "\uC57C\uC0DD \uAC1C. \uBC29\uC2EC\uD588\uB2E4\uAC04 \uC228\uD1B5\uC744 \uBB3C\uB9B4\uAC83\uC774\uB2E4."

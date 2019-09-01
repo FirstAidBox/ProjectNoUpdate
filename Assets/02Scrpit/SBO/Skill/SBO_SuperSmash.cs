@@ -14,7 +14,7 @@ public class SBO_SuperSmash : SBO_UseObject, I_BattleStack
         {
             SC_EffectMgr._effectMgr.isEvent = true;
             SC_EffectMgr._effectMgr.EffectDown(SC_PlayerMgr._playerMgr.playerIndicator.gameObject.transform.position);
-            SC_SoundMgr._soundMgr.SFX_Guard();
+            SC_SoundMgr._soundMgr.SFX_Stun();
             SC_PlayerMgr._playerMgr.IsDown = true;
             SC_GameMgr._gameMgr.PrintClickTextBox("자세가 무너져 제대로 행동할 수 없습니다.");
         }

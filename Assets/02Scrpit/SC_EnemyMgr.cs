@@ -18,6 +18,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public int ATK;
     public int DEF;
     public int SPD;
+    public string Text;
 
     public int[] SkillIndex;
     public int SkillCount;
@@ -37,7 +38,7 @@ public class SC_EnemyMgr : MonoBehaviour
     void Awake()
     {
         _enemyMgr = this;
-        SkillIndex = new int[3];
+        SkillIndex = new int[4];
         enemyData = new SBO_EnemyData[10];//지역당 보스1 + 그 외3*n
         Init();
     }
@@ -79,10 +80,11 @@ public class SC_EnemyMgr : MonoBehaviour
         ATK = enemyData[i].Atk + AddStatValue;
         DEF = enemyData[i].Def + AddStatValue;
         SPD = enemyData[i].Spd + AddStatValue;
+        Text = enemyData[i].text;
         SkillCount = enemyData[i].SkillIndex.Length;
         for (int n = 0; n < SkillCount; n++)
             SkillIndex[n] = enemyData[i].SkillIndex[n];
-        EnemyIndicator.IndicatorMakeup(enemyData[i].Image, enemyData[i].EnemyName, enemyData[i].Color);
+        EnemyIndicator.IndicatorMakeup(Image, Name +" " + Text, Color);
     }
     public void VisibleEnemy()
     {
@@ -219,9 +221,10 @@ public class SC_EnemyMgr : MonoBehaviour
         yield return SC_GameMgr._gameMgr.waitText;
         if (SC_GameMgr._gameMgr.IsGameClear())
         {
-            SC_GameMgr._gameMgr.SetBaseText("모든 지역의 우두머리를 처치했습니다. 당신의 승리입니다.");
-            SC_GameMgr._gameMgr.PrintBaseBox();
-            SC_SoundMgr._soundMgr.SFX_PlayerWin();
+            SC_FieldMgr._fieldMgr.isInBattle = false;
+            SC_FieldMgr._fieldMgr.StopAllCoroutines();
+            SC_FieldMgr._fieldMgr.BattleEndInit();
+            StartCoroutine(_PlayerWin());
         }
         else
         {
@@ -243,5 +246,15 @@ public class SC_EnemyMgr : MonoBehaviour
         EnemyIndicator.IndicatorInit();
         EnemyIndicator.gameObject.transform.position = InInnPos;
         EnemyIndicator.isInnMaster = true;
+        EnemyIndicator.gameObject.SetActive(true);
+    }
+    private IEnumerator _PlayerWin()
+    {
+        yield return SC_GameMgr._gameMgr.waitText;
+        SC_GameMgr._gameMgr.PrintTextBox("마지막 우두머리를 물리쳤습니다.");
+        SC_GameMgr._gameMgr.FadeOutAndIn();
+        yield return SC_GameMgr._gameMgr.waitFadeOut;
+        SC_FieldMgr._fieldMgr.ExitField();
+        SC_GameMgr._gameMgr.PlayerWin();
     }
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Index: 6
   KIND: 4
-  EnemyName: Area3Box
+  EnemyName: "\uC0C1\uC790"
   Image: {fileID: 21300000, guid: a6d171c345adf6e49bb2ced084130246, type: 3}
-  Color: {r: 0, g: 0.6911764, b: 1, a: 1}
+  Color: {r: 0.7794118, g: 0.8540225, b: 1, a: 1}
   Hp: 1
   Atk: 0
   Def: 0
   Spd: 0
   SkillIndex: 
+  text: "\uC544\uC774\uD15C\uC744 \uC5BB\uC744 \uC218 \uC788\uB2E4."

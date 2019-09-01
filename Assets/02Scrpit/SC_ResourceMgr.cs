@@ -10,9 +10,12 @@ public class SC_ResourceMgr : MonoBehaviour
     public Sprite _tempSprite;
 
     public Sprite sp_Null;//투명한 스프라이트. SC_GameMgr에도 nullSprite란 이름으로 있다.
+    public Sprite sp_Black;
+    public Sprite sp_White;
     public Sprite sp_Warrior;
     public Sprite sp_Mage;
     public Sprite sp_Ranger;
+    public Sprite sp_TomeStone;
 
     public Sprite sp_bg_Tavern;
     public Sprite sp_npc_Mr;

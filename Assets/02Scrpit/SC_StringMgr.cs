@@ -20,9 +20,9 @@ public class SC_StringMgr : MonoBehaviour
     public readonly string st_innExit = "여관을 떠납니다.";
 
     public readonly string st_selectArea = "목적지를 선택해주세요.";
-    public readonly string st_area1 = "지역1";
-    public readonly string st_area2 = "지역2";
-    public readonly string st_area3 = "지역3";
+    public readonly string st_area1 = "녹빛 숲. 흉포한 야수들과 그들을 저지하기 위한 덫들이 많이 깔려있습니다.";
+    public readonly string st_area2 = "버려진 묘지. 행동은 느리지만 생명력이 질긴 언데드들이 있습니다.";
+    public readonly string st_area3 = "설산. 기후에 적응에 털가죽이 두꺼워진 생물들이 살고 있습니다.";
     public readonly string st_tomove = "으로 이동합니다.";
     public readonly string st_moving = "으로 떠납니다.";
 }
