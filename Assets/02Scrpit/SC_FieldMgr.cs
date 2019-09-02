@@ -466,7 +466,6 @@ public class SC_FieldMgr : MonoBehaviour
         backGroundMat.mainTextureOffset = Vector2.zero;
         SC_GameMgr._gameMgr.OffMainIndicator();
         SC_EnemyMgr._enemyMgr.EnemyIndicator.gameObject.SetActive(false);
-        SC_SoundMgr._soundMgr.BGM_Stop();
     }
     public void BattleEndInit()
     {
