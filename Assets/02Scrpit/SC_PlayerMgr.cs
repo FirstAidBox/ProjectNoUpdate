@@ -305,6 +305,7 @@ public class SC_PlayerMgr : MonoBehaviour
         SC_GameMgr._gameMgr.PrintTextBox("의식이 희미해진다...");
         SC_GameMgr._gameMgr.FadeOutAndIn();
         yield return SC_GameMgr._gameMgr.waitFadeOut;
+        SC_SoundMgr._soundMgr.BGM_Stop();
         SC_FieldMgr._fieldMgr.ExitField();
         SC_GameMgr._gameMgr.PlayerDie();
     }

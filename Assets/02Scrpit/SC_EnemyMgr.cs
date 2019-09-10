@@ -237,6 +237,7 @@ public class SC_EnemyMgr : MonoBehaviour
             SC_FieldMgr._fieldMgr.AreaLevelUp();
             SC_GameMgr._gameMgr.PrintClickTextBox("우두머리를 무찌른걸 다른지역의 몬스터들이 알아차렸습니다. 남은 지역들의 난이도가 상승합니다.");
             yield return SC_GameMgr._gameMgr.waitText;
+            SC_SoundMgr._soundMgr.BGM_Stop();
             SC_GameMgr._gameMgr.EnteringInn();
             SC_GameMgr._gameMgr.InvokeWaitFadeOut(SC_FieldMgr._fieldMgr.ExitField);
         }
@@ -254,6 +255,7 @@ public class SC_EnemyMgr : MonoBehaviour
         SC_GameMgr._gameMgr.PrintTextBox("마지막 우두머리를 물리쳤습니다.");
         SC_GameMgr._gameMgr.FadeOutAndIn();
         yield return SC_GameMgr._gameMgr.waitFadeOut;
+        SC_SoundMgr._soundMgr.BGM_Stop();
         SC_FieldMgr._fieldMgr.ExitField();
         SC_GameMgr._gameMgr.PlayerWin();
     }
