@@ -12,6 +12,6 @@ public class SBO_EnemyData : ScriptableObject
     public int Atk;
     public int Def;
     public int Spd;
-    public int[] SkillIndex = { 0 }; //사용가능한 스킬들의 인덱스 번호
     public string text;
+    public SBO_SlotObject[] Skills;
 }
