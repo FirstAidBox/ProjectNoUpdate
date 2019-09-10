@@ -20,7 +20,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public int SPD;
     public string Text;
 
-    public int[] SkillIndex;
+    public SBO_SlotObject[] Skills;
     public int SkillCount;
 
     public bool IsGuard;
@@ -38,7 +38,7 @@ public class SC_EnemyMgr : MonoBehaviour
     void Awake()
     {
         _enemyMgr = this;
-        SkillIndex = new int[4];
+        Skills = new SBO_SlotObject[5];
         enemyData = new SBO_EnemyData[10];//지역당 보스1 + 그 외3*n
         Init();
     }
@@ -81,9 +81,9 @@ public class SC_EnemyMgr : MonoBehaviour
         DEF = enemyData[i].Def + AddStatValue;
         SPD = enemyData[i].Spd + AddStatValue;
         Text = enemyData[i].text;
-        SkillCount = enemyData[i].SkillIndex.Length;
+        SkillCount = enemyData[i].Skills.Length;
         for (int n = 0; n < SkillCount; n++)
-            SkillIndex[n] = enemyData[i].SkillIndex[n];
+            Skills[n] = enemyData[i].Skills[n];
         EnemyIndicator.IndicatorMakeup(Image, Name +" " + Text, Color);
     }
     public void VisibleEnemy()
@@ -147,7 +147,7 @@ public class SC_EnemyMgr : MonoBehaviour
     public void BattleActionInput()
     {
         for (int i = 0; i < 3; i++)
-            SC_FieldMgr._fieldMgr.enemyBattleActionSlot[i] = SC_SBODataMgr._SBODataMgr.enemySkillData[SkillIndex[Random.Range(0, SkillCount)]];
+            SC_FieldMgr._fieldMgr.enemyBattleActionSlot[i] = Skills[Random.Range(0, SkillCount)];
     }
     public void TurnInit()
     {

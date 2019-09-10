@@ -20,6 +20,9 @@ MonoBehaviour:
   Atk: 1
   Def: 1
   Spd: 10
-  SkillIndex: 000000000100000002000000
   text: "\uC5B8\uB370\uB4DC\uB2F5\uC9C0 \uC54A\uAC8C \uBE60\uB978 \uC6C0\uC9C1\uC784\uC744
     \uBCF4\uC774\uB294 \uD574\uACE8."
+  Skills:
+  - {fileID: 11400000, guid: efd45fe7da0aac145ae9e04ca4ced35c, type: 2}
+  - {fileID: 11400000, guid: 49b84df15b8a6834cbb2af5a541cd05d, type: 2}
+  - {fileID: 11400000, guid: 1d9c47ad00a30064f8fd59fe78f8f33c, type: 2}
