@@ -79,6 +79,7 @@ public class SC_GameMgr : MonoBehaviour
     void Awake()
     {
         _gameMgr = this;
+        Screen.SetResolution(1280, 720, false);
         _resourceMgr = GetComponent<SC_ResourceMgr>();
         _stringMgr = GetComponent<SC_StringMgr>();
 

@@ -82,8 +82,9 @@ public class SC_EnemyMgr : MonoBehaviour
         SPD = enemyData[i].Spd + AddStatValue;
         Text = enemyData[i].text;
         SkillCount = enemyData[i].Skills.Length;
-        for (int n = 0; n < SkillCount; n++)
-            Skills[n] = enemyData[i].Skills[n];
+        if (SkillCount != 0)
+            for (int n = 0; n < SkillCount; n++)
+                Skills[n] = enemyData[i].Skills[n];
         EnemyIndicator.IndicatorMakeup(Image, Name +" " + Text, Color);
     }
     public void VisibleEnemy()
